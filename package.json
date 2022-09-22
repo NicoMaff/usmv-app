@@ -1,0 +1,15 @@
+{
+  "name": "usmv-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/N1Code7/usmv-app.git",
+  "author": "N1Code7 <n1code7@outlook.fr>",
+  "license": "MIT",
+  "script": {
+    "sass": "sass --watch ./sass/index.scss:./public/style.css"
+  },
+  "devDependencies": {
+    "gitmoji-cli": "^6.2.0",
+    "sass": "^1.55.0"
+  }
+}
