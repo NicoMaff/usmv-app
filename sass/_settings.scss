@@ -1,0 +1,38 @@
+// --- FONTS --- //
+@font-face {
+  font-family: "Gotu";
+  src: url("/public/assets/fonts/Gotu-Regular.ttf");
+}
+@font-face {
+  font-family: "Montserrat-reg";
+  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Montserrat-ita";
+  src: url("/public/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
+}
+
+$font-title: "Gotu", sans-serif;
+$font-body: "Montserrat-reg", sans-serif;
+$font-body-ita: "Monserrat-ita", sans-serif;
+
+// --- COLORS --- //
+$primary-1: #2c61c9;
+$primary-2: #2c61c9;
+$danger-1: #9d1414;
+$danger-2: #9d1414;
+$success-1: #228020;
+$success-2: #32b52f;
+$warning: #bb7d21;
+$canceled: #722fb5;
+$infos: #dbdf1c;
+
+$content-1: #f5f8ff;
+$link: #748cbc;
+
+$bg-1: #354b77;
+$bg-2: #748cbc;
+$bg-3: #dfe3ec;
+$bg-4: #f4f4f5;
+
+$gradient-1: linear-gradient(180deg, #ea8121, #bf6512);

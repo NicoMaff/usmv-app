@@ -2,21 +2,65 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
 
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
 
-        <header>
+        <header class="header-mobile">
             <img src="#" alt="logo">
             <button>Menu</button>
+
+            <nav class="nav-mobile">
+                <div class="nav-container">
+                    <div class="line"></div>
+                    <div class="profile-icon">
+                        <a href="#"><i class="fa-solid fa-user"></i></a>
+                        <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+                    </div>
+                    <ul class="menu">
+                        <li><a href="#">Accueil</a></li>
+                        <li>Le club
+                            <ul class="sub-menu" style="display:none;">
+                                <li><a href="#">Présentation</a></li>
+                                <li><a href="#">Infos / Horaires / Créneaux</a></li>
+                                <li><a href="#">Acteurs du club</a></li>
+                                <li><a href="#">Gymnases</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Inscription</a></li>
+                        <li>Jeunes
+                            <ul class="sub-menu" style="display:none;">
+                                <li><a href="#">Créneaux / Infos pratiques</a></li>
+                                <li><a href="#">L'école de badminton</a></li>
+                                <li><a href="#">La section sportive (collège)</a></li>
+                                <li><a href="#">Demande d'inscription à un tournoi</a></li>
+                                <li><a href="#">Compétitions jeunes</a></li>
+                            </ul>
+                        </li>
+                        <li>Compétitions
+                            <ul class="sub-menu" style="display:none;">
+                                <li><a href="#">Créneaux / Infos pratiques</a></li>
+                                <li><a href="#">Entraînements</a></li>
+                                <li><a href="#">Tournois "BadTour"</a></li>
+                                <li><a href="#">InterClubs / Équipes</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Loisirs</a></li>
+                        <li><a href="#">Partenaires</a></li>
+                        <li><a href="#">Liens</a></li>
+                    </ul>
+                </div>
+            </nav>
         </header>
 
         <footer>
@@ -32,4 +76,17 @@
 
         {% block body %}{% endblock %}
     </body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
 </html>

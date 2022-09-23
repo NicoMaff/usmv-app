@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "Gotu";
+  src: url("/public/assets/fonts/Gotu-Regular.ttf");
+}
+@font-face {
+  font-family: "Montserrat-reg";
+  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Montserrat-ita";
+  src: url("/public/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
+}
+*,
+::before,
+::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "Montserrat-reg", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Gotu", sans-serif;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+.nav-mobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 85vh;
+  background: #dfe3ec;
+  position: absolute;
+  bottom: 0;
+  border-radius: 80px 80px 0 0;
+}
+.nav-mobile .nav-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  position: relative;
+  min-height: 85vh;
+  min-width: 95vw;
+}
+.nav-mobile .line {
+  width: 150px;
+  height: 7px;
+  background: #2c61c9;
+  border-radius: 50px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+.nav-mobile .profile-icon {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+.nav-mobile .profile-icon a {
+  min-width: 100px;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 50%;
+  background: #2c61c9;
+}
+.nav-mobile .profile-icon i {
+  font-size: 2rem;
+}
+.nav-mobile .menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  row-gap: 30px;
+  column-gap: 30px;
+}
+.nav-mobile li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  background: #748cbc;
+  border-radius: 15px;
+  height: 90px;
+  min-width: 170px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f5f8ff;
+}
+.nav-mobile a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #f5f8ff;
+}
+.nav-mobile a:visited {
+  color: #f5f8ff;
+}
+@media screen and (min-width: 500px) {
+  .nav-mobile {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
