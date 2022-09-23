@@ -1,0 +1,31 @@
+.header-mobile {
+  display: flex;
+  justify-content: center;
+  min-width: 100vw;
+  min-height: 100px;
+  background: $bg-1;
+  border-radius: 0 0 20px 20px;
+
+  .header-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-width: 90vw;
+
+    @media (min-width: 1000px) {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+    }
+
+    img {
+      max-width: 100px;
+    }
+  }
+}

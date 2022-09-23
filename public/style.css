@@ -23,6 +23,11 @@ body {
   font-family: "Montserrat-reg", sans-serif;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 h1,
 h2,
 h3,
@@ -33,6 +38,51 @@ h4 {
 ul,
 li {
   list-style: none;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f5f8ff;
+  background: #2c61c9;
+  border: none;
+  border-radius: 5px;
+}
+.btn-menu {
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.header-mobile {
+  display: flex;
+  justify-content: center;
+  min-width: 100vw;
+  min-height: 100px;
+  background: #354b77;
+  border-radius: 0 0 20px 20px;
+}
+.header-mobile .header-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: 90vw;
+}
+@media (min-width: 1000px) {
+  .header-mobile .header-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+.header-mobile .header-container .header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.header-mobile .header-container img {
+  max-width: 100px;
 }
 
 .nav-mobile {

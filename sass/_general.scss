@@ -11,6 +11,11 @@ body {
   font-family: $font-body;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 h1,
 h2,
 h3,
