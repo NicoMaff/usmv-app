@@ -26,6 +26,7 @@ body {
 body {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 h1,
@@ -100,6 +101,11 @@ li {
   border-top: 1px solid black;
   box-shadow: 0px -5px 10px 1px rgba(0, 0, 0, 0.3019607843);
 }
+@media screen and (min-width: 500px) {
+  .nav-mobile {
+    display: none;
+  }
+}
 .nav-mobile.open {
   animation: bounce-up 0.6s ease-out forwards;
 }
@@ -111,7 +117,7 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: clamp(20px, 8vmin, 40px);
   position: relative;
   min-height: 75vh;
   min-width: 95vw;
@@ -130,15 +136,15 @@ li {
 .nav-mobile .profile-icon {
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: clamp(30px, 15vmin, 60px);
 }
 .nav-mobile .profile-icon a {
-  min-width: 80px;
-  min-height: 80px;
+  min-width: clamp(60px, 20vmin, 80px);
+  min-height: clamp(60px, 20vmin, 80px);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.6rem;
+  padding: clamp(10px, 3vmin, 1.6rem);
   border-radius: 50%;
   background: #2c61c9;
 }
@@ -149,17 +155,24 @@ li {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, 1fr);
-  row-gap: 30px;
-  column-gap: 22px;
+  row-gap: 20px;
+  column-gap: clamp(10px, 8vmin, 40px);
+  position: relative;
+}
+.nav-mobile .sub-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 }
 .nav-mobile li {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.6rem 2rem;
+  padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
   background: #748cbc;
   border-radius: 15px;
-  min-width: 170px;
   font-size: 1.1rem;
   font-weight: 600;
   color: #f5f8ff;
@@ -172,11 +185,6 @@ li {
 }
 .nav-mobile a:visited {
   color: #f5f8ff;
-}
-@media screen and (min-width: 500px) {
-  .nav-mobile {
-    display: none;
-  }
 }
 
 @keyframes bounce-up {
