@@ -91,8 +91,8 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 75vh;
+  min-width: 100vw;
+  min-height: 75vh;
   background: #dfe3ec;
   position: absolute;
   bottom: -700px;
@@ -105,6 +105,27 @@ li {
   .nav-mobile {
     display: none;
   }
+}
+.nav-mobile li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
+  background: #748cbc;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f5f8ff;
+}
+.nav-mobile a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #f5f8ff;
+  user-select: none;
+}
+.nav-mobile a:visited {
+  color: #f5f8ff;
 }
 .nav-mobile.open {
   animation: bounce-up 0.6s ease-out forwards;
@@ -158,33 +179,46 @@ li {
   row-gap: 20px;
   column-gap: clamp(10px, 8vmin, 40px);
   position: relative;
+  overflow: hidden;
 }
 .nav-mobile .sub-menu {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  min-width: 105%;
+  min-height: 105%;
   position: absolute;
+  top: 0;
+  left: 101vw;
+  z-index: 10;
+  background: #dfe3ec;
+  transition: transform 0.3s ease-out;
 }
-.nav-mobile li {
+.nav-mobile .sub-menu.move-in {
+  transform: translateX(-101vw);
+}
+.nav-mobile .sub-menu.move-out {
+  transform: translateX(0);
+}
+.nav-mobile .sub-menu li {
+  padding: 2vmin 4vmin;
+  min-width: clamp(240px, 80vmin, 300px);
+  border-radius: 10px;
+}
+.nav-mobile .sub-menu i {
+  color: #748cbc;
+  font-size: 2.5rem;
+}
+.nav-mobile .sub-menu span {
+  color: #222222;
+  font-size: 1.3rem;
+}
+.nav-mobile .sub-menu-header {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
-  background: #748cbc;
-  border-radius: 15px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #f5f8ff;
-}
-.nav-mobile a {
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-decoration: none;
-  color: #f5f8ff;
-}
-.nav-mobile a:visited {
-  color: #f5f8ff;
+  justify-content: center;
+  gap: 20px;
 }
 
 @keyframes bounce-up {

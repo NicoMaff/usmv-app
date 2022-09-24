@@ -3,8 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 75vh;
+  min-width: 100vw;
+  min-height: 75vh;
   background: $bg-3;
   position: absolute;
   bottom: -700px;
@@ -16,6 +16,32 @@
 
   @media screen and (min-width: 500px) {
     display: none;
+  }
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
+    background: $bg-2;
+    border-radius: 15px;
+    // height: 90px;
+    // min-width: 170px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $content-light;
+  }
+
+  a {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: $content-light;
+    user-select: none;
+
+    &:visited {
+      color: $content-light;
+    }
   }
 
   &.open {
@@ -78,38 +104,53 @@
     row-gap: 20px;
     column-gap: clamp(10px, 8vmin, 40px);
     position: relative;
+    overflow: hidden;
   }
 
   .sub-menu {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    // gap: clamp(20px, 5vmin, 40px);
+    min-width: 105%;
+    min-height: 105%;
     position: absolute;
-  }
+    top: 0;
+    // left: 0;
+    left: 101vw;
+    z-index: 10;
+    background: $bg-3;
+    transition: transform 0.3s ease-out;
 
-  li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
-    background: $bg-2;
-    border-radius: 15px;
-    // height: 90px;
-    // min-width: 170px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: $content-1;
-  }
+    &.move-in {
+      transform: translateX(-101vw);
+    }
+    &.move-out {
+      transform: translateX(0);
+    }
 
-  a {
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: $content-1;
+    li {
+      padding: 2vmin 4vmin;
+      min-width: clamp(240px, 80vmin, 300px);
+      border-radius: 10px;
+    }
 
-    &:visited {
-      color: $content-1;
+    i {
+      color: $bg-2;
+      font-size: 2.5rem;
+    }
+
+    span {
+      color: $content-dark;
+      font-size: 1.3rem;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
     }
   }
 }
