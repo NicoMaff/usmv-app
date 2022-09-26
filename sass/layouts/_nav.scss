@@ -16,7 +16,7 @@
   box-shadow: 0px -5px 10px 1px #0000004d;
   z-index: -1;
 
-  @media screen and (min-width: 500px) {
+  @media screen and (min-width: 600px) {
     display: none;
   }
 
@@ -80,7 +80,7 @@
     cursor: pointer;
   }
 
-  .profile-icon {
+  .profile-icons {
     display: flex;
     align-items: center;
     gap: clamp(30px, 15vmin, 60px);
@@ -158,32 +158,32 @@
       gap: 20px;
     }
   }
-}
 
-@keyframes bounce-up {
-  0% {
-    transform: translateY(0);
+  @keyframes bounce-up {
+    0% {
+      transform: translateY(0);
+    }
+    60% {
+      transform: translateY(-105vh);
+      z-index: 2;
+    }
+    80% {
+      transform: translateY(-97vh);
+      z-index: 2;
+    }
+    100% {
+      transform: translateY(-100vh);
+      z-index: 2;
+    }
   }
-  60% {
-    transform: translateY(-105vh);
-    z-index: 2;
-  }
-  80% {
-    transform: translateY(-97vh);
-    z-index: 2;
-  }
-  100% {
-    transform: translateY(-100vh);
-    z-index: 2;
-  }
-}
 
-@keyframes bounce-down {
-  0% {
-    transform: translateY(-100vh);
-  }
-  100% {
-    transform: translateY(0);
-    z-index: -1;
+  @keyframes bounce-down {
+    0% {
+      transform: translateY(-100vh);
+    }
+    100% {
+      transform: translateY(0);
+      z-index: -1;
+    }
   }
 }
