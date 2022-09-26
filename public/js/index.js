@@ -23,23 +23,18 @@ lineOverlay.addEventListener("click", () => {
 
 // Handle mobile sub-navigation
 
-const backButton = document.querySelector(".backButton");
-const subMenu1 = document.getElementById("subMenu1");
-const tab1 = document.querySelector("#tab");
+const backButtons = document.querySelectorAll(".sub-menu-header i");
+const subMenus = document.querySelectorAll(".sub-menu");
+const tabs = document.querySelectorAll(".tab");
 
-console.log(tab1);
-
-tab1.addEventListener("click", () => {
-  console.log("yes");
-  if (subMenu1.classList.contains("move-out")) {
-    subMenu1.classList.remove("move-out");
-    subMenu1.classList.add("move-in");
-  } else {
-    subMenu1.classList.add("move-in");
-  }
+tabs.forEach((tab) => {
+  tab.addEventListener("click", (e) =>
+    e.target.children[0].classList.add("move-in")
+  );
 });
 
-backButton.addEventListener("click", () => {
-  subMenu1.classList.remove("move-in");
-  subMenu1.classList.add("move-out");
+backButtons.forEach((button) => {
+  button.addEventListener("click", (e) =>
+    e.target.parentNode.parentNode.classList.remove("move-in")
+  );
 });

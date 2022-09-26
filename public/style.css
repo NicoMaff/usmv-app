@@ -4,7 +4,7 @@
 }
 @font-face {
   font-family: "Montserrat-reg";
-  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf");
+  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
 }
 @font-face {
   font-family: "Montserrat-ita";
@@ -178,7 +178,6 @@ li {
   grid-template-rows: repeat(4, 1fr);
   row-gap: 20px;
   column-gap: clamp(10px, 8vmin, 40px);
-  position: relative;
   overflow: hidden;
 }
 .nav-mobile .sub-menu {
@@ -186,10 +185,11 @@ li {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  min-width: 105%;
-  min-height: 105%;
+  min-width: 100%;
+  min-height: 70%;
+  padding-bottom: 3rem;
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 101vw;
   z-index: 10;
   background: #dfe3ec;
@@ -198,12 +198,9 @@ li {
 .nav-mobile .sub-menu.move-in {
   transform: translateX(-101vw);
 }
-.nav-mobile .sub-menu.move-out {
-  transform: translateX(0);
-}
 .nav-mobile .sub-menu li {
   padding: 2vmin 4vmin;
-  min-width: clamp(240px, 80vmin, 300px);
+  min-width: clamp(240px, 88vmin, 21rem);
   border-radius: 10px;
 }
 .nav-mobile .sub-menu i {

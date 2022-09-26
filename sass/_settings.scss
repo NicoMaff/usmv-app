@@ -5,7 +5,8 @@
 }
 @font-face {
   font-family: "Montserrat-reg";
-  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf");
+  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf")
+    format("truetype");
 }
 @font-face {
   font-family: "Montserrat-ita";

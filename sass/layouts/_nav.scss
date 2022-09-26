@@ -103,7 +103,7 @@
     grid-template-rows: repeat(4, 1fr);
     row-gap: 20px;
     column-gap: clamp(10px, 8vmin, 40px);
-    position: relative;
+    // position: relative;
     overflow: hidden;
   }
 
@@ -113,10 +113,11 @@
     justify-content: space-around;
     align-items: center;
     // gap: clamp(20px, 5vmin, 40px);
-    min-width: 105%;
-    min-height: 105%;
+    min-width: 100%;
+    min-height: 70%;
+    padding-bottom: 3rem;
     position: absolute;
-    top: 0;
+    bottom: 0;
     // left: 0;
     left: 101vw;
     z-index: 10;
@@ -126,13 +127,13 @@
     &.move-in {
       transform: translateX(-101vw);
     }
-    &.move-out {
-      transform: translateX(0);
-    }
+    // &.move-out {
+    //   transform: translateX(0);
+    // }
 
     li {
       padding: 2vmin 4vmin;
-      min-width: clamp(240px, 80vmin, 300px);
+      min-width: clamp(240px, 88vmin, 21rem);
       border-radius: 10px;
     }
 
