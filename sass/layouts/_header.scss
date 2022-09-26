@@ -1,10 +1,12 @@
 .header-mobile {
   display: flex;
   justify-content: center;
-  min-width: 100vw;
-  min-height: 100px;
+  width: 100vw;
+  min-height: clamp(5rem, 12vh, 6rem);
   background: $bg-1;
   border-radius: 0 0 20px 20px;
+  position: fixed;
+  overflow: hidden;
 
   .header-container {
     display: grid;

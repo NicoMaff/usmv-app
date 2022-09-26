@@ -26,7 +26,17 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: hidden;
+  min-width: 100vw;
+}
+
+header,
+footer {
+  flex-grow: 1;
+}
+
+main {
+  flex-grow: 2;
 }
 
 h1,
@@ -59,10 +69,12 @@ li {
 .header-mobile {
   display: flex;
   justify-content: center;
-  min-width: 100vw;
-  min-height: 100px;
+  width: 100vw;
+  min-height: clamp(5rem, 12vh, 6rem);
   background: #354b77;
   border-radius: 0 0 20px 20px;
+  position: fixed;
+  overflow: hidden;
 }
 .header-mobile .header-container {
   display: grid;
@@ -91,15 +103,16 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 100vw;
+  width: 100vw;
   min-height: 75vh;
   background: #dfe3ec;
-  position: absolute;
-  bottom: -700px;
+  position: fixed;
+  bottom: -100vh;
   transition: transform 0.3s ease-out;
   border-radius: 80px 80px 0 0;
   border-top: 1px solid black;
   box-shadow: 0px -5px 10px 1px rgba(0, 0, 0, 0.3019607843);
+  z-index: -1;
 }
 @media screen and (min-width: 500px) {
   .nav-mobile {
@@ -116,6 +129,11 @@ li {
   font-size: 1.1rem;
   font-weight: 600;
   color: #f5f8ff;
+}
+@media (min-width: 425px) {
+  .nav-mobile li {
+    padding: clamp(1rem, 6vmin, 1.5rem) clamp(1rem, 7vmin, 2rem);
+  }
 }
 .nav-mobile a {
   font-size: 1.1rem;
@@ -187,7 +205,7 @@ li {
   align-items: center;
   min-width: 100%;
   min-height: 70%;
-  padding-bottom: 3rem;
+  padding-bottom: 2.5rem;
   position: absolute;
   bottom: 0;
   left: 101vw;
@@ -223,21 +241,25 @@ li {
     transform: translateY(0);
   }
   60% {
-    transform: translateY(-730px);
+    transform: translateY(-105vh);
+    z-index: 2;
   }
   80% {
-    transform: translateY(-690px);
+    transform: translateY(-97vh);
+    z-index: 2;
   }
   100% {
-    transform: translateY(-700px);
+    transform: translateY(-100vh);
+    z-index: 2;
   }
 }
 @keyframes bounce-down {
   0% {
-    transform: translateY(-700px);
+    transform: translateY(-100vh);
   }
   100% {
     transform: translateY(0);
+    z-index: -1;
   }
 }
 

@@ -3,11 +3,13 @@
 // const menuButton = document.getElementById(menuButton);
 const lineOverlay = document.querySelector(".line");
 const navMobile = document.querySelector(".nav-mobile");
+const subMenus = document.querySelectorAll(".sub-menu");
 
 menuButton.addEventListener("click", () => {
   if (navMobile.classList.contains("open")) {
     navMobile.classList.remove("open");
     navMobile.classList.add("close");
+    subMenus.forEach((item) => item.classList.remove("move-in"));
   } else {
     navMobile.classList.add("open");
     navMobile.classList.remove("close");
@@ -17,6 +19,7 @@ menuButton.addEventListener("click", () => {
 lineOverlay.addEventListener("click", () => {
   navMobile.classList.remove("open");
   navMobile.classList.add("close");
+  subMenus.forEach((item) => item.classList.remove("move-in"));
 });
 
 // ---
@@ -24,7 +27,6 @@ lineOverlay.addEventListener("click", () => {
 // Handle mobile sub-navigation
 
 const backButtons = document.querySelectorAll(".sub-menu-header i");
-const subMenus = document.querySelectorAll(".sub-menu");
 const tabs = document.querySelectorAll(".tab");
 
 tabs.forEach((tab) => {
