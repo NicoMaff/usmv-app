@@ -196,6 +196,10 @@
   // gap: clamp(1rem, 1vmin, 2rem);
   min-width: 98%;
 
+  @media (min-width: 1300px) {
+    padding: 0 0.6rem;
+  }
+
   a {
     color: $content-light;
     text-decoration: none;
@@ -216,6 +220,7 @@
     align-items: center;
     flex-grow: 2;
     margin: 0 0.6rem;
+    max-width: 1000px;
 
     @media (min-width: 600px) {
       justify-content: space-around;

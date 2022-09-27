@@ -279,6 +279,11 @@ header {
   gap: 1vmin;
   min-width: 98%;
 }
+@media (min-width: 1300px) {
+  .nav-desktop {
+    padding: 0 0.6rem;
+  }
+}
 .nav-desktop a {
   color: #f5f8ff;
   text-decoration: none;
@@ -296,6 +301,7 @@ header {
   align-items: center;
   flex-grow: 2;
   margin: 0 0.6rem;
+  max-width: 1000px;
 }
 @media (min-width: 600px) {
   .nav-desktop .menu {
@@ -416,7 +422,7 @@ footer {
   background: #354b77;
   color: #f5f8ff;
   min-height: 24rem;
-  padding: 1.5rem 0;
+  padding: 2rem 0;
   border-radius: 20px 20px 0 0;
 }
 @media (min-width: 600px) {
