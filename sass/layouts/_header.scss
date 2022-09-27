@@ -20,12 +20,6 @@ header {
     grid-template-columns: 1fr 1fr;
     min-width: 90vw;
 
-    @media (min-width: 1000px) {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
-
     .header-content {
       display: flex;
       justify-content: center;
@@ -40,98 +34,12 @@ header {
 }
 
 .header-desktop {
-  min-height: 70px;
+  display: none;
 
-  li {
-    padding: 0.6rem 1.2rem;
-  }
-
-  a {
-    color: $content-light;
-    text-decoration: none;
-    font-family: $font-body-ita;
-
-    &:visited {
-      color: $content-light;
-    }
-  }
-
-  .header-container {
+  @media (min-width: 600px) {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    min-width: 98%;
-  }
-
-  img {
-    max-width: 100px;
-  }
-
-  ul {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow: 2;
-    margin: 0 1.2rem;
-  }
-
-  .tablet-responsive {
-    position: relative;
-
-    i {
-      color: $content-light;
-      font-size: 1.2rem;
-    }
-
-    ul {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 45px;
-      right: -25px;
-      transform: translateY(-100px);
-      min-width: 7rem;
-      min-height: 4rem;
-      background: $bg-1;
-      opacity: 0;
-
-      li {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 100%;
-        padding: 0.6rem;
-
-        &:first-of-type {
-          border-bottom: 1px solid $content-light;
-        }
-      }
-    }
-
-    &:hover {
-      background: red;
-    }
-
-    &:hover .tablet-responsive > ul {
-      transition: opacity 0.3s linear;
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .desktop-responsive {
-    display: none;
-  }
-
-  .profile-icons {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-
-    i {
-      font-size: 1.7rem;
-    }
+    min-height: 70px;
   }
 }
