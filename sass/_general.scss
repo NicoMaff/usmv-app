@@ -16,15 +16,12 @@ body {
   flex-direction: column;
   overflow-y: hidden;
   min-width: 100vw;
-}
-
-header,
-footer {
-  flex-grow: 1;
+  min-height: 100vh;
 }
 
 main {
   flex-grow: 2;
+  margin-top: 5rem;
 }
 
 h1,
