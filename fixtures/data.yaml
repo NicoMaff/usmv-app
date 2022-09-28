@@ -3,7 +3,7 @@ App\Entity\Article:
     title: <fr_FR:catchPhrase()>
     content: <text(100)>
     url_image_main: <imageUrl(640, 480)>
-    url_image_additional_1: "60%? <imageUrl(640, 480)> : n/a"
-    url_image_additional_2: "35%? <imageUrl(640, 480)> : n/a"
-    url_image_additional_3: "10%? <imageUrl(640, 480)> : n/a"
+    url_image_additional_1: "60%? <imageUrl(640, 480)> : NULL"
+    url_image_additional_2: "35%? <imageUrl(640, 480)> : NULL"
+    url_image_additional_3: "10%? <imageUrl(640, 480)> : NULL"
     createdAt: <(new \DateTimeImmutable())>

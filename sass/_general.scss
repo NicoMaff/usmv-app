@@ -14,14 +14,14 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow-y: scroll;
   min-width: 100vw;
   min-height: 100vh;
 }
 
 main {
   flex-grow: 2;
-  margin-top: 5rem;
+  margin-top: 7rem;
 }
 
 h1,

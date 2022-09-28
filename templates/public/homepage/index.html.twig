@@ -6,16 +6,26 @@
 
     <h1>Bienvenue à l'USMV Badminton</h1>
 
-    <div class="news">
+    <section class="news">
         <h2>À la une</h2>
         <div class="carousel">
-            <div class="main-article"></div>
-            <div class="pending-articles"></div>
+            <div class="main-article">
+                <h3>{{articles[0].title}}</h3>
+                <img src="{{articles[0].urlImageMain}}" alt="illustration de {{articles[0].title}}">
+            </div>
+            <div class="pending-articles">
+                {% for article in articles | slice(1) %}
+                    <a href="{{ path("app_homepage_displayArticle", {"id": article.id})}}">
+                        <h3>{{article.title}}</h3>
+                        <img src="{{article.urlImageMain}}" alt="">
+                    </a>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="facebook-extract"></div>
-    <div class="calendar"></div>
-    <div class="contact-form"></div>
+    <section class="facebook-extract"></section>
+    <section class="calendar"></section>
+    <section class="contact-form"></section>
 
 {% endblock %}
