@@ -5,7 +5,7 @@
   "repository": "https://github.com/N1Code7/usmv-app.git",
   "author": "N1Code7 <n1code7@outlook.fr>",
   "license": "MIT",
-  "script": {
+  "scripts": {
     "sass": "sass --watch ./sass/index.scss:./public/style.css"
   },
   "devDependencies": {

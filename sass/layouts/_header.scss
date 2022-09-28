@@ -1,0 +1,45 @@
+header {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  background: $bg-1;
+  border-radius: 0 0 20px 20px;
+  position: fixed;
+}
+
+.header-mobile {
+  min-height: clamp(5rem, 12vh, 6rem);
+  overflow: hidden;
+
+  @media (min-width: 600px) {
+    display: none;
+  }
+
+  .header-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-width: 90vw;
+
+    .header-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+    }
+
+    img {
+      max-width: 100px;
+    }
+  }
+}
+
+.header-desktop {
+  display: none;
+
+  @media (min-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70px;
+  }
+}
