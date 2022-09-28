@@ -1,16 +1,15 @@
 // --- FONTS --- //
 @font-face {
   font-family: "Gotu";
-  src: url("/public/assets/fonts/Gotu-Regular.ttf");
+  src: url("assets/fonts/Gotu-Regular.ttf");
 }
 @font-face {
   font-family: "Montserrat-reg";
-  src: url("/public/assets/fonts/Montserrat-VariableFont_wght.ttf")
-    format("truetype");
+  src: url("assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
 }
 @font-face {
   font-family: "Montserrat-ita";
-  src: url("/public/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
+  src: url("assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
 }
 
 $font-title: "Gotu", sans-serif;
