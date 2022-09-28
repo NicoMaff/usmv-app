@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use Gedmo\Mapping\Annotation\Timestampable;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -32,9 +34,11 @@ class Article
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url_image_additional_3 = null;
 
+    // #[Timestampable(on: "create")]
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[Timestampable(on: "update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
