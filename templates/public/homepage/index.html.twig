@@ -2,27 +2,30 @@
 
 {% block title %}USMV Badminton - Accueil{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+{% endblock %}
+
 {% block main %}
 
     <h1>Bienvenue à l'USMV Badminton</h1>
 
     <section class="news">
         <h2>À la une</h2>
-        <div class="carousel">
-            <div class="article-carousel-view main-article">
-                <a href="{{ path("app_homepage_displayArticle", {"id": articles[0].id}) }}">
-                    <h3>{{articles[0].title}}</h3>
-                    <img src="{{articles[0].urlImageMain}}" alt="illustration de {{articles[0].title}}">
-                </a>
-            </div>
-            <div class="article-carousel-view pending-articles">
-                {% for article in articles | slice(1) %}
-                    <a href="{{ path("app_homepage_displayArticle", {"id": article.id})}}">
-                        <h3>{{article.title}}</h3>
-                        <img src="{{article.urlImageMain}}" alt="">
-                    </a>
+        <div class="carousel swiper mySwiper">
+            <div class="swiper-wrapper">
+                {% for article in articles %}
+                    <div class="articles-carousel-view swiper-slide">
+                            <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
+                                <div class="articles-carousel-view_title">
+                                    <h3>{{article.title}}</h3>
+                                </div>
+                                <img src="{{article.urlImageMain}}" alt="">
+                            </a>
+                    </div>
                 {% endfor %}
             </div>
+            <div class="swiper-pagination"></div>
         </div>
     </section>
 
@@ -30,4 +33,23 @@
     <section class="calendar"></section>
     <section class="contact-form"></section>
 
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "cards",
+        grabCursor: true,
+        loop: true,
+        autoplay: {
+          delay: 2000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
 {% endblock %}

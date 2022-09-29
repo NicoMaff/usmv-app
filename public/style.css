@@ -46,7 +46,13 @@ h4 {
 
 h1 {
   text-align: center;
-  margin: 0 auto;
+  margin: 0 auto 1.6rem;
+}
+
+h2 {
+  font-family: "Montserrat-reg", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 ul,
@@ -69,22 +75,32 @@ li {
   font-size: 1.1rem;
 }
 
-.article-carousel-view a {
+.articles-carousel-view a {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
   position: relative;
 }
-.article-carousel-view h3 {
+.articles-carousel-view_title {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  border-radius: 0 0 12px 12px;
+  background: rgba(240, 240, 240, 0.4);
+  padding: 0.3rem 0.6rem;
+}
+.articles-carousel-view h3 {
   text-align: right;
   font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
-  position: absolute;
-  bottom: 0.6rem;
-  right: 0.6rem;
   color: #f5f8ff;
+  border-radius: 12px;
+  text-shadow: none;
 }
-.article-carousel-view img {
-  max-width: 98%;
+.articles-carousel-view img {
+  max-width: 100%;
   border-radius: 12px;
 }
 
@@ -92,23 +108,16 @@ li {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  min-height: 75vh;
+  max-height: 75vh;
   max-width: 90vw;
   margin: 0 auto;
-  padding: 0.9rem 1.2rem;
+  padding: 1rem 1.2rem 0.9rem;
   background: #dfe3ec;
   border-radius: 15px;
 }
-.news h2 {
-  font-family: "Montserrat-reg", sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
 .news .carousel {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  min-height: 20rem;
+  max-width: 18rem;
 }
 .news .pending-articles {
   display: flex;
@@ -119,7 +128,7 @@ li {
 }
 .news .pending-articles a {
   margin-top: 0.6rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.3rem;
   margin-right: 0.6rem;
   min-width: 25vmin;
 }
@@ -132,8 +141,9 @@ li {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: calc(100% - 1rem);
-  bottom: 0.3rem;
-  right: 0.3rem;
+}
+.news .pending-articles .article-carousel-view_title {
+  padding: 0.15rem 0.3rem;
 }
 
 header {
@@ -143,6 +153,7 @@ header {
   background: #354b77;
   border-radius: 0 0 20px 20px;
   position: fixed;
+  z-index: 100;
 }
 
 .header-mobile {

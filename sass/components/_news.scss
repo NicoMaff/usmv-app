@@ -2,24 +2,20 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  min-height: 75vh;
+  max-height: 75vh;
   max-width: 90vw;
   margin: 0 auto;
-  padding: 0.9rem 1.2rem;
+  padding: 1rem 1.2rem 0.9rem;
   background: $bg-3;
   border-radius: 15px;
 
-  h2 {
-    font-family: $font-body;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-
   .carousel {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    min-height: 20rem;
+    max-width: 18rem;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
+    // align-items: center;
   }
 
   .pending-articles {
@@ -31,7 +27,7 @@
 
     a {
       margin-top: 0.6rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.3rem;
       margin-right: 0.6rem;
       min-width: 25vmin;
 
@@ -45,9 +41,11 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: calc(100% - 1rem);
-        bottom: 0.3rem;
-        right: 0.3rem;
       }
+    }
+
+    .article-carousel-view_title {
+      padding: 0.15rem 0.3rem;
     }
   }
 }

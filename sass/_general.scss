@@ -34,7 +34,13 @@ h4 {
 
 h1 {
   text-align: center;
-  margin: 0 auto;
+  margin: 0 auto 1.6rem;
+}
+
+h2 {
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 ul,
