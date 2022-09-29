@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}USMV Badminton - Tous les articles{% endblock %}
+
+{% block main %}
+
+  <h1>Tous les articles</h1>
+
+  {% for article in articles %}
+    <article>
+      <h3>{{ article.title }}</h3>
+      <img src="{{ article.urlImageMain }}" alt="illustration de {{ article.title }}">
+      <p>{{ article.content }}</p>
+      <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">Voir la suite</a>
+  {% endfor %}
+{% endblock %}

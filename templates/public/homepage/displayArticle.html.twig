@@ -3,7 +3,7 @@
 {% block title %}USMV Badminton - {{article.title}}{% endblock %}
 
 {% block main %}
-
+  <a href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
   <h1>{{article.title}}</h1>
 
   <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">

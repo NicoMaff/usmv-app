@@ -28,4 +28,14 @@ class HomepageController extends AbstractController
             "article" => $article,
         ]);
     }
+
+    #[Route("/articles", name: "app_homepage_displayAllArticles")]
+    public function displayAllArticles(ArticleRepository $repository): Response
+    {
+        $articles = $repository->findAll();
+
+        return $this->render("public/homepage/displayAllArticles.html.twig", [
+            "articles" => $articles
+        ]);
+    }
 }

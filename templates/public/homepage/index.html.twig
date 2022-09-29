@@ -10,8 +10,10 @@
         <h2>À la une</h2>
         <div class="carousel">
             <div class="main-article">
-                <h3>{{articles[0].title}}</h3>
-                <img src="{{articles[0].urlImageMain}}" alt="illustration de {{articles[0].title}}">
+                <a href="{{ path("app_homepage_displayArticle", {"id": articles[0].id}) }}">
+                    <h3>{{articles[0].title}}</h3>
+                    <img src="{{articles[0].urlImageMain}}" alt="illustration de {{articles[0].title}}">
+                </a>
             </div>
             <div class="pending-articles">
                 {% for article in articles | slice(1) %}

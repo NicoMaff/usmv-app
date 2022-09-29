@@ -29,6 +29,7 @@ body {
   overflow-y: scroll;
   min-width: 100vw;
   min-height: 100vh;
+  background: #f4f4f5;
 }
 
 main {
