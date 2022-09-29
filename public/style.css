@@ -34,7 +34,7 @@ body {
 
 main {
   flex-grow: 2;
-  margin-top: 7rem;
+  margin: 7rem auto 5rem;
 }
 
 h1,
@@ -42,6 +42,11 @@ h2,
 h3,
 h4 {
   font-family: "Gotu", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin: 0 auto;
 }
 
 ul,
@@ -62,6 +67,73 @@ li {
   padding: 0.6rem 1.2rem;
   font-weight: 600;
   font-size: 1.1rem;
+}
+
+.article-carousel-view a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.article-carousel-view h3 {
+  text-align: right;
+  font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.6rem;
+  color: #f5f8ff;
+}
+.article-carousel-view img {
+  max-width: 98%;
+  border-radius: 12px;
+}
+
+.news {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 75vh;
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 0.9rem 1.2rem;
+  background: #dfe3ec;
+  border-radius: 15px;
+}
+.news h2 {
+  font-family: "Montserrat-reg", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.news .carousel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.news .pending-articles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  overflow-y: hidden;
+}
+.news .pending-articles a {
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+  margin-right: 0.6rem;
+  min-width: 25vmin;
+}
+.news .pending-articles a:last-of-type {
+  margin-right: 0;
+}
+.news .pending-articles a h3 {
+  font-size: 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 1rem);
+  bottom: 0.3rem;
+  right: 0.3rem;
 }
 
 header {

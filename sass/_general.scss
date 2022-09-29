@@ -22,7 +22,7 @@ body {
 
 main {
   flex-grow: 2;
-  margin-top: 7rem;
+  margin: 7rem auto 5rem;
 }
 
 h1,
@@ -30,6 +30,11 @@ h2,
 h3,
 h4 {
   font-family: $font-title;
+}
+
+h1 {
+  text-align: center;
+  margin: 0 auto;
 }
 
 ul,
