@@ -15,9 +15,9 @@
         <div class="carousel swiper mySwiper">
             <div class="swiper-wrapper">
                 {% for article in articles %}
-                    <div class="articles-carousel-view swiper-slide">
+                    <div class="article swiper-slide">
                             <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
-                                <div class="articles-carousel-view_title">
+                                <div class="article-title">
                                     <h3>{{article.title}}</h3>
                                 </div>
                                 <img src="{{article.urlImageMain}}" alt="">
@@ -26,6 +26,9 @@
                 {% endfor %}
             </div>
             <div class="swiper-pagination"></div>
+        </div>
+        <div class="btn-container">
+            <a href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
         </div>
     </section>
 

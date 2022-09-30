@@ -34,7 +34,12 @@ body {
 
 main {
   flex-grow: 2;
-  margin: 7rem auto 5rem;
+  margin: 7rem 1rem 5rem;
+}
+@media (min-width: 600px) {
+  main {
+    margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
+  }
 }
 
 h1,
@@ -47,6 +52,7 @@ h4 {
 h1 {
   text-align: center;
   margin: 0 auto 1.6rem;
+  font-weight: 400;
 }
 
 h2 {
@@ -75,14 +81,38 @@ li {
   font-size: 1.1rem;
 }
 
-.articles-carousel-view a {
+.news {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 75vh;
+  max-width: 35rem;
+  margin: 0 auto;
+  padding: 1rem 1.2rem 0.9rem;
+  background: #dfe3ec;
+  border-radius: 15px;
+}
+.news .carousel {
+  min-height: clamp(15rem, 45vmin, 33rem);
+  max-width: clamp(12rem, 45vmin, 26rem);
+  margin-top: 1rem;
+}
+.news .swiper-wrapper {
+  margin-bottom: 3rem;
+}
+.news .article {
+  border-radius: 12px;
+}
+.news .article a {
   display: flex;
   flex-direction: column;
   justify-content: end;
   align-items: end;
   position: relative;
+  height: clamp(13rem, 40vmin, 25rem);
+  background: red;
 }
-.articles-carousel-view_title {
+.news .article-title {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -92,58 +122,24 @@ li {
   background: rgba(240, 240, 240, 0.4);
   padding: 0.3rem 0.6rem;
 }
-.articles-carousel-view h3 {
+.news .article h3 {
   text-align: right;
   font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
   color: #f5f8ff;
   border-radius: 12px;
   text-shadow: none;
 }
-.articles-carousel-view img {
-  max-width: 100%;
+.news .article img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-position: center;
   border-radius: 12px;
 }
-
-.news {
+.news .btn-container {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  max-height: 75vh;
-  max-width: 90vw;
-  margin: 0 auto;
-  padding: 1rem 1.2rem 0.9rem;
-  background: #dfe3ec;
-  border-radius: 15px;
-}
-.news .carousel {
-  min-height: 20rem;
-  max-width: 18rem;
-}
-.news .pending-articles {
-  display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
-  max-width: 100%;
-  overflow-y: hidden;
-}
-.news .pending-articles a {
-  margin-top: 0.6rem;
-  margin-bottom: 0.3rem;
-  margin-right: 0.6rem;
-  min-width: 25vmin;
-}
-.news .pending-articles a:last-of-type {
-  margin-right: 0;
-}
-.news .pending-articles a h3 {
-  font-size: 0.5rem;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: calc(100% - 1rem);
-}
-.news .pending-articles .article-carousel-view_title {
-  padding: 0.15rem 0.3rem;
 }
 
 header {
@@ -220,8 +216,8 @@ header {
   padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
   background: #748cbc;
   border-radius: 15px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   color: #f5f8ff;
 }
 @media (min-width: 425px) {
@@ -230,8 +226,8 @@ header {
   }
 }
 .nav-mobile a {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   text-decoration: none;
   color: #f5f8ff;
   user-select: none;

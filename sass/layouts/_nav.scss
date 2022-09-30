@@ -27,8 +27,8 @@
     padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
     background: $bg-2;
     border-radius: 15px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 500;
     color: $content-light;
 
     @media (min-width: 425px) {
@@ -37,8 +37,8 @@
   }
 
   a {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 500;
     text-decoration: none;
     color: $content-light;
     user-select: none;

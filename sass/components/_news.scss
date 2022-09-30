@@ -3,49 +3,74 @@
   flex-direction: column;
   gap: 0.6rem;
   max-height: 75vh;
-  max-width: 90vw;
+  max-width: 35rem;
   margin: 0 auto;
   padding: 1rem 1.2rem 0.9rem;
   background: $bg-3;
   border-radius: 15px;
 
   .carousel {
-    min-height: 20rem;
-    max-width: 18rem;
     // display: flex;
-    // flex-direction: column;
-    // justify-content: space-between;
+    // justify-content: center;
     // align-items: center;
+    min-height: clamp(15rem, 45vmin, 33rem);
+    // min-width: 500px;
+    max-width: clamp(12rem, 45vmin, 26rem);
+    margin-top: 1rem;
   }
 
-  .pending-articles {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-    overflow-y: hidden;
+  .swiper-wrapper {
+    margin-bottom: 3rem;
+  }
+
+  .article {
+    border-radius: 12px;
 
     a {
-      margin-top: 0.6rem;
-      margin-bottom: 0.3rem;
-      margin-right: 0.6rem;
-      min-width: 25vmin;
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-
-      h3 {
-        font-size: 0.5rem;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        max-width: calc(100% - 1rem);
-      }
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: end;
+      position: relative;
+      height: clamp(13rem, 40vmin, 25rem);
+      // width: 220px;
+      // min-height: 300px;
+      // min-width: 300px;
+      background: red;
     }
 
-    .article-carousel-view_title {
-      padding: 0.15rem 0.3rem;
+    &-title {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 100%;
+      position: absolute;
+      border-radius: 0 0 12px 12px;
+      background: rgba(240, 240, 240, 0.4);
+      padding: 0.3rem 0.6rem;
     }
+
+    h3 {
+      text-align: right;
+      font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
+      color: $content-light;
+      border-radius: 12px;
+      text-shadow: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-position: center;
+      // max-width: clamp(15rem, 80vmin, 30rem);
+      border-radius: 12px;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
   }
 }
