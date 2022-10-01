@@ -108,6 +108,11 @@ li {
   max-width: clamp(12rem, 45vmin, 26rem);
   margin-top: 1rem;
 }
+@media (min-width: 600px) {
+  .news .carousel {
+    padding: 0 0.6rem;
+  }
+}
 .news .swiper-wrapper {
   margin-bottom: 3rem;
 }
@@ -120,7 +125,7 @@ li {
   justify-content: end;
   align-items: end;
   position: relative;
-  height: clamp(13rem, 40vmin, 25rem);
+  height: clamp(15rem, 44vmin, 25rem);
   background: red;
 }
 .news .article-title {

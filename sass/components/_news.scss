@@ -17,6 +17,10 @@
     // min-width: 500px;
     max-width: clamp(12rem, 45vmin, 26rem);
     margin-top: 1rem;
+
+    @media (min-width: 600px) {
+      padding: 0 0.6rem;
+    }
   }
 
   .swiper-wrapper {
@@ -32,10 +36,7 @@
       justify-content: end;
       align-items: end;
       position: relative;
-      height: clamp(13rem, 40vmin, 25rem);
-      // width: 220px;
-      // min-height: 300px;
-      // min-width: 300px;
+      height: clamp(15rem, 44vmin, 25rem);
       background: red;
     }
 
