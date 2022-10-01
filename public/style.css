@@ -116,10 +116,10 @@ li {
 .news .swiper-wrapper {
   margin-bottom: 3rem;
 }
-.news .article {
+.news .card {
   border-radius: 12px;
 }
-.news .article a {
+.news .card a {
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -128,7 +128,7 @@ li {
   height: clamp(15rem, 44vmin, 25rem);
   background: red;
 }
-.news .article-title {
+.news .card-title {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -138,14 +138,14 @@ li {
   background: rgba(240, 240, 240, 0.4);
   padding: 0.3rem 0.6rem;
 }
-.news .article h3 {
+.news .card h3 {
   text-align: right;
   font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
   color: #f5f8ff;
   border-radius: 12px;
   text-shadow: none;
 }
-.news .article img {
+.news .card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -156,6 +156,43 @@ li {
   display: flex;
   justify-content: end;
   align-items: center;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.article .btn-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  min-width: 100%;
+}
+.article img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+.article p {
+  padding: 0.6rem 0.6rem;
+  margin-bottom: 1rem;
+  background: #dfe3ec;
+  border-radius: 12px;
+}
+.article .additional-img {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  overflow-y: scroll;
+}
+.article .additional-img img {
+  width: 45%;
+  margin: 0.6rem;
 }
 
 header {

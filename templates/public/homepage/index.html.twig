@@ -15,9 +15,9 @@
         <div class="carousel swiper mySwiper">
             <div class="swiper-wrapper">
                 {% for article in articles %}
-                    <div class="article swiper-slide">
+                    <div class="card swiper-slide">
                             <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
-                                <div class="article-title">
+                                <div class="card-title">
                                     <h3>{{article.title}}</h3>
                                 </div>
                                 <img src="{{article.urlImageMain}}" alt="">

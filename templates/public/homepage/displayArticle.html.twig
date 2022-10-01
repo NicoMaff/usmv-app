@@ -3,23 +3,27 @@
 {% block title %}USMV Badminton - {{article.title}}{% endblock %}
 
 {% block main %}
-  <a href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
-  <h1>{{article.title}}</h1>
 
-  <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
-
-  <p>{{article.content}}</p>
-
-  {% if article.urlImageAdditional1 != "NULL" %}
-    <img src="{{article.urlImageAdditional1}}" alt="image secondaire de l'article {{article.title}}">
-  {% endif %}
-  {% if article.urlImageAdditional2 != "NULL" %}
-    <img src="{{article.urlImageAdditional2}}" alt="image secondaire de l'article {{article.title}}">
-  {% endif %}
-  {% if article.urlImageAdditional3 != "NULL" %}
-  {# String NULL to change to the null type #}
-    {{article.urlImageAdditional3}}
-    <img src="{{article.urlImageAdditional3}}" alt="image secondaire de l'article {{article.title}}">
-  {% endif %}
+<article class="article">
+  <div class="btn-container">
+    <a class="btn btn-level2" href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
+  </div>
+  <div class="article-container">
+    <h1>{{article.title}}</h1>
+    <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
+    <p>{{article.content}}</p>
+    <div class="additional-img">
+      {% if article.urlImageAdditional1 != "NULL" %}
+        <img src="{{article.urlImageAdditional1}}" alt="image secondaire de l'article {{article.title}}">
+      {% endif %}
+      {% if article.urlImageAdditional2 != "NULL" %}
+        <img src="{{article.urlImageAdditional2}}" alt="image secondaire de l'article {{article.title}}">
+      {% endif %}
+      {% if article.urlImageAdditional3 != "NULL" %}
+        <img src="{{article.urlImageAdditional3}}" alt="image secondaire de l'article {{article.title}}">
+      {% endif %}
+    </div>
+  </div>
+</article>
 
 {% endblock %}
