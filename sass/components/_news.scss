@@ -10,11 +10,7 @@
   border-radius: 15px;
 
   .carousel {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     min-height: clamp(15rem, 45vmin, 33rem);
-    // min-width: 500px;
     max-width: clamp(12rem, 45vmin, 26rem);
     margin-top: 1rem;
 
@@ -36,8 +32,7 @@
       justify-content: end;
       align-items: end;
       position: relative;
-      height: clamp(15rem, 44vmin, 25rem);
-      background: red;
+      height: clamp(13rem, 42vmin, 25rem);
     }
 
     &-title {
@@ -46,9 +41,14 @@
       align-items: center;
       width: 100%;
       position: absolute;
+      bottom: 0;
       border-radius: 0 0 12px 12px;
       background: rgba(240, 240, 240, 0.4);
-      padding: 0.3rem 0.6rem;
+      padding: 0.4rem 0.6rem;
+
+      @media (min-width: 600px) {
+        padding: 1.2rem 0.6rem;
+      }
     }
 
     h3 {

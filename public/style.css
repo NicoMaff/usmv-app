@@ -51,18 +51,19 @@ h4 {
 
 h1 {
   text-align: center;
-  margin: 0 auto 1.6rem;
+  margin: 1rem auto 1.6rem;
   font-weight: 400;
 }
 @media (min-width: 600px) {
   h1 {
+    margin: 0 auto 1.6rem;
     font-size: clamp(2rem, 4vw, 3rem);
   }
 }
 
 h2 {
   font-family: "Montserrat-reg", sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.2rem;
 }
 
@@ -95,6 +96,10 @@ li {
 }
 .btn-level2:visited {
   color: #2c61c9;
+}
+.btn-small {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.7rem;
 }
 
 .news {
@@ -130,8 +135,7 @@ li {
   justify-content: end;
   align-items: end;
   position: relative;
-  height: clamp(15rem, 44vmin, 25rem);
-  background: red;
+  height: clamp(13rem, 42vmin, 25rem);
 }
 .news .card-title {
   display: flex;
@@ -139,9 +143,15 @@ li {
   align-items: center;
   width: 100%;
   position: absolute;
+  bottom: 0;
   border-radius: 0 0 12px 12px;
   background: rgba(240, 240, 240, 0.4);
-  padding: 0.3rem 0.6rem;
+  padding: 0.4rem 0.6rem;
+}
+@media (min-width: 600px) {
+  .news .card-title {
+    padding: 1.2rem 0.6rem;
+  }
 }
 .news .card h3 {
   text-align: right;
@@ -166,19 +176,7 @@ li {
 .article {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-@media (min-width: 600px) {
-  .article h1 {
-    font-size: clamp(2rem, 4vw, 2.5rem);
-  }
-}
-.article .btn-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.2rem;
-  min-width: 100%;
 }
 .article img {
   width: 100%;
@@ -186,29 +184,111 @@ li {
   object-fit: cover;
   border-radius: 12px;
 }
-.article p {
-  padding: 0.6rem 0.6rem;
+@media (min-width: 600px) {
+  .article-details h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+  }
+}
+.article-details .btn-container {
+  display: flex;
+  align-items: center;
+  margin: 1.2rem 0;
+  min-width: 100%;
+}
+.article-details .article-datetime {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  max-width: 36rem;
+  margin-bottom: 1.2rem;
+  padding-right: 0.6rem;
+  font-style: italic;
+}
+.article-details p {
+  padding: 0.6rem;
   margin: 2rem 0;
   background: #dfe3ec;
   border-radius: 12px;
+  text-align: justify;
 }
 @media (min-width: 600px) {
-  .article p {
+  .article-details p {
     margin: 2.5rem 0;
   }
 }
-.article .additional-img {
+.article-details .additional-img {
   max-width: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   overflow-y: scroll;
+  margin-bottom: 1.7rem;
 }
-.article .additional-img img {
+.article-details .additional-img img {
   width: 45%;
   max-width: 20rem;
   margin: 0 0.6rem 0.6rem;
+}
+.article-overview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #dfe3ec;
+  padding: clamp(0.6rem, 3vmin, 1.5rem);
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  border-radius: 12px;
+}
+.article-overview:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 600px) {
+  .article-overview {
+    max-width: 35rem;
+    margin-bottom: 0;
+    margin: 1rem;
+  }
+}
+.article-overview h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.article-overview img {
+  margin-bottom: 0.6rem;
+}
+.article-overview p {
+  padding: 0.6rem 0.6rem 0.9rem;
+  width: 100%;
+  max-width: 36rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+}
+.article-overview .bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100%;
+}
+.article-overview span {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+.article-overview .btn-container,
+.article-overview span {
+  display: flex;
+  align-items: center;
+}
+
+.articles-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 header {

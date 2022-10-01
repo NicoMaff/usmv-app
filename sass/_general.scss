@@ -38,17 +38,18 @@ h4 {
 
 h1 {
   text-align: center;
-  margin: 0 auto 1.6rem;
+  margin: 1rem auto 1.6rem;
   font-weight: 400;
 
   @media (min-width: 600px) {
+    margin: 0 auto 1.6rem;
     font-size: clamp(2rem, 4vw, 3rem);
   }
 }
 
 h2 {
   font-family: $font-body;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.2rem;
 }
 
