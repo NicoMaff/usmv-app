@@ -40,6 +40,10 @@ h1 {
   text-align: center;
   margin: 0 auto 1.6rem;
   font-weight: 400;
+
+  @media (min-width: 600px) {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
 }
 
 h2 {
