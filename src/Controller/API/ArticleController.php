@@ -18,9 +18,13 @@ class ArticleController extends AbstractController
     #[Route("articles", name: "app_article_api_list", methods: "GET")]
     public function list(ArticleRepository $repository): Response
     {
-        $articles = $repository->findAll();
+        return $this->json($repository->findAll(), 200, [], ["groups" => "article:read"]);
+    }
 
-        return $this->json($articles, 200, [], ["groups" => "article:read"]);
+    #[Route("article/{id}", name: "app_article_api_listOne")]
+    public function listOne(ArticleRepository $repository, int $id): Response
+    {
+        return $this->json($repository->find($id), 200, [], ["groups" => "article:read"]);
     }
 
     #[Route("article/new", name: "app_article_api_new", methods: "POST")]
@@ -31,6 +35,9 @@ class ArticleController extends AbstractController
         try {
             $article = $serializer->deserialize($jsonReceived, Article::class, "json");
             $article->setCreatedAt(new \DateTimeImmutable());
+            if ($article->getUrlImageMain() === null) {
+                $article->setUrlImageMain("assets/img/news-by-default.jpg");
+            }
 
             $errors = $validator->validate($article);
 
@@ -60,7 +67,13 @@ class ArticleController extends AbstractController
             $article = $repository->find($id);
             $article->setTitle($updatedArticle->getTitle());
             $article->setContent($updatedArticle->getContent());
-            $article->setUrlImageMain($updatedArticle->getUrlImageMain());
+
+            if ($updatedArticle->getUrlImageMain() === null) {
+                $article->setUrlImageMain("assets/img/news-by-default.jpg");
+            } else {
+                $article->setUrlImageMain($updatedArticle->getUrlImageMain());
+            }
+
             $article->setUrlImageAdditional1($updatedArticle->getUrlImageAdditional1());
             $article->setUrlImageAdditional2($updatedArticle->getUrlImageAdditional2());
             $article->setUrlImageAdditional3($updatedArticle->getUrlImageAdditional3());
