@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
 use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -14,33 +16,44 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("article:read", "article:write")]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups("article:read", "article:write", "article:update")]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups("article:read", "article:write", "article:update")]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
     private ?string $url_image_main = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
     private ?string $url_image_additional_1 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
     private ?string $url_image_additional_2 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
     private ?string $url_image_additional_3 = null;
 
-    // #[Timestampable(on: "create")]
+    #[Timestampable(on: "create")]
     #[ORM\Column]
+    #[Groups("article:read", "article:write")]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[Timestampable(on: "update")]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updatedAt = null;
+    #[ORM\Column(nullable: true)]
+    #[Groups("article:read", "article:write")]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
