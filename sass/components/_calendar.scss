@@ -1,0 +1,52 @@
+.calendar {
+  .cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    background: $bg-4;
+    border-radius: 12px;
+    margin: 0.3rem 0;
+    padding: 0.6rem;
+    // min-height: 10rem;
+    width: 100%;
+    text-decoration: none;
+    color: $content-dark;
+
+    &:visited {
+      color: $content-dark;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      font-family: $font-body;
+      font-weight: 500;
+    }
+
+    p {
+      // white-space: nowrap;
+      overflow: hidden;
+      // text-overflow: ellipsis;
+      max-width: 100%;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-align: justify;
+      font-size: 0.8rem;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+}

@@ -102,17 +102,6 @@ li {
   font-size: 0.7rem;
 }
 
-.news {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  max-height: 75vh;
-  max-width: 35rem;
-  margin: 0 auto;
-  padding: 1rem 1.2rem 0.9rem;
-  background: #dfe3ec;
-  border-radius: 15px;
-}
 .news .carousel {
   min-height: clamp(15rem, 45vmin, 33rem);
   max-width: clamp(12rem, 45vmin, 26rem);
@@ -168,6 +157,49 @@ li {
   border-radius: 12px;
 }
 .news .btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.calendar .cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.calendar .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f4f4f5;
+  border-radius: 12px;
+  margin: 0.3rem 0;
+  padding: 0.6rem;
+  width: 100%;
+  text-decoration: none;
+  color: #222222;
+}
+.calendar .card:visited {
+  color: #222222;
+}
+.calendar .card h3 {
+  font-size: 0.9rem;
+  font-family: "Montserrat-reg", sans-serif;
+  font-weight: 500;
+}
+.calendar .card p {
+  overflow: hidden;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  font-size: 0.8rem;
+}
+.calendar .btn-container {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -736,6 +768,20 @@ footer .networks-icon i {
 }
 footer p {
   padding: 0.6rem;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 35rem;
+  margin: 0 auto 1.5rem;
+  padding: 1rem 1.2rem 0.9rem;
+  background: #dfe3ec;
+  border-radius: 15px;
+}
+section:last-of-type {
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=style.css.map */

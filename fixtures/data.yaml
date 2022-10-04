@@ -17,7 +17,12 @@ App\Entity\Article:
     createdAt: <(new \DateTimeImmutable())>
 
 App\Entity\Event:
-  event{1..20}:
+  event{1}:
+    date: <dateTime()>
+    content: <text(20)>
+    url_image: <imageUrl(640, 480, null)>
+    createdAt: <(new \DateTimeImmutable())>
+  event{2..20}:
     date: <dateTime()>
     content: <text()>
     url_image: <imageUrl(640, 480, null)>

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -15,18 +17,22 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url_image = null;
 
     #[ORM\Column]
+    #[Timestampable(on: "create")]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Timestampable(on: "update")]
     private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
