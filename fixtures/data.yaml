@@ -15,3 +15,10 @@ App\Entity\Article:
     url_image_additional_2: <imageUrl(640, 480, null)>
     url_image_additional_3: <imageUrl(640, 480, null)>
     createdAt: <(new \DateTimeImmutable())>
+
+App\Entity\Event:
+  event{1..20}:
+    date: <dateTime()>
+    content: <text()>
+    url_image: <imageUrl(640, 480, null)>
+    createdAt: <(new \DateTimeImmutable())>

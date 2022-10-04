@@ -3,6 +3,7 @@
 namespace App\Controller\Public;
 
 use App\Repository\ArticleRepository;
+use App\Repository\EventRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,12 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 class HomepageController extends AbstractController
 {
     #[Route('/', name: 'app_homepage_index')]
-    public function index(ArticleRepository $repository): Response
+    public function index(ArticleRepository $articleRepo, EventRepository $eventRepo): Response
     {
-        $articles = $repository->findLast10();
+        $articles = $articleRepo->findLast10();
+        $events = $eventRepo->findLast10();
 
         return $this->render('public/homepage/index.html.twig', [
             "articles" => $articles,
+            "events" => $events
         ]);
     }
 
