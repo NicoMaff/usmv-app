@@ -39,37 +39,14 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLast10(): array
+    public function findLast5(): array
     {
         return $this->createQueryBuilder("event")
-            ->orderBy("event.createdAt", "DESC")
-            ->setMaxResults(10)
+            ->where('event.date > :now')
+            ->setParameter("now", new \DateTime())
+            ->orderBy("event.date", "DESC")
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
-
-    //    /**
-    //     * @return Event[] Returns an array of Event objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Event
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

@@ -18,12 +18,12 @@ App\Entity\Article:
 
 App\Entity\Event:
   event{1}:
-    date: <dateTime()>
-    content: <text(20)>
+    date: <dateTimeBetween('-1 week', '+1 week')>
+    content: <sentence(10)>
     url_image: <imageUrl(640, 480, null)>
     createdAt: <(new \DateTimeImmutable())>
   event{2..20}:
-    date: <dateTime()>
-    content: <text()>
+    date: <dateTimeBetween('-1 week', '+1 week')>
+    content: <sentence(10)>
     url_image: <imageUrl(640, 480, null)>
     createdAt: <(new \DateTimeImmutable())>

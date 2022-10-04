@@ -16,7 +16,7 @@ class HomepageController extends AbstractController
     public function index(ArticleRepository $articleRepo, EventRepository $eventRepo): Response
     {
         $articles = $articleRepo->findLast10();
-        $events = $eventRepo->findLast10();
+        $events = $eventRepo->findLast5();
 
         return $this->render('public/homepage/index.html.twig', [
             "articles" => $articles,

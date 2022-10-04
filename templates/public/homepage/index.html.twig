@@ -42,22 +42,27 @@
             {% for event in events %}
                 <a href="#" class="card event">
                 {% set trans_day_hash = { 
-                    "Monday": "Lundi", 
-                    "Tuesday": "Mardi", 
-                    "Wednesday": "Mercredi", 
-                    "Thursday": "Jeudi", 
-                    "Friday": "Vendredi", 
-                    "Saturday": "Samedi", 
-                    "Sunday": "Dimanche" 
+                    "Monday": "Lun", 
+                    "Tuesday": "Mar", 
+                    "Wednesday": "Mer", 
+                    "Thursday": "Jeu", 
+                    "Friday": "Ven", 
+                    "Saturday": "Sam", 
+                    "Sunday": "Dim" 
                     } 
                 %}
-                    <h3 class="event-date">{{ trans_day_hash[event.date|date("l")] }} {{ event.date|date("d/m/y") }}</h3>
-                    <p class="event-description">{{ event.content }}</p>
+                    <div class="event-date">
+                        <span>{{ trans_day_hash[event.date|date("l")] }}</span>
+                        <span>{{ event.date|date("d/m/y") }}</span>
+                    </div>
+                    <p class="event-description">
+                        <span>{{ event.content }}</span>
+                    </p>
                 </a>
             {% endfor %}
         </div>
         <div class="btn-container">
-            <a href="#" class="btn btn-small btn-level2">Voir plus</a>
+            <a href="#" class="btn btn-level2">Voir plus</a>
         </div>
     </section>
 
