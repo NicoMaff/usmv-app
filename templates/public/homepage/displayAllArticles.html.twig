@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}USMV Badminton - Tous les articles{% endblock %}
+
+{% block main %}
+
+  <h1>Tous les articles</h1>
+
+
+  {{ knp_pagination_render(pagination) }}
+    {% for article in pagination %}
+      <article class="article article-overview">
+        <h2>{{ article.title }}</h2>
+        <img src="{{ article.urlImageMain }}" alt="illustration de {{ article.title }}">
+        <p>{{ article.content }}</p>
+        <div class="bottom">
+          <span>
+            {% if article.updatedAt is empty %}
+              le {{article.createdAt|date("d/m/y \\à G:i", "Europe/Paris")}}
+            {% elseif article.updatedAt > article.createdAt %}
+              le {{article.updatedAt|date("d/m/y \\à G:i", "Europe/Paris")}}
+            {% else %}
+              le {{article.updatedAt|date("d/m/y \\à G:i", "Europe/Paris")}}
+            {% endif %}
+          </span>
+          <div class="btn-container">
+            <a class="btn btn-level2 btn-small" href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">Voir la suite</a>
+          </div>
+        </div>
+        </article>
+    {% endfor %}
+  </div>
+  {{ knp_pagination_render(pagination) }}
+{% endblock %}

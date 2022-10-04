@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}USMV Badminton - {{article.title}}{% endblock %}
+
+{% block main %}
+
+<article class="article article-details">
+  <div class="btn-container">
+    <a class="btn btn-level2" href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
+  </div>
+    <h1>{{article.title}}</h1>
+    <div class="article-datetime">
+      {% if article.updatedAt is empty %}
+        le {{article.createdAt|date("d/m/y \\à G:i", "Europe/Paris")}}
+      {% elseif article.updatedAt > article.createdAt %}
+        le {{article.updatedAt|date("d/m/y \\à G:i", "Europe/Paris")}}
+      {% else %}
+        le {{article.updatedAt|date("d/m/y \\à G:i", "Europe/Paris")}}
+      {% endif %}
+    </div>
+    <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
+    <p>{{article.content}}</p>
+    <div class="additional-img">
+      {% if article.urlImageAdditional1 != "NULL" %}
+        <img src="{{article.urlImageAdditional1}}" alt="image secondaire de l'article {{article.title}}">
+      {% endif %}
+      {% if article.urlImageAdditional2 != "NULL" %}
+        <img src="{{article.urlImageAdditional2}}" alt="image secondaire de l'article {{article.title}}">
+      {% endif %}
+      {% if article.urlImageAdditional3 != "NULL" %}
+        <img src="{{article.urlImageAdditional3}}" alt="image secondaire de l'article {{article.title}}">
+      {% endif %}
+    </div>
+    <div class="btn-container">
+      <a class="btn btn-level2" href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
+    </div>
+</article>
+
+{% endblock %}

@@ -14,14 +14,19 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow-y: scroll;
   min-width: 100vw;
   min-height: 100vh;
+  background: $bg-4;
 }
 
 main {
   flex-grow: 2;
-  margin-top: 5rem;
+  margin: 7rem 1rem 5rem;
+
+  @media (min-width: 600px) {
+    margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
+  }
 }
 
 h1,
@@ -29,6 +34,23 @@ h2,
 h3,
 h4 {
   font-family: $font-title;
+}
+
+h1 {
+  text-align: center;
+  margin: 1rem auto 1.6rem;
+  font-weight: 400;
+
+  @media (min-width: 600px) {
+    margin: 0 auto 1.6rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+}
+
+h2 {
+  font-family: $font-body;
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 ul,

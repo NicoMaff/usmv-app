@@ -2,20 +2,57 @@
 
 {% block title %}USMV Badminton - Accueil{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+{% endblock %}
+
 {% block main %}
 
     <h1>Bienvenue à l'USMV Badminton</h1>
 
-    <div class="news">
+    <section class="news">
         <h2>À la une</h2>
-        <div class="carousel">
-            <div class="main-article"></div>
-            <div class="pending-articles"></div>
+        <div class="carousel swiper mySwiper">
+            <div class="swiper-wrapper">
+                {% for article in articles %}
+                    <div class="card swiper-slide">
+                            <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
+                                <div class="card-title">
+                                    <h3>{{article.title}}</h3>
+                                </div>
+                                <img src="{{article.urlImageMain}}" alt="">
+                            </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
         </div>
-    </div>
+        <div class="btn-container">
+            <a class="btn btn-level2" href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
+        </div>
+    </section>
 
-    <div class="facebook-extract"></div>
-    <div class="calendar"></div>
-    <div class="contact-form"></div>
+    <section class="facebook-extract"></section>
+    <section class="calendar"></section>
+    <section class="contact-form"></section>
 
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "cards",
+        grabCursor: true,
+        loop: true,
+        // autoplay: {
+        //   delay: 2000,
+        //     disableOnInteraction: false,
+        // },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
 {% endblock %}

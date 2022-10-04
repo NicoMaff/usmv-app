@@ -26,14 +26,20 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow-y: scroll;
   min-width: 100vw;
   min-height: 100vh;
+  background: #f4f4f5;
 }
 
 main {
   flex-grow: 2;
-  margin-top: 5rem;
+  margin: 7rem 1rem 5rem;
+}
+@media (min-width: 600px) {
+  main {
+    margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
+  }
 }
 
 h1,
@@ -41,6 +47,24 @@ h2,
 h3,
 h4 {
   font-family: "Gotu", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin: 1rem auto 1.6rem;
+  font-weight: 400;
+}
+@media (min-width: 600px) {
+  h1 {
+    margin: 0 auto 1.6rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+}
+
+h2 {
+  font-family: "Montserrat-reg", sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 ul,
@@ -52,15 +76,261 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #f5f8ff;
-  background: #2c61c9;
   border: none;
   border-radius: 5px;
 }
 .btn-menu {
+  color: #f5f8ff;
+  background: #2c61c9;
   padding: 0.6rem 1.2rem;
   font-weight: 600;
   font-size: 1.1rem;
+}
+.btn-level2 {
+  color: #2c61c9;
+  background: #f5f8ff;
+  border: 2px solid #2c61c9;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.btn-level2:visited {
+  color: #2c61c9;
+}
+.btn-small {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.7rem;
+}
+
+.news {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 75vh;
+  max-width: 35rem;
+  margin: 0 auto;
+  padding: 1rem 1.2rem 0.9rem;
+  background: #dfe3ec;
+  border-radius: 15px;
+}
+.news .carousel {
+  min-height: clamp(15rem, 45vmin, 33rem);
+  max-width: clamp(12rem, 45vmin, 26rem);
+  margin-top: 1rem;
+}
+@media (min-width: 600px) {
+  .news .carousel {
+    padding: 0 0.6rem;
+  }
+}
+.news .swiper-wrapper {
+  margin-bottom: 3rem;
+}
+.news .card {
+  border-radius: 12px;
+}
+.news .card a {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  position: relative;
+  height: clamp(13rem, 42vmin, 25rem);
+}
+.news .card-title {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0 0 12px 12px;
+  background: rgba(240, 240, 240, 0.4);
+  padding: 0.4rem 0.6rem;
+}
+@media (min-width: 600px) {
+  .news .card-title {
+    padding: 1.2rem 0.6rem;
+  }
+}
+.news .card h3 {
+  text-align: right;
+  font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
+  color: #f5f8ff;
+  border-radius: 12px;
+  text-shadow: none;
+}
+.news .card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-position: center;
+  border-radius: 12px;
+}
+.news .btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.articles-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.article img {
+  width: 100%;
+  max-width: 36rem;
+  object-fit: cover;
+  border-radius: 12px;
+}
+@media (min-width: 600px) {
+  .article-details h1 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+  }
+}
+.article-details .btn-container {
+  display: flex;
+  align-items: center;
+  margin: 1.2rem 0;
+  min-width: 100%;
+}
+.article-details .article-datetime {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  max-width: 36rem;
+  margin-bottom: 1.2rem;
+  padding-right: 0.6rem;
+  font-style: italic;
+}
+.article-details p {
+  padding: 0.6rem;
+  margin: 2rem 0;
+  background: #dfe3ec;
+  border-radius: 12px;
+  text-align: justify;
+}
+@media (min-width: 600px) {
+  .article-details p {
+    margin: 2.5rem 0;
+  }
+}
+.article-details .additional-img {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow-y: scroll;
+  margin-bottom: 1.7rem;
+}
+.article-details .additional-img img {
+  width: 45%;
+  max-width: 20rem;
+  margin: 0 0.6rem 0.6rem;
+}
+.article-overview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #dfe3ec;
+  padding: clamp(0.6rem, 3vmin, 1.5rem);
+  margin-bottom: 1.5rem;
+  max-width: 100%;
+  border-radius: 12px;
+}
+.article-overview:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 600px) {
+  .article-overview {
+    max-width: 35rem;
+    margin-bottom: 0;
+    margin: 1rem;
+  }
+}
+.article-overview h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.article-overview img {
+  margin-bottom: 0.6rem;
+}
+.article-overview p {
+  padding: 0.6rem 0.6rem 0.9rem;
+  width: 100%;
+  max-width: 36rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+}
+.article-overview .bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100%;
+}
+.article-overview span {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+.article-overview .btn-container,
+.article-overview span {
+  display: flex;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2.7rem;
+}
+.pagination:first-of-type {
+  margin-bottom: 2.7rem;
+}
+.pagination span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+  min-width: 2.2rem;
+  background: #f4f4f5;
+  color: #2c61c9;
+  margin: 0 0.3rem;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1882352941);
+  border-radius: 3px;
+}
+.pagination span:first-of-type {
+  border-radius: 12px 3px 3px 12px;
+}
+.pagination span:last-of-type {
+  border-radius: 3px 12px 12px 3px;
+}
+.pagination a {
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  color: #2c61c9;
+}
+.pagination a:visited {
+  color: #2c61c9;
+}
+.pagination .current {
+  font-weight: 600;
+  background: #2c61c9;
+  color: #f5f8ff;
 }
 
 header {
@@ -70,6 +340,7 @@ header {
   background: #354b77;
   border-radius: 0 0 20px 20px;
   position: fixed;
+  z-index: 100;
 }
 
 .header-mobile {
@@ -136,8 +407,8 @@ header {
   padding: clamp(10px, 4vmin, 15px) clamp(10px, 5vmin, 40px);
   background: #748cbc;
   border-radius: 15px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   color: #f5f8ff;
 }
 @media (min-width: 425px) {
@@ -146,8 +417,8 @@ header {
   }
 }
 .nav-mobile a {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
   text-decoration: none;
   color: #f5f8ff;
   user-select: none;

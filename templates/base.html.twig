@@ -5,11 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}USMV Badminton{% endblock %}</title>
-
-        {% block stylesheets %}
-            <link rel="stylesheet" href="style.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        {% endblock %}
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {% block stylesheets %}{% endblock %}
 
         {% block javascripts %}
         {% endblock %}
@@ -19,7 +17,7 @@
         <header class="header-mobile">
             <div class="header-container">
                 <div class="header-content">
-                    <img src="assets/img/logo-club.png" alt="logo du club">
+                    <img src="/assets/img/logo-club.png" alt="logo du club">
                 </div>
                 <div class="header-content">
                     <button class="btn btn-menu" id="menuButton">Menu</button>
@@ -27,7 +25,7 @@
                 
             </div>
 
-            <nav class="nav-mobile">
+            <nav class="nav-mobile" draggable="true">
                 <div class="nav-container">
                     <div class="line"></div>
                     <div class="profile-icons">
@@ -35,7 +33,7 @@
                         <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
                     </div>
                     <ul class="menu">
-                        <li><a href="#">Accueil</a></li>
+                        <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
                         <li class="tab">Le club
                             <ul class="sub-menu">
                             {# <ul class="sub-menu" id="subMenu1" style="display:none;"> #}
@@ -86,9 +84,9 @@
 
         <header class="header-desktop">
             <nav class="nav-desktop">
-                <img src="assets/img/logo-club.png" alt="logo du club">
+                <img src="/assets/img/logo-club.png" alt="logo du club">
                 <ul class="menu">
-                    <li><a href="#">Accueil</a></li>
+                    <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
                     <li><a href="#">Le Club</a>
                         <ul class="sub-menu">
                             <li><a href="#">Présentation</a></li>
@@ -152,8 +150,8 @@
             </div>
             <p>Copyright © 2022 USMV Badminton</p>
         </footer>
-
-        <script src="js/index.js"></script>
+    {% block js %}{% endblock %}
+        <script src="/js/index.js"></script>
     </body>
 </html>
 

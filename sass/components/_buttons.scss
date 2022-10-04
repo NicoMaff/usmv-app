@@ -2,14 +2,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $content-light;
-  background: $primary-1;
   border: none;
   border-radius: 5px;
 
   &-menu {
+    color: $content-light;
+    background: $primary-1;
     padding: 0.6rem 1.2rem;
     font-weight: 600;
     font-size: 1.1rem;
+  }
+
+  &-level2 {
+    color: $primary-1;
+    background: $content-light;
+    border: 2px solid $primary-1;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+
+    &:visited {
+      color: $primary-1;
+    }
+  }
+
+  &-small {
+    padding: 0.1rem 0.3rem;
+    font-size: 0.7rem;
   }
 }

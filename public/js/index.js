@@ -40,3 +40,8 @@ backButtons.forEach((button) => {
     e.target.parentNode.parentNode.classList.remove("move-in")
   );
 });
+
+lineOverlay.addEventListener("drag", (e) => console.log("yes"));
+document
+  .querySelector(".nav-mobile")
+  .addEventListener("drag", (e) => console.log(e));

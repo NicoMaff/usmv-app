@@ -1,0 +1,17 @@
+App\Entity\Article:
+  article{1..30}:
+    title: <fr_FR:catchPhrase()>
+    content: <text(500)>
+    url_image_main: <imageUrl(640, 480, null)>
+    url_image_additional_1: "60%? <imageUrl(640, 480, null)> : NULL"
+    url_image_additional_2: "35%? <imageUrl(640, 480, null)> : NULL"
+    url_image_additional_3: "10%? <imageUrl(640, 480, null)> : NULL"
+    createdAt: <(new \DateTimeImmutable())>
+  article{21}:
+    title: <fr_FR:catchPhrase()>
+    content: <text(500)>
+    url_image_main: "assets/img/news-by-default.jpg"
+    url_image_additional_1: <imageUrl(640, 480, null)>
+    url_image_additional_2: <imageUrl(640, 480, null)>
+    url_image_additional_3: <imageUrl(640, 480, null)>
+    createdAt: <(new \DateTimeImmutable())>
