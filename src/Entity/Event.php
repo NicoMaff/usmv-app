@@ -18,7 +18,11 @@ class Event
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTimeInterface $start_date = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\NotBlank]
+    private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
@@ -35,19 +39,32 @@ class Event
     #[Timestampable(on: "update")]
     private ?\DateTimeImmutable $updatedAt = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->start_date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setStartDate(\DateTimeInterface $start_date): self
     {
-        $this->date = $date;
+        $this->start_date = $start_date;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->end_date;
+    }
+
+    public function setEndDate(?\DateTimeInterface $end_date): self
+    {
+        $this->end_date = $end_date;
 
         return $this;
     }

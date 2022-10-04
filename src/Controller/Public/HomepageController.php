@@ -50,17 +50,14 @@ class HomepageController extends AbstractController
             "pagination" => $pagination
         ]);
     }
+
+    #[Route("/calendrier", name: "app_homepage_displayCalendar")]
+    public function displayCalendar(EventRepository $repository): Response
+    {
+        $events = $repository->findAll();
+
+        return $this->render("public/homapage/displayCalendar.html.twig", [
+            "events" => $events
+        ]);
+    }
 }
-
-
-// $donnees = $this->getDoctrine()->getRepository(Articles::class)->findBy([], ['created_at' => 'desc']);
-
-// $articles = $paginator->paginate(
-//     $donnees, // Requête contenant les données à paginer (ici nos articles)
-//     $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-//     6 // Nombre de résultats par page
-// );
-
-// return $this->render('articles/index.html.twig', [
-//     'articles' => $articles,
-// ]);

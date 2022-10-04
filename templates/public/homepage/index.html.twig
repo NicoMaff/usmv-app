@@ -36,7 +36,7 @@
 
     </section>
 
-    <section class="calendar-overview">
+    <section class="calendar-extract">
         <h2>Calendrier</h2>
         <div class="cards">
             {% for event in events %}
@@ -52,8 +52,8 @@
                     } 
                 %}
                     <div class="card-date">
-                        <span>{{ trans_day_hash[event.date|date("l")] }}</span>
-                        <span>{{ event.date|date("d/m/y") }}</span>
+                        <span>{{ trans_day_hash[event.startDate|date("l")] }}</span>
+                        <span>{{ event.startDate|date("d/m/y") }}</span>
                     </div>
                     <p class="card-description">
                         <span>{{ event.content }}</span>

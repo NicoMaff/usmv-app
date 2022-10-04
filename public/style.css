@@ -162,13 +162,13 @@ li {
   align-items: center;
 }
 
-.calendar-overview .cards {
+.calendar-extract .cards {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
-.calendar-overview .card {
+.calendar-extract .card {
   display: grid;
   grid-template-columns: 4.5rem 1fr;
   grid-template-rows: 1fr;
@@ -177,10 +177,10 @@ li {
   text-decoration: none;
   color: #222222;
 }
-.calendar-overview .card:visited {
+.calendar-extract .card:visited {
   color: #222222;
 }
-.calendar-overview .card-date {
+.calendar-extract .card-date {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -195,21 +195,21 @@ li {
   padding: 0.6rem;
   min-width: 2.5rem;
 }
-.calendar-overview .card-description {
+.calendar-extract .card-description {
   text-overflow: ellipsis;
   max-width: 100%;
   background: #f4f4f5;
   border-radius: 3px 12px 12px 3px;
   padding: 0.6rem 0.3rem;
 }
-.calendar-overview .card-description span {
+.calendar-extract .card-description span {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-size: 0.9rem;
 }
-.calendar-overview .btn-container {
+.calendar-extract .btn-container {
   display: flex;
   justify-content: end;
   align-items: center;
