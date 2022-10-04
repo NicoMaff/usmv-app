@@ -1,71 +1,63 @@
 .calendar {
-  .cards {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .card {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr;
-    // grid-template-columns: 20% 80%;
-    grid-template-rows: 1fr;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-around;
-    // align-items: center;
-    // gap: 0.3rem;
-    // background: $bg-4;
-    // border-radius: 12px;
-    margin: 0.3rem 0;
-    // padding: 0.6rem;
-    // min-height: 6rem;
-    width: 100%;
-    text-decoration: none;
-    color: $content-dark;
-
-    &:visited {
-      color: $content-dark;
-    }
-
-    .event-date {
+  &-overview {
+    .cards {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      font-size: 0.9rem;
-      font-family: $font-body;
-      font-weight: 500;
-      background: $bg-2;
-      color: $content-light;
-      border-radius: 12px 3px 3px 12px;
-      margin-right: 0.3rem;
-      padding: 0.6rem;
-      min-width: 2.5rem;
     }
 
-    .event-description {
-      text-overflow: ellipsis;
-      max-width: 100%;
-      background: $bg-4;
-      border-radius: 3px 12px 12px 3px;
-      padding: 0.6rem 0.3rem;
+    .card {
+      display: grid;
+      grid-template-columns: 4.5rem 1fr;
+      grid-template-rows: 1fr;
+      margin: 0.3rem 0;
+      width: 100%;
+      text-decoration: none;
+      color: $content-dark;
 
-      span {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        // text-align: justify;
+      &:visited {
+        color: $content-dark;
+      }
+
+      &-date {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         font-size: 0.9rem;
+        font-family: $font-body;
+        font-weight: 500;
+        background: $bg-2;
+        color: $content-light;
+        border-radius: 12px 3px 3px 12px;
+        margin-right: 0.3rem;
+        padding: 0.6rem;
+        min-width: 2.5rem;
+      }
+
+      &-description {
+        text-overflow: ellipsis;
+        max-width: 100%;
+        background: $bg-4;
+        border-radius: 3px 12px 12px 3px;
+        padding: 0.6rem 0.3rem;
+
+        span {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          // text-align: justify;
+          font-size: 0.9rem;
+        }
       }
     }
-  }
 
-  .btn-container {
-    display: flex;
-    justify-content: end;
-    align-items: center;
+    .btn-container {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+    }
   }
 }
