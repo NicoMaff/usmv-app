@@ -8,7 +8,6 @@
 .article {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
 
   img {
@@ -16,7 +15,6 @@
     max-width: 36rem;
     object-fit: cover;
     border-radius: 12px;
-    // margin-bottom: 1rem;
   }
 
   &-details {

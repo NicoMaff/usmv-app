@@ -8,6 +8,7 @@
 
 
   {{ knp_pagination_render(pagination) }}
+  <div class="articles-list">
     {% for article in pagination %}
       <article class="article article-overview">
         <h2>{{ article.title }}</h2>

@@ -37,7 +37,7 @@ class HomepageController extends AbstractController
     #[Route("/articles", name: "app_homepage_displayAllArticles")]
     public function displayAllArticles(ArticleRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-        $articles = $repository->findAll();
+        $articles = $repository->findAllAndSortDesc();
 
         $pagination = $paginator->paginate(
             $articles,
