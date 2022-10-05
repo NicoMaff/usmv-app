@@ -56,7 +56,7 @@ class HomepageController extends AbstractController
     {
         $events = $repository->findAll();
 
-        return $this->render("public/homapage/displayCalendar.html.twig", [
+        return $this->render("public/homepage/displayCalendar.html.twig", [
             "events" => $events
         ]);
     }

@@ -6,11 +6,10 @@
   "author": "N1Code7 <n1code7@outlook.fr>",
   "license": "MIT",
   "scripts": {
-    "sass": "sass --watch ./sass/index.scss:./public/style.css"
+    "sass": "sass --watch ./sass/index.scss:./public/css/style.css"
   },
   "devDependencies": {
     "gitmoji-cli": "^6.2.0",
     "sass": "^1.55.0"
-  },
-  "dependencies": {}
+  }
 }
