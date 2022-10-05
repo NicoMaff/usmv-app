@@ -200,6 +200,7 @@
     padding: 0 0.6rem;
   }
 
+  li,
   a {
     color: $content-light;
     text-decoration: none;
@@ -232,6 +233,14 @@
       position: relative;
       text-align: center;
 
+      &:hover:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        height: 50px;
+        width: 100%;
+      }
+
       &:hover .sub-menu {
         transition: opacity 0.3s linear;
         opacity: 1;
@@ -253,7 +262,7 @@
     position: absolute;
     top: 54px;
     left: 50%;
-    transform: translate(-50%, -100px);
+    transform: translate(-50%, -200px);
     min-width: 17rem;
     min-height: 4rem;
     background: $bg-2;

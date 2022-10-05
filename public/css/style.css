@@ -651,11 +651,13 @@ header {
     padding: 0 0.6rem;
   }
 }
+.nav-desktop li,
 .nav-desktop a {
   color: #f5f8ff;
   text-decoration: none;
   font-family: "Monserrat-ita", sans-serif;
 }
+.nav-desktop li:visited,
 .nav-desktop a:visited {
   color: #f5f8ff;
 }
@@ -681,6 +683,13 @@ header {
   position: relative;
   text-align: center;
 }
+.nav-desktop .menu > li:hover:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 50px;
+  width: 100%;
+}
 .nav-desktop .menu > li:hover .sub-menu {
   transition: opacity 0.3s linear;
   opacity: 1;
@@ -698,7 +707,7 @@ header {
   position: absolute;
   top: 54px;
   left: 50%;
-  transform: translate(-50%, -100px);
+  transform: translate(-50%, -200px);
   min-width: 17rem;
   min-height: 4rem;
   background: #748cbc;
