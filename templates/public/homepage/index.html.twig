@@ -32,8 +32,41 @@
         </div>
     </section>
 
-    <section class="facebook-extract"></section>
-    <section class="calendar"></section>
+    <section class="facebook-extract">
+
+    </section>
+
+    <section class="events-extract">
+        <h2>Calendrier</h2>
+        <div class="cards">
+            {% for event in events %}
+                <a href="#" class="card">
+                {% set trans_day_hash = { 
+                    "Monday": "Lun", 
+                    "Tuesday": "Mar", 
+                    "Wednesday": "Mer", 
+                    "Thursday": "Jeu", 
+                    "Friday": "Ven", 
+                    "Saturday": "Sam", 
+                    "Sunday": "Dim" 
+                    } 
+                %}
+                    <div class="card-date">
+                        <span>{{ trans_day_hash[event.startDate|date("l")] }}</span>
+                        <span>{{ event.startDate|date("d/m/y") }}</span>
+                    </div>
+                    <p class="card-description">
+                        <span>{{ event.content }}</span>
+                    </p>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="btn-container">
+            <a href="{{ path("app_homepage_listEvents") }}" class="btn btn-level2">Voir plus</a>
+        </div>
+    </section>
+
+
     <section class="contact-form"></section>
 
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}USMV Badminton - Calendrier{% endblock %}
+
+{% block stylesheets %}
+  <link href='css/fullcalendar.min.css' rel='stylesheet' />
+{% endblock %}
+
+{% block main %}
+
+  <div id="calendar" class="calendar">
+  
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script src='js/fullcalendar.min.js'></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+      });
+      calendar.render();
+    });
+
+  </script>
+{% endblock %}

@@ -8,7 +8,6 @@
 .article {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
 
   img {
@@ -16,7 +15,6 @@
     max-width: 36rem;
     object-fit: cover;
     border-radius: 12px;
-    // margin-bottom: 1rem;
   }
 
   &-details {
@@ -150,10 +148,6 @@
     align-items: center;
     padding: 0.5rem 0;
     min-width: 2.2rem;
-    // min-height: 3rem;
-    // border-top: 1px solid $bg-1;
-    // border-bottom: 1px solid $bg-1;
-    // border-left: 1px solid $bg-1;
     background: $bg-4;
     color: $primary-1;
     margin: 0 0.3rem;
@@ -165,7 +159,6 @@
     }
 
     &:last-of-type {
-      // border-right: 1px solid $bg-1;
       border-radius: 3px 12px 12px 3px;
     }
   }

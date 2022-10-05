@@ -3,6 +3,7 @@
 namespace App\Controller\Public;
 
 use App\Repository\ArticleRepository;
+use App\Repository\EventRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,12 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 class HomepageController extends AbstractController
 {
     #[Route('/', name: 'app_homepage_index')]
-    public function index(ArticleRepository $repository): Response
+    public function index(ArticleRepository $articleRepo, EventRepository $eventRepo): Response
     {
-        $articles = $repository->findLast10();
+        $articles = $articleRepo->findLast10();
+        $events = $eventRepo->findLast5();
 
         return $this->render('public/homepage/index.html.twig', [
             "articles" => $articles,
+            "events" => $events
         ]);
     }
 
@@ -34,7 +37,7 @@ class HomepageController extends AbstractController
     #[Route("/articles", name: "app_homepage_displayAllArticles")]
     public function displayAllArticles(ArticleRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-        $articles = $repository->findAll();
+        $articles = $repository->findAllAndSortDesc();
 
         $pagination = $paginator->paginate(
             $articles,
@@ -47,17 +50,24 @@ class HomepageController extends AbstractController
             "pagination" => $pagination
         ]);
     }
+
+    // #[Route("/calendrier", name: "app_homepage_fullCalendar")]
+    // public function fullCalendar(EventRepository $repository): Response
+    // {
+    //     $events = $repository->findAll();
+
+    //     return $this->render("public/homepage/displayCalendar.html.twig", [
+    //         "events" => $events
+    //     ]);
+    // }
+
+    #[Route("/liste-evenements", name: "app_homepage_listEvents")]
+    public function listEvents(EventRepository $repository): Response
+    {
+        $events = $repository->findAll();
+
+        return $this->render("public/homepage/listEvents.html.twig", [
+            "events" => $events
+        ]);
+    }
 }
-
-
-// $donnees = $this->getDoctrine()->getRepository(Articles::class)->findBy([], ['created_at' => 'desc']);
-
-// $articles = $paginator->paginate(
-//     $donnees, // Requête contenant les données à paginer (ici nos articles)
-//     $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-//     6 // Nombre de résultats par page
-// );
-
-// return $this->render('articles/index.html.twig', [
-//     'articles' => $articles,
-// ]);
