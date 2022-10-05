@@ -51,12 +51,22 @@ class HomepageController extends AbstractController
         ]);
     }
 
-    #[Route("/calendrier", name: "app_homepage_displayCalendar")]
-    public function displayCalendar(EventRepository $repository): Response
+    // #[Route("/calendrier", name: "app_homepage_fullCalendar")]
+    // public function fullCalendar(EventRepository $repository): Response
+    // {
+    //     $events = $repository->findAll();
+
+    //     return $this->render("public/homepage/displayCalendar.html.twig", [
+    //         "events" => $events
+    //     ]);
+    // }
+
+    #[Route("/liste-evenements", name: "app_homepage_listEvents")]
+    public function listEvents(EventRepository $repository): Response
     {
         $events = $repository->findAll();
 
-        return $this->render("public/homepage/displayCalendar.html.twig", [
+        return $this->render("public/homepage/listEvents.html.twig", [
             "events" => $events
         ]);
     }

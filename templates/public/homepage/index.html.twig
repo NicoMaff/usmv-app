@@ -36,7 +36,7 @@
 
     </section>
 
-    <section class="calendar-extract">
+    <section class="events-extract">
         <h2>Calendrier</h2>
         <div class="cards">
             {% for event in events %}
@@ -62,7 +62,7 @@
             {% endfor %}
         </div>
         <div class="btn-container">
-            <a href="{{ path("app_homepage_displayCalendar") }}" class="btn btn-level2">Voir plus</a>
+            <a href="{{ path("app_homepage_listEvents") }}" class="btn btn-level2">Voir plus</a>
         </div>
     </section>
 

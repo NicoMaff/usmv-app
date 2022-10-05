@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %}USMV Badminton - Liste des événments{% endblock %}
+
+{% block main %}
+
+  <h1>Liste des événements</h1>
+
+{% set trans_day_hash = { 
+  "Monday": "lundi", 
+  "Tuesday": "mardi", 
+  "Wednesday": "mercredi", 
+  "Thursday": "jeudi", 
+  "Friday": "vendredi", 
+  "Saturday": "samedi", 
+  "Sunday": "dimanche" 
+  } 
+%}
+
+  <div class="events">
+
+    {% for event in events %}
+      <div class="event">
+        
+        <div class="event-date">
+          {% if event.endDate != NULL %}
+            <div class="from">
+              <span>Du</span> 
+              <span class="bold">{{ trans_day_hash[event.startDate|date("l")] }}</span>
+              <span class="bold">{{ event.startDate|date("d/m/y") }}</span>
+            </div>
+            <div class="to">
+              <span> au </span> 
+              <span class="bold">{{ trans_day_hash[event.endDate|date("l")] }}</span>
+              <span class="bold">{{ event.endDate|date("d/m/y") }}</span>
+            </div>
+          {% else %}
+            <div>Le  
+              <span class="bold">{{ trans_day_hash[event.startDate|date("l")] }}</span>
+              <span class="bold">{{ event.startDate|date("d/m/y") }}</span>
+            </div>
+          {% endif %}
+        </div>  
+
+        <div class="event-content">
+          <p>{{ event.content }}</p>
+        </div>
+
+        <div class="event-illustration">
+          <img src="{{ event.urlImage }}" alt="illustration de l'événement {{ event.content }}">
+        </div>
+      </div>
+    {% endfor %}
+  
+  </div>
+
+{% endblock %}
