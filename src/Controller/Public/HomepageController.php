@@ -2,6 +2,7 @@
 
 namespace App\Controller\Public;
 
+use App\Form\ContactType;
 use App\Repository\ArticleRepository;
 use App\Repository\EventRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -13,14 +14,25 @@ use Symfony\Component\HttpFoundation\Request;
 class HomepageController extends AbstractController
 {
     #[Route('/', name: 'app_homepage_index')]
-    public function index(ArticleRepository $articleRepo, EventRepository $eventRepo): Response
+    public function index(Request $request, ArticleRepository $articleRepo, EventRepository $eventRepo): Response
     {
         $articles = $articleRepo->findLast10();
         $events = $eventRepo->findLast5();
 
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $contact = $form->getData();
+
+
+        //     // return $this->redirectToRoute("app_book_list");
+        // }
+
         return $this->render('public/homepage/index.html.twig', [
             "articles" => $articles,
-            "events" => $events
+            "events" => $events,
+            "form" => $form->createView()
         ]);
     }
 

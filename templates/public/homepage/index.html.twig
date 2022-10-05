@@ -66,8 +66,38 @@
         </div>
     </section>
 
+    <section class="contact-form">
+        <h2>Formulaire de contact</h2>
+        <p>Pour toute question ou demande de renseigements, merci de renseigner les champs ci-dessous :</p>
 
-    <section class="contact-form"></section>
+        <div class="form">
+            <div class="form-row">
+                {{ form_label(form.last_name) }}
+                {{ form_widget(form.last_name) }}
+            </div>
+            <div class="form-row">
+                {{ form_label(form.first_name) }}
+                {{ form_widget(form.first_name) }}
+            </div>
+            <div class="form-row">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="form-row">
+                {{ form_label(form.subject) }}
+                {{ form_widget(form.subject) }}
+            </div>
+            <div class="form-row">
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-level1">Envoyer</button>
+            </div>
+                {# {{ form_widget(form.submit)}} #}
+            {{ form_rest(form) }}
+        </div>
+    </section>
 
 {% endblock %}
 

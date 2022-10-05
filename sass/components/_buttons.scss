@@ -13,6 +13,19 @@
     font-size: 1.1rem;
   }
 
+  &-level1 {
+    color: $content-light;
+    background: $primary-1;
+    padding: 0.9rem 1.2rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 10px;
+
+    &:visited {
+      color: $content-light;
+    }
+  }
+
   &-level2 {
     color: $primary-1;
     background: $content-light;
