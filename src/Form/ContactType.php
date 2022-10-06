@@ -33,12 +33,13 @@ class ContactType extends AbstractType
                 "label" => "Sujet :",
                 "required" => true,
                 "choices" => [
-                    "Général" => "contact@villeparisisbadminton77.fr",
-                    "Adhésions / Renouvellement" => "adhesion@villeparisisbadminton77.fr",
-                    "Tournois Badtour" => "tournois@villeparisisbadminton77.fr",
-                    "Jeunes" => "jeunes@villeparisisbadminton77.fr",
-                    "Compétiteurs" => "competitions@villeparisisbadminton77.fr",
-                    "Loisirs" => "loisirs@villeparisisbadminton77.fr"
+                    "test" => "n1code7@outlook.fr"
+                    // "Général" => "contact@villeparisisbadminton77.fr",
+                    // "Adhésions / Renouvellement" => "adhesion@villeparisisbadminton77.fr",
+                    // "Tournois Badtour" => "tournois@villeparisisbadminton77.fr",
+                    // "Jeunes" => "jeunes@villeparisisbadminton77.fr",
+                    // "Compétiteurs" => "competitions@villeparisisbadminton77.fr",
+                    // "Loisirs" => "loisirs@villeparisisbadminton77.fr"
                 ]
             ])
             ->add('message', TextareaType::class, [

@@ -8,6 +8,13 @@
 
 {% block main %}
 
+{# read and display just one flash message type #}
+{% for message in app.flashes('success') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
     <h1>Bienvenue à l'USMV Badminton</h1>
 
     <section class="news">
@@ -70,33 +77,40 @@
         <h2>Formulaire de contact</h2>
         <p>Pour toute question ou demande de renseigements, merci de renseigner les champs ci-dessous :</p>
 
-        <div class="form">
+         {# {{ form_start(form) }} #}
+        <form method="POST" class="form">
             <div class="form-row">
                 {{ form_label(form.last_name) }}
                 {{ form_widget(form.last_name) }}
+                {{ form_errors(form.last_name)}}
             </div>
             <div class="form-row">
                 {{ form_label(form.first_name) }}
                 {{ form_widget(form.first_name) }}
+                {{ form_errors(form.first_name)}}
             </div>
             <div class="form-row">
                 {{ form_label(form.email) }}
                 {{ form_widget(form.email) }}
+                {{ form_errors(form.email)}}
             </div>
             <div class="form-row">
                 {{ form_label(form.subject) }}
                 {{ form_widget(form.subject) }}
+                {{ form_errors(form.subject)}}
             </div>
             <div class="form-row">
                 {{ form_label(form.message) }}
                 {{ form_widget(form.message) }}
+                {{ form_errors(form.message)}}
             </div>
             <div class="btn-container">
-                <button class="btn btn-level1">Envoyer</button>
+                <button type="submit" class="btn btn-level1">Envoyer</button>
             </div>
                 {# {{ form_widget(form.submit)}} #}
             {{ form_rest(form) }}
-        </div>
+        </form>
+        {# {{ form_end(form) }} #}
     </section>
 
 {% endblock %}
