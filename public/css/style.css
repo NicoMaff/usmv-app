@@ -945,15 +945,28 @@ footer p {
   display: flex;
   flex-direction: column;
 }
-.club .contributors ul {
+.club .contributors .mobile {
   display: flex;
   flex-direction: column;
 }
-.club .contributors li {
+@media (min-width: 600px) {
+  .club .contributors .mobile {
+    display: none;
+  }
+}
+.club .contributors .mobile li {
   padding: 0.3rem 0;
 }
-.club .contributors strong {
+.club .contributors .mobile strong {
   font-weight: 500;
+}
+.club .contributors .desktop {
+  display: none;
+}
+@media (min-width: 600px) {
+  .club .contributors .desktop {
+    display: flex;
+  }
 }
 .club .supervisors {
   display: flex;

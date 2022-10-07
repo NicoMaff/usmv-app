@@ -14,17 +14,28 @@
     display: flex;
     flex-direction: column;
 
-    ul {
+    .mobile {
       display: flex;
       flex-direction: column;
+
+      @media (min-width: 600px) {
+        display: none;
+      }
+      li {
+        padding: 0.3rem 0;
+      }
+
+      strong {
+        font-weight: 500;
+      }
     }
 
-    li {
-      padding: 0.3rem 0;
-    }
+    .desktop {
+      display: none;
 
-    strong {
-      font-weight: 500;
+      @media (min-width: 600px) {
+        display: flex;
+      }
     }
   }
 
