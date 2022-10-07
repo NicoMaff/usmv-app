@@ -12,6 +12,6 @@ class ClubController extends AbstractController
     #[Route("/acteurs", name: "app_club_contributors")]
     public function contributors(): Response
     {
-        return $this->render('club/contributors.html.twig');
+        return $this->render('public/club/contributors.html.twig');
     }
 }
