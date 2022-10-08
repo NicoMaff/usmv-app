@@ -964,6 +964,19 @@ footer p {
 .club .card:last-of-type {
   margin-bottom: 0;
 }
+.club .card-contributors {
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  width: clamp(18rem, 20vmin, 38rem);
+  min-height: 10rem;
+}
+.club .card-contributors .img-container {
+  grid-row: 1/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .club .card-supervisors {
   display: grid;
   grid-template-columns: 25% 1fr;
@@ -1020,6 +1033,10 @@ footer p {
 @media (min-width: 600px) {
   .club .contributors .desktop {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
   }
 }
 .club .supervisors {

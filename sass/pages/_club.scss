@@ -36,8 +36,20 @@
       margin-bottom: 0;
     }
 
-    // &-contributors {
-    // }
+    &-contributors {
+      display: grid;
+      grid-template-columns: 25% 1fr;
+      grid-template-rows: repeat(2, 1fr);
+      width: clamp(18rem, 20vmin, 38rem);
+      min-height: 10rem;
+
+      .img-container {
+        grid-row: 1/4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
 
     &-supervisors {
       display: grid;
@@ -102,9 +114,10 @@
 
       @media (min-width: 600px) {
         display: flex;
-
-        // .card {
-        // }
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
       }
     }
   }
