@@ -932,14 +932,68 @@ footer p {
   margin: 0 auto;
 }
 
+.club section {
+  margin-bottom: 1.5rem;
+}
+.club h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: "Montserrat-reg", sans-serif;
+  font-weight: 500;
+}
 .club h2 {
   font-family: "Montserrat-reg", sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
-.club section {
-  margin-bottom: 1.5rem;
+.club img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border: 3px;
+}
+.club .card {
+  background: #dfe3ec;
+  margin-bottom: 0.6rem;
+  padding: 0.6rem;
+  border-radius: 12px;
+}
+.club .card:last-of-type {
+  margin-bottom: 0;
+}
+.club .card-supervisors {
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  min-height: 7rem;
+  column-gap: 0.6rem;
+}
+.club .card-supervisors:nth-of-type(2) {
+  grid-template-rows: repeat(2, 1fr);
+}
+.club .card-supervisors:nth-of-type(2) h3 {
+  grid-row: 1/2;
+}
+.club .card-supervisors:nth-of-type(2) .supervisors-name {
+  grid-row: 2/3;
+}
+.club .card-supervisors:nth-of-type(3) .supervisors-name {
+  grid-row: 2/4;
+}
+.club .card-supervisors .img-container {
+  grid-row: 1/4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.club .card-technical-officials {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 .club .contributors {
   display: flex;
@@ -973,52 +1027,8 @@ footer p {
   flex-direction: column;
   justify-content: center;
 }
-.club .supervisors .card {
-  display: grid;
-  grid-template-columns: 25% 1fr;
-  grid-template-rows: repeat(3, 1fr);
-  min-height: 7rem;
-  column-gap: 0.6rem;
-  background: #dfe3ec;
-  margin-bottom: 0.6rem;
-  padding: 0.6rem;
-  border-radius: 12px;
-}
-.club .supervisors .card:nth-of-type(2) {
-  grid-template-rows: repeat(2, 1fr);
-}
-.club .supervisors .card:nth-of-type(2) h3 {
-  grid-row: 1/2;
-}
-.club .supervisors .card:nth-of-type(2) .supervisors-name {
-  grid-row: 2/3;
-}
-.club .supervisors .card:nth-of-type(3) .supervisors-name {
-  grid-row: 2/4;
-}
-.club .supervisors .card:last-of-type {
-  margin-bottom: 0;
-}
-.club .supervisors .card .img-container {
-  grid-row: 1/4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.club .supervisors img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border: 3px;
-}
 .club .supervisors h3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   font-size: clamp(0.8rem, 4vmin, 1.1rem);
-  font-family: "Montserrat-reg", sans-serif;
-  font-weight: 500;
 }
 .club .supervisors em {
   display: flex;
@@ -1026,12 +1036,6 @@ footer p {
   align-items: center;
   text-align: center;
   font-size: clamp(0.7rem, 3.5vmin, 1rem);
-}
-.club .supervisors .supervisors-name {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
 }
 .club .supervisors strong {
   display: flex;
@@ -1041,24 +1045,14 @@ footer p {
   font-size: clamp(0.9rem, 4.5vmin, 1.2rem);
   font-weight: 500;
 }
-.club .technical-officials .card {
+.club .supervisors .supervisors-name {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.6rem;
-  padding: 0.6rem;
-  background: #dfe3ec;
-  border-radius: 12px;
-}
-.club .technical-officials .card:last-of-type {
-  margin-bottom: 0;
 }
 .club .technical-officials h3 {
   font-size: clamp(0.9rem, 4.5vmin, 1.1rem);
-  font-family: "Montserrat-reg", sans-serif;
-  font-weight: 500;
-  text-align: center;
 }
 .club .technical-officials ul {
   display: flex;
@@ -1068,7 +1062,7 @@ footer p {
 }
 .club .technical-officials ul li {
   text-align: center;
-  font-size: clamp(0.9rem, 4.5vmin, 1.1rem);
+  font-size: clamp(0.8rem, 4vmin, 1rem);
   padding: 0.1rem;
 }
 
