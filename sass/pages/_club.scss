@@ -1,4 +1,9 @@
 .club {
+  max-width: 1500px;
+  @include from(1500) {
+    margin: 7rem auto 5rem;
+  }
+
   section {
     margin-bottom: 2rem;
 
@@ -12,7 +17,8 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    @media (min-width: 600px) {
+
+    @include ptt {
       margin-bottom: 1.5rem;
     }
   }
@@ -60,7 +66,7 @@
       max-width: 38rem;
     }
 
-    @include resp(1343) {
+    @include from(1343) {
       max-width: 32rem;
     }
 

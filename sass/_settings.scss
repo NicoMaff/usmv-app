@@ -42,8 +42,14 @@ $gradient-1: linear-gradient(180deg, #ea8121, #bf6512);
 
 //
 // --- MIXINS --- //
-@mixin resp($size) {
+@mixin from($size) {
   @media (min-width: "#{$size}px") {
+    @content;
+  }
+}
+
+@mixin to($size) {
+  @media (max-width: "#{$size}px") {
     @content;
   }
 }

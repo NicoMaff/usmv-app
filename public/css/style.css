@@ -938,6 +938,14 @@ footer p {
   margin: 0 auto;
 }
 
+.club {
+  max-width: 1500px;
+}
+@media (min-width: 1500px) {
+  .club {
+    margin: 7rem auto 5rem;
+  }
+}
 .club section {
   margin-bottom: 2rem;
 }
