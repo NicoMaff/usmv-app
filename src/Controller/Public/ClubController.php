@@ -9,6 +9,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/club")]
 class ClubController extends AbstractController
 {
+    #[Route("/presentation", name: "app_club_introduction")]
+    public function introduction(): Response
+    {
+        return $this->render("public/club/introduction.html.twig");
+    }
+
     #[Route("/acteurs", name: "app_club_contributors")]
     public function contributors(): Response
     {
