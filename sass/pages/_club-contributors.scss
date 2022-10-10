@@ -1,8 +1,5 @@
 .club {
   max-width: 1500px;
-  @include from(1500) {
-    margin: 7rem auto 5rem;
-  }
 
   section {
     margin-bottom: 2rem;
