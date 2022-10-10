@@ -24,8 +24,13 @@ main {
   flex-grow: 2;
   margin: 7rem 1rem 5rem;
 
-  @media (min-width: 600px) {
+  @include ptt {
     margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
+  }
+
+  @include big-screen {
+    max-width: 1500px;
+    margin: 7rem auto 5rem;
   }
 }
 

@@ -41,6 +41,12 @@ main {
     margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
   }
 }
+@media (min-width: 1800px) {
+  main {
+    max-width: 1500px;
+    margin: 7rem auto 5rem;
+  }
+}
 
 h1,
 h2,
@@ -933,7 +939,23 @@ footer p {
 }
 
 .club section {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 600px) {
+  .club section {
+    margin-bottom: 2.5rem;
+  }
+}
+.club h2 {
+  font-family: "Montserrat-reg", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+@media (min-width: 600px) {
+  .club h2 {
+    margin-bottom: 1.5rem;
+  }
 }
 .club h3 {
   display: flex;
@@ -943,45 +965,104 @@ footer p {
   font-family: "Montserrat-reg", sans-serif;
   font-weight: 500;
 }
-.club h2 {
-  font-family: "Montserrat-reg", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+@media (min-width: 1800px) {
+  .club h3 {
+    font-size: 1.3rem;
+  }
 }
-.club img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border: 3px;
+.club .cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+@media (min-width: 600px) {
+  .club .cards {
+    gap: 1.6rem;
+  }
 }
 .club .card {
   background: #dfe3ec;
-  margin-bottom: 0.6rem;
   padding: 0.6rem;
   border-radius: 12px;
+  min-height: clamp(8rem, 25vmin, 12rem);
+  width: 100%;
 }
-.club .card:last-of-type {
-  margin-bottom: 0;
+@media (min-width: 600px) {
+  .club .card {
+    max-width: 38rem;
+  }
 }
-.club .card-contributors {
-  display: grid;
-  grid-template-columns: 25% 1fr;
-  grid-template-rows: repeat(2, 1fr);
-  width: clamp(18rem, 20vmin, 38rem);
-  min-height: 10rem;
+@media (min-width: 1343px) {
+  .club .card {
+    max-width: 32rem;
+  }
 }
-.club .card-contributors .img-container {
+@media (min-width: 1800px) {
+  .club .card {
+    min-height: 15rem;
+    max-width: 45rem;
+  }
+}
+.club .card .img-container {
   grid-row: 1/4;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url("/assets/img/profile.jpg") center/cover;
+  border-radius: 6px;
+}
+.club .card-contributors {
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  grid-template-rows: 0.8fr 1.3fr;
+}
+.club .card-contributors .img-container:nth-of-type(1) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(2) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(3) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(4) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(5) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(6) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(7) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(8) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .img-container:nth-of-type(9) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-contributors .description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.club .card-contributors .description span {
+  padding: 0.1rem 0;
+}
+@media (min-width: 1800px) {
+  .club .card-contributors .description span {
+    font-size: 1.2rem;
+  }
 }
 .club .card-supervisors {
   display: grid;
   grid-template-columns: 25% 1fr;
   grid-template-rows: repeat(3, 1fr);
-  min-height: 7rem;
   column-gap: 0.6rem;
 }
 .club .card-supervisors:nth-of-type(2) {
@@ -996,17 +1077,22 @@ footer p {
 .club .card-supervisors:nth-of-type(3) .supervisors-name {
   grid-row: 2/4;
 }
-.club .card-supervisors .img-container {
-  grid-row: 1/4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.club .card-supervisors .img-container:nth-of-type(1) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-supervisors .img-container:nth-of-type(2) {
+  background: url("/assets/img/profile.jpg") center/cover;
+}
+.club .card-supervisors .img-container:nth-of-type(3) {
+  background: url("/assets/img/profile.jpg") center/cover;
 }
 .club .card-technical-officials {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  min-height: 0;
+  max-width: clamp(40rem, 55vw, 65rem);
 }
 .club .contributors {
   display: flex;
@@ -1033,10 +1119,6 @@ footer p {
 @media (min-width: 600px) {
   .club .contributors .desktop {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
   }
 }
 .club .supervisors {
@@ -1054,6 +1136,11 @@ footer p {
   text-align: center;
   font-size: clamp(0.7rem, 3.5vmin, 1rem);
 }
+@media (min-width: 1800px) {
+  .club .supervisors em {
+    font-size: 1.2rem;
+  }
+}
 .club .supervisors strong {
   display: flex;
   justify-content: center;
@@ -1061,6 +1148,11 @@ footer p {
   text-align: center;
   font-size: clamp(0.9rem, 4.5vmin, 1.2rem);
   font-weight: 500;
+}
+@media (min-width: 1800px) {
+  .club .supervisors strong {
+    font-size: 1.4rem;
+  }
 }
 .club .supervisors .supervisors-name {
   display: flex;
@@ -1081,6 +1173,10 @@ footer p {
   text-align: center;
   font-size: clamp(0.8rem, 4vmin, 1rem);
   padding: 0.1rem;
+}
+.club .technical-officials .cards {
+  flex-direction: column;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=style.css.map */
