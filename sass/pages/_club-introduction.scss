@@ -14,9 +14,19 @@
   p {
     text-align: justify;
 
-    span {
-      font-weight: 600;
+    &:last-of-type {
+      max-width: 60rem;
+      margin: 0 auto;
     }
+
+    span {
+      font-weight: 580;
+    }
+  }
+
+  img {
+    object-fit: cover;
+    border-radius: 3px;
   }
 
   .container {
@@ -26,24 +36,93 @@
     align-items: center;
     gap: 1rem;
     margin-bottom: 2rem;
-  }
 
-  .img {
-    object-fit: cover;
+    @include from(1180) {
+      display: grid;
+      gap: clamp(0.6rem, 1vw, 1.2rem);
+      margin: 0 auto 2rem;
+      max-width: 60rem;
+    }
 
     &-1 {
-      height: 35vh;
-      width: 70vw;
+      @include from(1180) {
+        grid-template-columns: 34% 1fr;
+        grid-template-rows: 1fr 44%;
+      }
     }
 
     &-2 {
-      height: 20vh;
-      width: 80vw;
+      @include from(1180) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
     }
-    &-3,
-    &-4 {
-      height: 20vh;
-      width: 80vw;
+
+    .img {
+      &-1 {
+        height: clamp(19rem, 94vmin, 25rem);
+        width: clamp(12rem, 60vmin, 16rem);
+
+        @include from(1180) {
+          height: 40rem; //70vh;
+          width: 20rem; // 25vmin;
+          grid-row: 1/3;
+        }
+      }
+
+      &-2 {
+        height: clamp(11rem, 56vmin, 15rem);
+        width: clamp(16rem, 80vmin, 22rem);
+
+        @include from(1180) {
+          display: flex;
+          justify-self: flex-end;
+          align-self: flex-end;
+          height: 17rem;
+          width: 38rem;
+          max-width: 38rem;
+        }
+      }
+
+      &-3 {
+        @include from(1180) {
+          justify-self: flex-end;
+        }
+      }
+      &-4 {
+        @include from(1180) {
+          justify-self: flex-start;
+        }
+      }
+
+      &-3,
+      &-4 {
+        height: clamp(11rem, 56vmin, 15rem);
+        width: clamp(16rem, 80vmin, 21rem);
+
+        @include from(1180) {
+          display: flex;
+          height: 18rem;
+          width: 29rem;
+        }
+      }
+    }
+  }
+
+  .content {
+    p {
+      padding-bottom: 0.6rem;
+
+      &:last-of-type {
+        padding-bottom: 0;
+      }
+    }
+
+    @include from(1180) {
+      // margin-left: auto;
+      // margin-right: 0;
+      margin: 0 0 auto auto;
+      max-width: 38rem;
     }
   }
 }
