@@ -943,39 +943,64 @@ footer p {
   font-size: 1.5rem;
   color: #354b77;
   text-align: center;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.2rem;
 }
 .club-introduction h2 span {
   color: #9d1414;
 }
-.club-introduction .bloc-1 {
+.club-introduction p {
+  text-align: justify;
+}
+.club-introduction p span {
+  font-weight: 600;
+}
+.club-introduction .container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
-.club {
+.club-introduction .img {
+  object-fit: cover;
+}
+.club-introduction .img-1 {
+  height: 35vh;
+  width: 70vw;
+}
+.club-introduction .img-2 {
+  height: 20vh;
+  width: 80vw;
+}
+.club-introduction .img-3, .club-introduction .img-4 {
+  height: 20vh;
+  width: 80vw;
+}
+
+.club-contributors {
   max-width: 1500px;
 }
-.club section {
+.club-contributors section {
   margin-bottom: 2rem;
 }
 @media (min-width: 600px) {
-  .club section {
+  .club-contributors section {
     margin-bottom: 2.5rem;
   }
 }
-.club h2 {
+.club-contributors h2 {
   font-family: "Montserrat-reg", sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 @media (min-width: 600px) {
-  .club h2 {
+  .club-contributors h2 {
     margin-bottom: 1.5rem;
   }
 }
-.club h3 {
+.club-contributors h3 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -984,11 +1009,11 @@ footer p {
   font-weight: 500;
 }
 @media (min-width: 1800px) {
-  .club h3 {
+  .club-contributors h3 {
     font-size: 1.3rem;
   }
 }
-.club .cards {
+.club-contributors .cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -996,11 +1021,11 @@ footer p {
   gap: 0.6rem;
 }
 @media (min-width: 600px) {
-  .club .cards {
+  .club-contributors .cards {
     gap: 1.6rem;
   }
 }
-.club .card {
+.club-contributors .card {
   background: #dfe3ec;
   padding: 0.6rem;
   border-radius: 12px;
@@ -1008,22 +1033,22 @@ footer p {
   width: 100%;
 }
 @media (min-width: 600px) {
-  .club .card {
+  .club-contributors .card {
     max-width: 38rem;
   }
 }
 @media (min-width: 1343px) {
-  .club .card {
+  .club-contributors .card {
     max-width: 32rem;
   }
 }
 @media (min-width: 1800px) {
-  .club .card {
+  .club-contributors .card {
     min-height: 15rem;
     max-width: 45rem;
   }
 }
-.club .card .img-container {
+.club-contributors .card .img-container {
   grid-row: 1/4;
   display: flex;
   justify-content: center;
@@ -1031,80 +1056,80 @@ footer p {
   background: url("/assets/img/profile.jpg") center/cover;
   border-radius: 6px;
 }
-.club .card-contributors {
+.club-contributors .card-contributors {
   display: grid;
   grid-template-columns: 25% 1fr;
   grid-template-rows: 0.8fr 1.3fr;
 }
-.club .card-contributors .img-container:nth-of-type(1) {
+.club-contributors .card-contributors .img-container:nth-of-type(1) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(2) {
+.club-contributors .card-contributors .img-container:nth-of-type(2) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(3) {
+.club-contributors .card-contributors .img-container:nth-of-type(3) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(4) {
+.club-contributors .card-contributors .img-container:nth-of-type(4) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(5) {
+.club-contributors .card-contributors .img-container:nth-of-type(5) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(6) {
+.club-contributors .card-contributors .img-container:nth-of-type(6) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(7) {
+.club-contributors .card-contributors .img-container:nth-of-type(7) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(8) {
+.club-contributors .card-contributors .img-container:nth-of-type(8) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .img-container:nth-of-type(9) {
+.club-contributors .card-contributors .img-container:nth-of-type(9) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-contributors .description {
+.club-contributors .card-contributors .description {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.club .card-contributors .description span {
+.club-contributors .card-contributors .description span {
   padding: 0.1rem 0;
 }
 @media (min-width: 1800px) {
-  .club .card-contributors .description span {
+  .club-contributors .card-contributors .description span {
     font-size: 1.2rem;
   }
 }
-.club .card-supervisors {
+.club-contributors .card-supervisors {
   display: grid;
   grid-template-columns: 25% 1fr;
   grid-template-rows: repeat(3, 1fr);
   column-gap: 0.6rem;
 }
-.club .card-supervisors:nth-of-type(2) {
+.club-contributors .card-supervisors:nth-of-type(2) {
   grid-template-rows: repeat(2, 1fr);
 }
-.club .card-supervisors:nth-of-type(2) h3 {
+.club-contributors .card-supervisors:nth-of-type(2) h3 {
   grid-row: 1/2;
 }
-.club .card-supervisors:nth-of-type(2) .supervisors-name {
+.club-contributors .card-supervisors:nth-of-type(2) .supervisors-name {
   grid-row: 2/3;
 }
-.club .card-supervisors:nth-of-type(3) .supervisors-name {
+.club-contributors .card-supervisors:nth-of-type(3) .supervisors-name {
   grid-row: 2/4;
 }
-.club .card-supervisors .img-container:nth-of-type(1) {
+.club-contributors .card-supervisors .img-container:nth-of-type(1) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-supervisors .img-container:nth-of-type(2) {
+.club-contributors .card-supervisors .img-container:nth-of-type(2) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-supervisors .img-container:nth-of-type(3) {
+.club-contributors .card-supervisors .img-container:nth-of-type(3) {
   background: url("/assets/img/profile.jpg") center/cover;
 }
-.club .card-technical-officials {
+.club-contributors .card-technical-officials {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1112,42 +1137,42 @@ footer p {
   min-height: 0;
   max-width: clamp(40rem, 55vw, 65rem);
 }
-.club .contributors {
+.club-contributors .contributors {
   display: flex;
   flex-direction: column;
 }
-.club .contributors .mobile {
+.club-contributors .contributors .mobile {
   display: flex;
   flex-direction: column;
 }
 @media (min-width: 600px) {
-  .club .contributors .mobile {
+  .club-contributors .contributors .mobile {
     display: none;
   }
 }
-.club .contributors .mobile li {
+.club-contributors .contributors .mobile li {
   padding: 0.3rem 0;
 }
-.club .contributors .mobile strong {
+.club-contributors .contributors .mobile strong {
   font-weight: 500;
 }
-.club .contributors .desktop {
+.club-contributors .contributors .desktop {
   display: none;
 }
 @media (min-width: 600px) {
-  .club .contributors .desktop {
+  .club-contributors .contributors .desktop {
     display: flex;
   }
 }
-.club .supervisors {
+.club-contributors .supervisors {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.club .supervisors h3 {
+.club-contributors .supervisors h3 {
   font-size: clamp(0.8rem, 4vmin, 1.1rem);
 }
-.club .supervisors em {
+.club-contributors .supervisors em {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1155,11 +1180,11 @@ footer p {
   font-size: clamp(0.7rem, 3.5vmin, 1rem);
 }
 @media (min-width: 1800px) {
-  .club .supervisors em {
+  .club-contributors .supervisors em {
     font-size: 1.2rem;
   }
 }
-.club .supervisors strong {
+.club-contributors .supervisors strong {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1168,31 +1193,31 @@ footer p {
   font-weight: 500;
 }
 @media (min-width: 1800px) {
-  .club .supervisors strong {
+  .club-contributors .supervisors strong {
     font-size: 1.4rem;
   }
 }
-.club .supervisors .supervisors-name {
+.club-contributors .supervisors .supervisors-name {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
-.club .technical-officials h3 {
+.club-contributors .technical-officials h3 {
   font-size: clamp(0.9rem, 4.5vmin, 1.1rem);
 }
-.club .technical-officials ul {
+.club-contributors .technical-officials ul {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.club .technical-officials ul li {
+.club-contributors .technical-officials ul li {
   text-align: center;
   font-size: clamp(0.8rem, 4vmin, 1rem);
   padding: 0.1rem;
 }
-.club .technical-officials .cards {
+.club-contributors .technical-officials .cards {
   flex-direction: column;
   margin: 0 auto;
 }
