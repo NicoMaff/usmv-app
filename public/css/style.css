@@ -950,6 +950,7 @@ footer p {
 }
 .club-introduction p {
   text-align: justify;
+  line-height: 20px;
 }
 .club-introduction p:last-of-type {
   max-width: 60rem;
