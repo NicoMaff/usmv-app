@@ -20,4 +20,10 @@ class ClubController extends AbstractController
     {
         return $this->render('public/club/contributors.html.twig');
     }
+
+    #[Route("/gymnases", name: "app_club_gym")]
+    public function infos(): Response
+    {
+        return $this->render("public/club/gym.html.twig");
+    }
 }

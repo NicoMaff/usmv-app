@@ -1,0 +1,165 @@
+.club-gym {
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    max-width: 62rem;
+    margin-bottom: 2rem;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    @include from(1150) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 0.8fr;
+      margin: 0 auto 2rem;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  iframe {
+    justify-self: center;
+    align-self: center;
+    height: 90vw;
+    width: 90vw;
+    max-width: 25rem;
+    max-height: 25rem;
+    border-radius: 3px;
+  }
+
+  .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    // align-items: center;
+
+    p {
+      line-height: 22px;
+      padding: 0.3rem 0;
+
+      span {
+        text-decoration: underline;
+      }
+
+      strong {
+        font-weight: 560;
+      }
+    }
+  }
+
+  img {
+    height: 70vw;
+    max-height: 20rem;
+    width: 90vw;
+    max-width: 30rem;
+    object-fit: cover;
+    border-radius: 3px;
+  }
+
+  table {
+    tr {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:first-of-type {
+        th {
+          border-top: 1px solid black;
+
+          &:last-of-type {
+            border-right: 1px solid black;
+          }
+        }
+      }
+
+      td:last-of-type {
+        border-right: 1px solid black;
+      }
+    }
+
+    th {
+      font-weight: 580;
+    }
+
+    td,
+    th {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(0.5rem, 2.5vmin, 1rem);
+      line-height: clamp(0.9rem, 4.6vmin, 1.4rem);
+      height: clamp(2.5rem, 13vmin, 3.8rem);
+      border-left: 1px solid black;
+      border-bottom: 1px solid black;
+
+      @include ptt {
+        // height: 3.5rem;
+        line-height: 22px;
+      }
+    }
+  }
+
+  .table1 {
+    th {
+      width: clamp(3rem, 16vmin, 16rem); // 50px;
+
+      @include ptt {
+        width: 7rem;
+      }
+    }
+
+    td {
+      width: clamp(7rem, 32vmin, 13rem); // 112px;
+
+      @include ptt {
+        width: 10rem;
+      }
+    }
+
+    tr {
+      &:first-of-type {
+        th:nth-of-type(2),
+        th:nth-of-type(3) {
+          width: clamp(7rem, 32vmin, 13rem);
+          @include ptt {
+            width: 10rem;
+          }
+        }
+      }
+
+      &:last-of-type {
+        td {
+          width: clamp(14rem, 64vmin, 26rem);
+          @include ptt {
+            width: 20rem;
+          }
+        }
+      }
+    }
+  }
+
+  .table2 {
+    th {
+      width: clamp(4rem, 18vmin, 16rem); // 50px;
+
+      @include ptt {
+        width: 8rem;
+      }
+    }
+
+    tr:first-of-type > th:last-of-type,
+    td {
+      width: clamp(7rem, 40vmin, 15rem);
+      // @include ptt {
+      //   width: 10rem;
+      // }
+    }
+  }
+}
