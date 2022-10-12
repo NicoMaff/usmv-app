@@ -963,6 +963,18 @@ footer p {
   object-fit: cover;
   border-radius: 3px;
 }
+.club-introduction a {
+  color: #748cbc;
+  text-decoration: none;
+}
+@media (min-width: 1000px) {
+  .club-introduction a {
+    transition: font-size 0.3s ease-out;
+  }
+  .club-introduction a:hover {
+    font-size: 1.5rem;
+  }
+}
 .club-introduction .container {
   display: flex;
   flex-direction: column;
