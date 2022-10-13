@@ -1,0 +1,130 @@
+.membership {
+  h2 {
+    text-align: center;
+    font-size: clamp(1.3rem, 6vmin, 1.5rem);
+  }
+
+  p {
+    text-align: justify;
+  }
+
+  table {
+    color: $content-light;
+    margin: 0 auto;
+    border-radius: 12px;
+    background: $bg-2;
+    border: 1px solid $content-light;
+    border-collapse: collapse;
+  }
+
+  tr {
+    td:first-of-type {
+      width: 13rem;
+    }
+
+    td:last-of-type {
+      width: 5rem;
+    }
+  }
+
+  td {
+    font-size: clamp(0.9rem, 4vmin, 1rem);
+    text-align: center;
+    height: 2rem;
+    border: 1px solid $content-light;
+  }
+
+  .prices-container {
+    margin-bottom: 1.6rem;
+  }
+
+  .procedure {
+    margin-bottom: 1.6rem;
+
+    img {
+      display: block;
+      width: clamp(16rem, 83vmin, 22rem);
+      height: clamp(22rem, 108vmin, 30rem);
+      object-fit: cover;
+      margin: 0 auto 1.2rem;
+      border-radius: 3px;
+    }
+
+    .infos {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+
+    button {
+      display: block;
+      max-width: 19rem;
+
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .downloads {
+    h2 {
+      text-align: left;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    li {
+      list-style-type: "👉";
+      margin-bottom: 0.6rem;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      padding: 0.3rem;
+      color: $link;
+      text-decoration: none;
+    }
+  }
+
+  .line {
+    height: 2px;
+    width: 100%;
+    background: $bg-2;
+    margin: 2rem auto;
+  }
+
+  .contact-infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    a {
+      color: $link;
+      font-size: clamp(1rem, 5vmin, 1.2rem);
+
+      &:visited {
+        color: $link;
+      }
+    }
+  }
+}

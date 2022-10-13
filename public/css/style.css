@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Gotu";
   src: url("../assets/fonts/Gotu-Regular.ttf");
@@ -1438,6 +1439,110 @@ footer p {
 .club-gym .table2 tr:first-of-type > th:last-of-type,
 .club-gym .table2 td {
   width: clamp(7rem, 40vmin, 15rem);
+}
+
+.membership h2 {
+  text-align: center;
+  font-size: clamp(1.3rem, 6vmin, 1.5rem);
+}
+.membership p {
+  text-align: justify;
+}
+.membership table {
+  color: #f5f8ff;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #748cbc;
+  border: 1px solid #f5f8ff;
+  border-collapse: collapse;
+}
+.membership tr td:first-of-type {
+  width: 13rem;
+}
+.membership tr td:last-of-type {
+  width: 5rem;
+}
+.membership td {
+  font-size: clamp(0.9rem, 4vmin, 1rem);
+  text-align: center;
+  height: 2rem;
+  border: 1px solid #f5f8ff;
+}
+.membership .prices-container {
+  margin-bottom: 1.6rem;
+}
+.membership .procedure {
+  margin-bottom: 1.6rem;
+}
+.membership .procedure img {
+  display: block;
+  width: clamp(16rem, 83vmin, 22rem);
+  height: clamp(22rem, 108vmin, 30rem);
+  object-fit: cover;
+  margin: 0 auto 1.2rem;
+  border-radius: 3px;
+}
+.membership .procedure .infos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+.membership .btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+.membership .btn-container button {
+  display: block;
+  max-width: 19rem;
+}
+.membership .btn-container button span {
+  font-weight: 500;
+}
+.membership .downloads h2 {
+  text-align: left;
+}
+.membership .downloads ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 90%;
+  margin: 0 auto;
+}
+.membership .downloads li {
+  list-style-type: "👉";
+  margin-bottom: 0.6rem;
+}
+.membership .downloads li:last-of-type {
+  margin-bottom: 0;
+}
+.membership .downloads a {
+  padding: 0.3rem;
+  color: #748cbc;
+  text-decoration: none;
+}
+.membership .line {
+  height: 2px;
+  width: 100%;
+  background: #748cbc;
+  margin: 2rem auto;
+}
+.membership .contact-infos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.membership .contact-infos a {
+  color: #748cbc;
+  font-size: clamp(1rem, 5vmin, 1.2rem);
+}
+.membership .contact-infos a:visited {
+  color: #748cbc;
 }
 
 /*# sourceMappingURL=style.css.map */
