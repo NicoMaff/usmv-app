@@ -88,6 +88,7 @@ li {
   border-radius: 5px;
   line-height: 21px;
   cursor: pointer;
+  font-family: "Montserrat-reg", sans-serif;
 }
 .btn-menu {
   color: #f5f8ff;
@@ -1443,6 +1444,11 @@ footer p {
   width: clamp(7rem, 40vmin, 15rem);
 }
 
+.membership {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
 .membership h2 {
   text-align: center;
   font-size: clamp(1.3rem, 6vmin, 1.5rem);
@@ -1470,17 +1476,14 @@ footer p {
   height: clamp(2rem, 10vmin, 3rem);
   border: 1px solid #f5f8ff;
 }
-.membership .prices-container {
-  margin-bottom: 1.6rem;
-}
 .membership .procedure {
-  margin: 0 auto 1.6rem;
+  margin: 0 auto;
   max-width: 63rem;
 }
 @media (min-width: 1000px) {
   .membership .procedure {
     display: grid;
-    grid-template-rows: 3rem 1fr 15rem;
+    grid-template-rows: 3rem 1fr;
     grid-template-columns: 0.7fr 1fr;
   }
 }
@@ -1525,7 +1528,7 @@ footer p {
     gap: 1.8rem;
   }
 }
-.membership .btn-container {
+.membership .procedure-details {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1534,36 +1537,96 @@ footer p {
   margin-bottom: 1.2rem;
 }
 @media (min-width: 600px) {
-  .membership .btn-container {
+  .membership .procedure-details {
     margin-top: 1.2rem;
   }
 }
-.membership .btn-container button {
+.membership .procedure-details .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  border: 2px solid #2c61c9;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.membership .procedure-details button.slider {
   display: block;
   max-width: 18rem;
   padding: 0.9rem 4rem !important;
+  z-index: 2;
 }
 @media (min-width: 600px) {
-  .membership .btn-container button {
+  .membership .procedure-details button.slider {
     max-width: none;
     min-width: 100%;
     position: relative;
   }
 }
-.membership .btn-container button strong {
+.membership .procedure-details button.slider strong {
   font-weight: 500;
 }
-.membership .btn-container button i {
+.membership .procedure-details button.slider i {
   display: none;
 }
 @media (min-width: 600px) {
-  .membership .btn-container button i {
+  .membership .procedure-details button.slider i {
     display: block;
     position: absolute;
+    align-self: center;
+    margin: auto 0;
     top: 50%;
     right: 1rem;
+    z-index: 5;
     transform: translateY(-50%);
+    transition: transform 0.3s ease-out;
   }
+}
+.membership .procedure-details .details {
+  display: flex;
+  flex-direction: column;
+  max-height: 0rem;
+}
+.membership .procedure-details .details .block {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.membership .procedure-details .details .block .number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.6rem;
+  border: 1px solid #354b77;
+  border-radius: 10px;
+  min-height: 2.8rem;
+  min-width: 2.8rem;
+}
+.membership .procedure-details .details .block .text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: justify;
+  padding: 0.6rem 0.6rem 0.6rem 0;
+  line-height: 22px;
+}
+.membership .procedure-details .details .block .links {
+  display: flex;
+  align-items: center;
+}
+.membership .procedure-details .details .block .links img {
+  height: 17rem;
+  width: 17rem;
+}
+.membership .procedure-details .details .block .links a {
+  max-height: 3rem;
+}
+.membership .procedure-details .details .line {
+  max-width: 90%;
+  background: #2c61c9;
 }
 .membership .downloads h2 {
   text-align: left;
@@ -1595,7 +1658,7 @@ footer p {
   width: 100%;
   max-width: 65rem;
   background: #748cbc;
-  margin: 2rem auto;
+  margin: 0 auto;
 }
 .membership .contact-infos {
   display: flex;

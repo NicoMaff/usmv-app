@@ -45,3 +45,42 @@ lineOverlay.addEventListener("drag", (e) => console.log("yes"));
 document
   .querySelector(".nav-mobile")
   .addEventListener("drag", (e) => console.log(e));
+
+//
+
+// Handle membership page sliders
+
+const sliderBtns = document.querySelectorAll(".slider");
+const arrowBtns = document.querySelectorAll(".slider i");
+
+sliderBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    if (e.target.localName == "i") {
+      if (!e.target.parentNode.nextElementSibling.style.maxHeight) {
+        e.target.parentNode.nextElementSibling.style.maxHeight = "41rem";
+        e.target.style.transform = "translateY(-50%) rotate(180deg)";
+      } else if (
+        e.target.parentNode.nextElementSibling.style.maxHeight == "0px"
+      ) {
+        e.target.parentNode.nextElementSibling.style.maxHeight = "41rem";
+        e.target.style.transform = "translateY(-50%) rotate(180deg)";
+      } else {
+        e.target.parentNode.nextElementSibling.style.maxHeight = "0px";
+        e.target.style.transform = "translateY(-50%) rotate(0)";
+      }
+    } else {
+      if (!e.target.nextElementSibling.style.maxHeight) {
+        e.target.nextElementSibling.style.maxHeight = "41rem";
+        e.target.children[0].style.transform =
+          "translateY(-50%) rotate(180deg)";
+      } else if (e.target.nextElementSibling.style.maxHeight == "0px") {
+        e.target.nextElementSibling.style.maxHeight = "41rem";
+        e.target.children[0].style.transform =
+          "translateY(-50%) rotate(180deg)";
+      } else {
+        e.target.nextElementSibling.style.maxHeight = "0px";
+        e.target.children[0].style.transform = "translateY(-50%) rotate(0)";
+      }
+    }
+  });
+});
