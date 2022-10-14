@@ -57,12 +57,12 @@ sliderBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (e.target.localName == "i") {
       if (!e.target.parentNode.nextElementSibling.style.maxHeight) {
-        e.target.parentNode.nextElementSibling.style.maxHeight = "41rem";
+        e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
         e.target.style.transform = "translateY(-50%) rotate(180deg)";
       } else if (
         e.target.parentNode.nextElementSibling.style.maxHeight == "0px"
       ) {
-        e.target.parentNode.nextElementSibling.style.maxHeight = "41rem";
+        e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
         e.target.style.transform = "translateY(-50%) rotate(180deg)";
       } else {
         e.target.parentNode.nextElementSibling.style.maxHeight = "0px";
@@ -70,11 +70,11 @@ sliderBtns.forEach((btn) => {
       }
     } else {
       if (!e.target.nextElementSibling.style.maxHeight) {
-        e.target.nextElementSibling.style.maxHeight = "41rem";
+        e.target.nextElementSibling.style.maxHeight = "65rem";
         e.target.children[0].style.transform =
           "translateY(-50%) rotate(180deg)";
       } else if (e.target.nextElementSibling.style.maxHeight == "0px") {
-        e.target.nextElementSibling.style.maxHeight = "41rem";
+        e.target.nextElementSibling.style.maxHeight = "65rem";
         e.target.children[0].style.transform =
           "translateY(-50%) rotate(180deg)";
       } else {
@@ -84,3 +84,5 @@ sliderBtns.forEach((btn) => {
     }
   });
 });
+
+document.addEventListener("click", (e) => console.log(e.target));

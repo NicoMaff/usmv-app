@@ -1545,7 +1545,6 @@ footer p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
   width: 100%;
   border: 2px solid #2c61c9;
   border-radius: 14px;
@@ -1587,6 +1586,7 @@ footer p {
   display: flex;
   flex-direction: column;
   max-height: 0rem;
+  transition: max-height 0.5s ease-out;
 }
 .membership .procedure-details .details .block {
   display: flex;
@@ -1599,7 +1599,7 @@ footer p {
   justify-content: center;
   align-items: center;
   margin: 0.6rem;
-  border: 1px solid #354b77;
+  border: 1.5px solid #354b77;
   border-radius: 10px;
   min-height: 2.8rem;
   min-width: 2.8rem;
@@ -1623,6 +1623,9 @@ footer p {
 }
 .membership .procedure-details .details .block .links a {
   max-height: 3rem;
+}
+.membership .procedure-details .details .block .memory-aid {
+  font-style: italic;
 }
 .membership .procedure-details .details .line {
   max-width: 90%;
