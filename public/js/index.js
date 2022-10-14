@@ -53,35 +53,65 @@ document
 const sliderBtns = document.querySelectorAll(".slider");
 const arrowBtns = document.querySelectorAll(".slider i");
 
-sliderBtns.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    if (e.target.localName == "i") {
-      if (!e.target.parentNode.nextElementSibling.style.maxHeight) {
-        e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
-        e.target.style.transform = "translateY(-50%) rotate(180deg)";
-      } else if (
-        e.target.parentNode.nextElementSibling.style.maxHeight == "0px"
-      ) {
-        e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
-        e.target.style.transform = "translateY(-50%) rotate(180deg)";
-      } else {
-        e.target.parentNode.nextElementSibling.style.maxHeight = "0px";
-        e.target.style.transform = "translateY(-50%) rotate(0)";
-      }
-    } else {
-      if (!e.target.nextElementSibling.style.maxHeight) {
-        e.target.nextElementSibling.style.maxHeight = "65rem";
-        e.target.children[0].style.transform =
-          "translateY(-50%) rotate(180deg)";
-      } else if (e.target.nextElementSibling.style.maxHeight == "0px") {
-        e.target.nextElementSibling.style.maxHeight = "65rem";
-        e.target.children[0].style.transform =
-          "translateY(-50%) rotate(180deg)";
-      } else {
-        e.target.nextElementSibling.style.maxHeight = "0px";
-        e.target.children[0].style.transform = "translateY(-50%) rotate(0)";
-      }
+const sliderBtnsArray = Object.values(sliderBtns);
+console.log(sliderBtnsArray);
+
+sliderBtns.forEach((sliderBtn) => {
+  sliderBtn.addEventListener("click", (e) => {
+    console.log(e);
+    const otherBtns = [...sliderBtns].filter(
+      (otherBtn) => otherBtn.textContent != sliderBtn.textContent
+    );
+    console.log(sliderBtn.getBoundingClientRect().pageY);
+    if (sliderBtn.nextElementSibling.style.maxHeight == "65rem") {
+      window.scroll(0, sliderBtn.getBoundingClientRect().y);
     }
+
+    otherBtns.forEach((otherButton) => {
+      if (otherButton.nextElementSibling.style.maxHeight != "0px") {
+        otherButton.nextElementSibling.style.maxHeight = "0px";
+        otherButton.children[0].style.transform = "translateY(-50%) rotate(0)";
+      }
+    });
+
+    if (!sliderBtn.nextElementSibling.style.maxHeight) {
+      sliderBtn.nextElementSibling.style.maxHeight = "65rem";
+      sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
+    } else if (sliderBtn.nextElementSibling.style.maxHeight == "0px") {
+      sliderBtn.nextElementSibling.style.maxHeight = "65rem";
+      sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
+    } else {
+      sliderBtn.nextElementSibling.style.maxHeight = "0px";
+      sliderBtn.children[0].style.transform = "translateY(-50%) rotate(0)";
+    }
+
+    // if (e.target.localName == "i") {
+    //   if (!e.target.parentNode.nextElementSibling.style.maxHeight) {
+    //     e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
+    //     e.target.style.transform = "translateY(-50%) rotate(180deg)";
+    //   } else if (
+    //     e.target.parentNode.nextElementSibling.style.maxHeight == "0px"
+    //   ) {
+    //     e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
+    //     e.target.style.transform = "translateY(-50%) rotate(180deg)";
+    //   } else {
+    //     e.target.parentNode.nextElementSibling.style.maxHeight = "0px";
+    //     e.target.style.transform = "translateY(-50%) rotate(0)";
+    //   }
+    // } else {
+    //   if (!e.target.nextElementSibling.style.maxHeight) {
+    //     e.target.nextElementSibling.style.maxHeight = "65rem";
+    //     e.target.children[0].style.transform =
+    //       "translateY(-50%) rotate(180deg)";
+    //   } else if (e.target.nextElementSibling.style.maxHeight == "0px") {
+    //     e.target.nextElementSibling.style.maxHeight = "65rem";
+    //     e.target.children[0].style.transform =
+    //       "translateY(-50%) rotate(180deg)";
+    //   } else {
+    //     e.target.nextElementSibling.style.maxHeight = "0px";
+    //     e.target.children[0].style.transform = "translateY(-50%) rotate(0)";
+    //   }
+    // }
   });
 });
 
