@@ -1533,11 +1533,11 @@ footer p {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  grid-column: 1/3;
   margin-bottom: 1.2rem;
 }
 @media (min-width: 600px) {
   .membership .procedure-details {
+    grid-column: 1/3;
     margin-top: 1.2rem;
   }
 }
@@ -1545,10 +1545,29 @@ footer p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  border: 2px solid #2c61c9;
-  border-radius: 14px;
-  overflow: hidden;
+  position: fixed;
+  z-index: 150;
+  top: 0;
+  transform: translateX(150vw);
+  background: #f4f4f5;
+  width: 100vw;
+  overflow: scroll;
+}
+@media (min-width: 1000px) {
+  .membership .procedure-details .container {
+    width: 100%;
+    border: 2px solid #2c61c9;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+}
+.membership .procedure-details .container-header-mobile {
+  height: 5rem;
+  background: #2c61c9;
+  width: 100vw;
+  margin-top: -7rem;
+  padding: 4rem 0.6rem 0.6rem;
+  border-radius: 0 0 12px 12px;
 }
 .membership .procedure-details button.slider {
   display: block;
@@ -1585,14 +1604,25 @@ footer p {
 .membership .procedure-details .details {
   display: flex;
   flex-direction: column;
-  max-height: 0rem;
-  transition: max-height 0.5s ease-out;
+  max-width: 95vw;
+}
+@media (min-width: 600px) {
+  .membership .procedure-details .details {
+    max-height: 0rem;
+    transition: max-height 0.5s ease-out;
+  }
 }
 .membership .procedure-details .details .block {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
   padding: 1rem;
+}
+@media (min-width: 600px) {
+  .membership .procedure-details .details .block {
+    gap: 1rem;
+    flex-direction: row;
+  }
 }
 .membership .procedure-details .details .block .number {
   display: flex;
@@ -1615,14 +1645,29 @@ footer p {
 }
 .membership .procedure-details .details .block .links {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 0.6rem;
+}
+@media (min-width: 600px) {
+  .membership .procedure-details .details .block .links {
+    flex-direction: row;
+  }
 }
 .membership .procedure-details .details .block .links img {
-  height: 17rem;
-  width: 17rem;
+  height: 10rem;
+  width: 10rem;
+}
+@media (min-width: 600px) {
+  .membership .procedure-details .details .block .links img {
+    height: 17rem;
+    width: 17rem;
+  }
 }
 .membership .procedure-details .details .block .links a {
   max-height: 3rem;
+  margin: 0.6rem 0;
+  font-size: clamp(1rem, 5vmin, 1.2rem);
 }
 .membership .procedure-details .details .block .memory-aid {
   font-style: italic;

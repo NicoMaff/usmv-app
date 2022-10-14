@@ -99,21 +99,47 @@
       flex-direction: column;
       align-items: center;
       gap: 1rem;
-      grid-column: 1/3;
       margin-bottom: 1.2rem;
+      // position: relative;
 
       @include ptt {
+        grid-column: 1/3;
         margin-top: 1.2rem;
+        // position: static;
       }
 
       .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        border: 2px solid $primary-1;
-        border-radius: 14px;
-        overflow: hidden;
+        position: fixed;
+        z-index: 150;
+        top: 0;
+        transform: translateX(150vw);
+        background: $bg-4;
+        width: 100vw;
+        overflow: scroll;
+        // position: relative;
+
+        @include from(1000) {
+          width: 100%;
+          border: 2px solid $primary-1;
+          border-radius: 14px;
+          overflow: hidden;
+        }
+
+        &-header-mobile {
+          height: 5rem;
+          background: $primary-1;
+          width: 100vw;
+          margin-top: -7rem;
+          padding: 4rem 0.6rem 0.6rem;
+          border-radius: 0 0 12px 12px;
+
+          // z-index: 150;
+          // position: absolute;
+          // top: 0;
+        }
       }
 
       button.slider {
@@ -136,12 +162,10 @@
           display: none;
 
           @include ptt {
-            // display: flex;
             display: block;
             position: absolute;
             align-self: center;
             margin: auto 0;
-            // top: 0;
             top: 50%;
             right: 1rem;
             z-index: 5;
@@ -154,14 +178,23 @@
       .details {
         display: flex;
         flex-direction: column;
-        max-height: 0rem;
-        transition: max-height 0.5s ease-out;
+        max-width: 95vw;
+
+        @include ptt {
+          max-height: 0rem;
+          transition: max-height 0.5s ease-out;
+        }
 
         .block {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          gap: 1rem;
           padding: 1rem;
+
+          @include ptt {
+            gap: 1rem;
+            flex-direction: row;
+          }
 
           .number {
             display: flex;
@@ -187,15 +220,28 @@
 
           .links {
             display: flex;
+            flex-direction: column;
             align-items: center;
+            margin-bottom: 0.6rem;
+
+            @include ptt {
+              flex-direction: row;
+            }
 
             img {
-              height: 17rem;
-              width: 17rem;
+              height: 10rem;
+              width: 10rem;
+
+              @include ptt {
+                height: 17rem;
+                width: 17rem;
+              }
             }
 
             a {
               max-height: 3rem;
+              margin: 0.6rem 0;
+              font-size: clamp(1rem, 5vmin, 1.2rem);
             }
           }
 
