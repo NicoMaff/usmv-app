@@ -1476,8 +1476,12 @@ footer p {
   height: clamp(2rem, 10vmin, 3rem);
   border: 1px solid #f5f8ff;
 }
+.membership input[type=checkbox] {
+  display: none;
+}
 .membership .procedure {
   margin: 0 auto;
+  width: 100%;
   max-width: 63rem;
 }
 @media (min-width: 1000px) {
@@ -1541,6 +1545,16 @@ footer p {
     margin-top: 1.2rem;
   }
 }
+.membership .procedure-details button.open-overlay {
+  display: inline-block;
+  min-width: 100%;
+  text-align: center;
+}
+@media (min-width: 600px) {
+  .membership .procedure-details button.open-overlay {
+    display: none;
+  }
+}
 .membership .procedure-details .container {
   display: flex;
   flex-direction: column;
@@ -1551,32 +1565,41 @@ footer p {
   transform: translateX(150vw);
   background: #f4f4f5;
   width: 100vw;
-  overflow: scroll;
 }
-@media (min-width: 1000px) {
+@media (min-width: 600px) {
   .membership .procedure-details .container {
+    position: static;
+    z-index: 1;
     width: 100%;
     border: 2px solid #2c61c9;
     border-radius: 14px;
     overflow: hidden;
+    transform: none;
   }
 }
 .membership .procedure-details .container-header-mobile {
-  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #2c61c9;
   width: 100vw;
-  margin-top: -7rem;
-  padding: 4rem 0.6rem 0.6rem;
+  padding: 6rem 0.6rem 0.6rem;
   border-radius: 0 0 12px 12px;
 }
+@media (min-width: 600px) {
+  .membership .procedure-details .container-header-mobile {
+    display: none;
+  }
+}
 .membership .procedure-details button.slider {
-  display: block;
-  max-width: 18rem;
-  padding: 0.9rem 4rem !important;
-  z-index: 2;
+  display: none;
 }
 @media (min-width: 600px) {
   .membership .procedure-details button.slider {
+    display: block;
+    max-width: 18rem;
+    padding: 0.9rem 4rem !important;
+    z-index: 2;
     max-width: none;
     min-width: 100%;
     position: relative;
@@ -1605,6 +1628,7 @@ footer p {
   display: flex;
   flex-direction: column;
   max-width: 95vw;
+  overflow: scroll;
 }
 @media (min-width: 600px) {
   .membership .procedure-details .details {

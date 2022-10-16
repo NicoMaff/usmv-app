@@ -42,9 +42,14 @@
   //   margin-bottom: 1.6rem;
   // }
 
+  input[type="checkbox"] {
+    display: none;
+  }
+
   .procedure {
     margin: 0 auto;
     // margin: 0 auto 1.6rem;
+    width: 100%;
     max-width: 63rem;
 
     @include from(1000) {
@@ -108,6 +113,16 @@
         // position: static;
       }
 
+      button.open-overlay {
+        display: inline-block;
+        min-width: 100%;
+        text-align: center;
+
+        @include ptt {
+          display: none;
+        }
+      }
+
       .container {
         display: flex;
         flex-direction: column;
@@ -118,37 +133,42 @@
         transform: translateX(150vw);
         background: $bg-4;
         width: 100vw;
-        overflow: scroll;
-        // position: relative;
 
-        @include from(1000) {
+        @include ptt {
+          position: static;
+          z-index: 1;
           width: 100%;
           border: 2px solid $primary-1;
           border-radius: 14px;
           overflow: hidden;
+          transform: none;
         }
 
         &-header-mobile {
-          height: 5rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          // height: 5rem;
           background: $primary-1;
           width: 100vw;
-          margin-top: -7rem;
-          padding: 4rem 0.6rem 0.6rem;
+          // min-height: 2rem;
+          padding: 6rem 0.6rem 0.6rem;
           border-radius: 0 0 12px 12px;
 
-          // z-index: 150;
-          // position: absolute;
-          // top: 0;
+          @include ptt {
+            display: none;
+          }
         }
       }
 
       button.slider {
-        display: block;
-        max-width: 18rem;
-        padding: 0.9rem 4rem !important;
-        z-index: 2;
+        display: none;
 
         @include ptt {
+          display: block;
+          max-width: 18rem;
+          padding: 0.9rem 4rem !important;
+          z-index: 2;
           max-width: none;
           min-width: 100%;
           position: relative;
@@ -179,6 +199,7 @@
         display: flex;
         flex-direction: column;
         max-width: 95vw;
+        overflow: scroll;
 
         @include ptt {
           max-height: 0rem;

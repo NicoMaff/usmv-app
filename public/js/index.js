@@ -48,6 +48,25 @@ document
 
 //
 
+// --- Open overlay in membership page --- //
+
+const overlayBtns = document.querySelectorAll(".open-overlay");
+const overlayBackBtns = document.querySelectorAll(".overlay-back-button");
+
+overlayBtns.forEach((overlayBtn) => {
+  overlayBtn.addEventListener("click", () => {
+    overlayBtn.nextElementSibling.style.transform = "translateX(0)";
+  });
+});
+
+overlayBackBtns.forEach((backBtn) => {
+  backBtn.addEventListener("click", (e) => {
+    backBtn.parentNode.parentNode.style.transform = "translateX(150vw)";
+  });
+});
+
+//
+
 // Handle membership page sliders
 
 const sliderBtns = document.querySelectorAll(".slider");
@@ -74,14 +93,16 @@ sliderBtns.forEach((sliderBtn) => {
       }
     });
 
-    if (!sliderBtn.nextElementSibling.style.maxHeight) {
-      sliderBtn.nextElementSibling.style.maxHeight = "65rem";
+    if (!sliderBtn.nextElementSibling.nextElementSibling.style.maxHeight) {
+      sliderBtn.nextElementSibling.nextElementSibling.style.maxHeight = "65rem";
       sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
-    } else if (sliderBtn.nextElementSibling.style.maxHeight == "0px") {
-      sliderBtn.nextElementSibling.style.maxHeight = "65rem";
+    } else if (
+      sliderBtn.nextElementSibling.nextElementSibling.style.maxHeight == "0px"
+    ) {
+      sliderBtn.nextElementSibling.nextElementSibling.style.maxHeight = "65rem";
       sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
     } else {
-      sliderBtn.nextElementSibling.style.maxHeight = "0px";
+      sliderBtn.nextElementSibling.nextElementSibling.style.maxHeight = "0px";
       sliderBtn.children[0].style.transform = "translateY(-50%) rotate(0)";
     }
 
