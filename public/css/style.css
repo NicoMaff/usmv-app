@@ -70,7 +70,7 @@ h1 {
 
 h2 {
   font-family: "Montserrat-reg", sans-serif;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 5vmin, 1.5rem);
   font-weight: 580;
   margin-bottom: 1.2rem;
 }
@@ -1695,6 +1695,48 @@ footer p {
 }
 .membership .contact-infos a:visited {
   color: #748cbc;
+}
+
+.youths-infos .container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+.youths-infos .infos-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.youths-infos .infos-text p {
+  text-align: justify;
+}
+.youths-infos .infos-text ul {
+  margin-top: -0.6rem;
+  padding-left: 1.5rem;
+}
+.youths-infos .infos-text li {
+  list-style-type: "👉";
+  padding: 0.3rem;
+}
+.youths-infos .prices-container table {
+  color: #f5f8ff;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #748cbc;
+  border: 1px solid #f5f8ff;
+  border-collapse: collapse;
+}
+.youths-infos .prices-container tr td:first-of-type {
+  width: clamp(13rem, 65vw, 30rem);
+}
+.youths-infos .prices-container tr td:last-of-type {
+  width: clamp(5rem, 25vw, 12rem);
+}
+.youths-infos .prices-container td {
+  font-size: clamp(0.9rem, 4vmin, 1rem);
+  text-align: center;
+  height: clamp(2rem, 10vmin, 3rem);
+  border: 1px solid #f5f8ff;
 }
 
 /*# sourceMappingURL=style.css.map */

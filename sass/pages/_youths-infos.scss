@@ -1,0 +1,54 @@
+.youths-infos {
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .infos-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    p {
+      text-align: justify;
+    }
+
+    ul {
+      margin-top: -0.6rem;
+      padding-left: 1.5rem;
+    }
+    li {
+      list-style-type: "👉";
+      padding: 0.3rem;
+    }
+  }
+
+  .prices-container {
+    table {
+      color: $content-light;
+      margin: 0 auto;
+      border-radius: 12px;
+      background: $bg-2;
+      border: 1px solid $content-light;
+      border-collapse: collapse;
+    }
+
+    tr {
+      td:first-of-type {
+        width: clamp(13rem, 65vw, 30rem);
+      }
+
+      td:last-of-type {
+        width: clamp(5rem, 25vw, 12rem);
+      }
+    }
+
+    td {
+      font-size: clamp(0.9rem, 4vmin, 1rem);
+      text-align: center;
+      height: clamp(2rem, 10vmin, 3rem);
+      border: 1px solid $content-light;
+    }
+  }
+}
