@@ -87,15 +87,6 @@ sliderBtns.forEach((sliderBtn) => {
       (otherBtn) => otherBtn.textContent != sliderBtn.textContent
     );
 
-    window.scroll({
-      left: 0,
-      top:
-        document.documentElement.scrollTop +
-        sliderBtn.getBoundingClientRect().top -
-        100,
-      behavior: "smooth",
-    });
-
     otherBtns.forEach((otherButton) => {
       if (otherButton.nextElementSibling.style.maxHeight != "0px") {
         otherButton.nextElementSibling.style.maxHeight = "0px";
@@ -104,15 +95,26 @@ sliderBtns.forEach((sliderBtn) => {
     });
 
     if (!sliderBtn.nextElementSibling.style.maxHeight) {
-      sliderBtn.nextElementSibling.style.maxHeight = "65rem";
+      sliderBtn.nextElementSibling.style.maxHeight = "150rem";
       sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
     } else if (sliderBtn.nextElementSibling.style.maxHeight == "0px") {
-      sliderBtn.nextElementSibling.style.maxHeight = "65rem";
+      sliderBtn.nextElementSibling.style.maxHeight = "150rem";
       sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
     } else {
       sliderBtn.nextElementSibling.style.maxHeight = "0px";
       sliderBtn.children[0].style.transform = "translateY(-50%) rotate(0)";
     }
+
+    setTimeout(() => {
+      window.scroll({
+        left: 0,
+        top:
+          document.documentElement.scrollTop +
+          sliderBtn.getBoundingClientRect().top -
+          110,
+        behavior: "smooth",
+      });
+    }, 300);
 
     // if (e.target.localName == "i") {
     //   if (!e.target.parentNode.nextElementSibling.style.maxHeight) {

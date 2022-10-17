@@ -1550,18 +1550,15 @@ footer p {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 0;
   border: 2px solid #2c61c9;
   border-radius: 14px;
   overflow: hidden;
-  transform: none;
 }
 .membership .procedure-details button.slider {
   display: block;
   max-width: 18rem;
   padding: 0.9rem clamp(3rem, 10vmin, 4rem) !important;
   z-index: 2;
-  max-width: none;
   min-width: 100%;
   position: relative;
 }
@@ -1582,9 +1579,8 @@ footer p {
 .membership .procedure-details .details {
   display: flex;
   flex-direction: column;
-  overflow: scroll;
   max-height: 0rem;
-  transition: max-height 0.5s ease-out;
+  transition: max-height 0.3s ease-out;
 }
 .membership .procedure-details .details .block {
   display: flex;
@@ -1690,9 +1686,12 @@ footer p {
   max-width: 63rem;
   margin: 0 auto;
 }
+.membership .contact-infos p {
+  max-width: 100%;
+}
 .membership .contact-infos a {
   color: #748cbc;
-  font-size: clamp(1rem, 5vmin, 1.2rem);
+  font-size: clamp(0.9rem, 4.5vmin, 1.2rem);
 }
 .membership .contact-infos a:visited {
   color: #748cbc;
