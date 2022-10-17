@@ -48,7 +48,6 @@
 
   .procedure {
     margin: 0 auto;
-    // margin: 0 auto 1.6rem;
     width: 100%;
     max-width: 63rem;
 
@@ -105,130 +104,57 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 1.2rem;
-      // position: relative;
 
       @include ptt {
         grid-column: 1/3;
         margin-top: 1.2rem;
-        // position: static;
-      }
-
-      button.open-overlay {
-        display: inline-block;
-        min-width: 100%;
-        text-align: center;
-
-        @include ptt {
-          display: none;
-        }
       }
 
       .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        position: absolute;
-        z-index: 150;
-        top: 0;
-        transform: translateX(150vw);
-        background: $bg-4;
-        width: 100vw;
-        min-height: 2500px;
-
-        @include ptt {
-          position: static;
-          z-index: 1;
-          width: 100%;
-          min-height: 0;
-          border: 2px solid $primary-1;
-          border-radius: 14px;
-          overflow: hidden;
-          transform: none;
-        }
-
-        &-header-mobile {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: $primary-1;
-          width: 100vw;
-          padding: 5rem 0.6rem 1rem;
-          border-radius: 0 0 12px 12px;
-          color: $content-light;
-          position: relative;
-
-          @include ptt {
-            display: none;
-          }
-
-          i {
-            position: absolute;
-            top: 1.6rem;
-            left: 1rem;
-            font-size: 1.5rem;
-            z-index: 200;
-            color: $content-light;
-            padding: 0.6rem;
-          }
-
-          span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 80vw;
-            min-height: 2rem;
-            font-size: 1.3rem;
-            font-weight: 480;
-            text-align: center;
-            line-height: 25px;
-          }
-        }
+        // background: $bg-4;
+        width: 100%;
+        min-height: 0;
+        border: 2px solid $primary-1;
+        border-radius: 14px;
+        overflow: hidden;
+        transform: none;
       }
 
       button.slider {
-        display: none;
-
-        @include ptt {
-          display: block;
-          max-width: 18rem;
-          padding: 0.9rem 4rem !important;
-          z-index: 2;
-          max-width: none;
-          min-width: 100%;
-          position: relative;
-        }
+        display: block;
+        max-width: 18rem;
+        padding: 0.9rem clamp(3rem, 10vmin, 4rem) !important;
+        z-index: 2;
+        max-width: none;
+        min-width: 100%;
+        position: relative;
 
         strong {
           font-weight: 500;
         }
 
         i {
-          display: none;
-
-          @include ptt {
-            display: block;
-            position: absolute;
-            align-self: center;
-            margin: auto 0;
-            top: 50%;
-            right: 1rem;
-            z-index: 5;
-            transform: translateY(-50%);
-            transition: transform 0.3s ease-out;
-          }
+          display: block;
+          position: absolute;
+          align-self: center;
+          margin: auto 0;
+          top: 50%;
+          right: 1rem;
+          z-index: 5;
+          transform: translateY(-50%);
+          transition: transform 0.3s ease-out;
         }
       }
 
       .details {
         display: flex;
         flex-direction: column;
-        max-width: 95vw;
         overflow: scroll;
-
-        @include ptt {
-          max-height: 0rem;
-          transition: max-height 0.5s ease-out;
-        }
+        max-height: 0rem;
+        transition: max-height 0.5s ease-out;
 
         .block {
           display: flex;
@@ -255,7 +181,6 @@
           .text {
             display: flex;
             flex-direction: column;
-            // justify-content: center;
             align-items: center;
             gap: 0.6rem;
             text-align: justify;
