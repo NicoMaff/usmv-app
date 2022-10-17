@@ -1559,18 +1559,20 @@ footer p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: absolute;
   z-index: 150;
   top: 0;
   transform: translateX(150vw);
   background: #f4f4f5;
   width: 100vw;
+  min-height: 2500px;
 }
 @media (min-width: 600px) {
   .membership .procedure-details .container {
     position: static;
     z-index: 1;
     width: 100%;
+    min-height: 0;
     border: 2px solid #2c61c9;
     border-radius: 14px;
     overflow: hidden;
@@ -1583,13 +1585,35 @@ footer p {
   align-items: center;
   background: #2c61c9;
   width: 100vw;
-  padding: 6rem 0.6rem 0.6rem;
+  padding: 5rem 0.6rem 1rem;
   border-radius: 0 0 12px 12px;
+  color: #f5f8ff;
+  position: relative;
 }
 @media (min-width: 600px) {
   .membership .procedure-details .container-header-mobile {
     display: none;
   }
+}
+.membership .procedure-details .container-header-mobile i {
+  position: absolute;
+  top: 1.6rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  z-index: 200;
+  color: #f5f8ff;
+  padding: 0.6rem;
+}
+.membership .procedure-details .container-header-mobile span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 80vw;
+  min-height: 2rem;
+  font-size: 1.3rem;
+  font-weight: 480;
+  text-align: center;
+  line-height: 25px;
 }
 .membership .procedure-details button.slider {
   display: none;

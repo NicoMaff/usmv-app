@@ -56,6 +56,11 @@ const overlayBackBtns = document.querySelectorAll(".overlay-back-button");
 overlayBtns.forEach((overlayBtn) => {
   overlayBtn.addEventListener("click", () => {
     overlayBtn.nextElementSibling.style.transform = "translateX(0)";
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   });
 });
 
@@ -81,14 +86,23 @@ sliderBtns.forEach((sliderBtn) => {
     const otherBtns = [...sliderBtns].filter(
       (otherBtn) => otherBtn.textContent != sliderBtn.textContent
     );
-    console.log(sliderBtn.getBoundingClientRect().pageY);
-    if (sliderBtn.nextElementSibling.style.maxHeight == "65rem") {
-      window.scroll(0, sliderBtn.getBoundingClientRect().y);
-    }
+
+    window.scroll({
+      left: 0,
+      top:
+        document.documentElement.scrollTop +
+        sliderBtn.getBoundingClientRect().top -
+        100,
+      behavior: "smooth",
+    });
 
     otherBtns.forEach((otherButton) => {
-      if (otherButton.nextElementSibling.style.maxHeight != "0px") {
-        otherButton.nextElementSibling.style.maxHeight = "0px";
+      if (
+        otherButton.nextElementSibling.nextElementSibling.style.maxHeight !=
+        "0px"
+      ) {
+        otherButton.nextElementSibling.nextElementSibling.style.maxHeight =
+          "0px";
         otherButton.children[0].style.transform = "translateY(-50%) rotate(0)";
       }
     });

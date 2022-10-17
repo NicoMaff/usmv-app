@@ -127,17 +127,19 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        position: fixed;
+        position: absolute;
         z-index: 150;
         top: 0;
         transform: translateX(150vw);
         background: $bg-4;
         width: 100vw;
+        min-height: 2500px;
 
         @include ptt {
           position: static;
           z-index: 1;
           width: 100%;
+          min-height: 0;
           border: 2px solid $primary-1;
           border-radius: 14px;
           overflow: hidden;
@@ -148,15 +150,37 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          // height: 5rem;
           background: $primary-1;
           width: 100vw;
-          // min-height: 2rem;
-          padding: 6rem 0.6rem 0.6rem;
+          padding: 5rem 0.6rem 1rem;
           border-radius: 0 0 12px 12px;
+          color: $content-light;
+          position: relative;
 
           @include ptt {
             display: none;
+          }
+
+          i {
+            position: absolute;
+            top: 1.6rem;
+            left: 1rem;
+            font-size: 1.5rem;
+            z-index: 200;
+            color: $content-light;
+            padding: 0.6rem;
+          }
+
+          span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 80vw;
+            min-height: 2rem;
+            font-size: 1.3rem;
+            font-weight: 480;
+            text-align: center;
+            line-height: 25px;
           }
         }
       }
