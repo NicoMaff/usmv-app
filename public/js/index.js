@@ -1,6 +1,5 @@
-// Handle mobile navigation
+// --- Handle mobile navigation --- //
 
-// const menuButton = document.getElementById(menuButton);
 const lineOverlay = document.querySelector(".line");
 const navMobile = document.querySelector(".nav-mobile");
 const subMenus = document.querySelectorAll(".sub-menu");
@@ -23,8 +22,7 @@ lineOverlay.addEventListener("click", () => {
 });
 
 // ---
-
-// Handle mobile sub-navigation
+// --- Handle mobile sub-navigation --- //
 
 const backButtons = document.querySelectorAll(".sub-menu-header i");
 const tabs = document.querySelectorAll(".tab");
@@ -46,33 +44,8 @@ document
   .querySelector(".nav-mobile")
   .addEventListener("drag", (e) => console.log(e));
 
-//
-
-// --- Open overlay in membership page --- //
-
-// const overlayBtns = document.querySelectorAll(".open-overlay");
-// const overlayBackBtns = document.querySelectorAll(".overlay-back-button");
-
-// overlayBtns.forEach((overlayBtn) => {
-//   overlayBtn.addEventListener("click", () => {
-//     overlayBtn.nextElementSibling.style.transform = "translateX(0)";
-//     window.scroll({
-//       top: 0,
-//       left: 0,
-//       behavior: "smooth",
-//     });
-//   });
-// });
-
-// overlayBackBtns.forEach((backBtn) => {
-//   backBtn.addEventListener("click", (e) => {
-//     backBtn.parentNode.parentNode.style.transform = "translateX(150vw)";
-//   });
-// });
-
-//
-
-// Handle membership page sliders
+// ---
+// --- Handle membership page sliders --- //
 
 const sliderBtns = document.querySelectorAll(".slider");
 const arrowBtns = document.querySelectorAll(".slider i");
@@ -115,35 +88,5 @@ sliderBtns.forEach((sliderBtn) => {
         behavior: "smooth",
       });
     }, 300);
-
-    // if (e.target.localName == "i") {
-    //   if (!e.target.parentNode.nextElementSibling.style.maxHeight) {
-    //     e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
-    //     e.target.style.transform = "translateY(-50%) rotate(180deg)";
-    //   } else if (
-    //     e.target.parentNode.nextElementSibling.style.maxHeight == "0px"
-    //   ) {
-    //     e.target.parentNode.nextElementSibling.style.maxHeight = "65rem";
-    //     e.target.style.transform = "translateY(-50%) rotate(180deg)";
-    //   } else {
-    //     e.target.parentNode.nextElementSibling.style.maxHeight = "0px";
-    //     e.target.style.transform = "translateY(-50%) rotate(0)";
-    //   }
-    // } else {
-    //   if (!e.target.nextElementSibling.style.maxHeight) {
-    //     e.target.nextElementSibling.style.maxHeight = "65rem";
-    //     e.target.children[0].style.transform =
-    //       "translateY(-50%) rotate(180deg)";
-    //   } else if (e.target.nextElementSibling.style.maxHeight == "0px") {
-    //     e.target.nextElementSibling.style.maxHeight = "65rem";
-    //     e.target.children[0].style.transform =
-    //       "translateY(-50%) rotate(180deg)";
-    //   } else {
-    //     e.target.nextElementSibling.style.maxHeight = "0px";
-    //     e.target.children[0].style.transform = "translateY(-50%) rotate(0)";
-    //   }
-    // }
   });
 });
-
-document.addEventListener("click", (e) => console.log(e.target));

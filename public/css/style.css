@@ -1557,7 +1557,7 @@ footer p {
 .membership .procedure-details button.slider {
   display: block;
   max-width: 18rem;
-  padding: 0.9rem clamp(3rem, 10vmin, 4rem) !important;
+  padding: 1rem clamp(3rem, 10vmin, 4rem) !important;
   z-index: 2;
   min-width: 100%;
   position: relative;
@@ -1691,7 +1691,7 @@ footer p {
 }
 .membership .contact-infos a {
   color: #748cbc;
-  font-size: clamp(0.9rem, 4.5vmin, 1.2rem);
+  font-size: clamp(0.9rem, 4.5vmin, 1.5rem);
 }
 .membership .contact-infos a:visited {
   color: #748cbc;
