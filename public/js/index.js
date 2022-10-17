@@ -1,6 +1,5 @@
-// Handle mobile navigation
+// --- Handle mobile navigation --- //
 
-// const menuButton = document.getElementById(menuButton);
 const lineOverlay = document.querySelector(".line");
 const navMobile = document.querySelector(".nav-mobile");
 const subMenus = document.querySelectorAll(".sub-menu");
@@ -23,8 +22,7 @@ lineOverlay.addEventListener("click", () => {
 });
 
 // ---
-
-// Handle mobile sub-navigation
+// --- Handle mobile sub-navigation --- //
 
 const backButtons = document.querySelectorAll(".sub-menu-header i");
 const tabs = document.querySelectorAll(".tab");
@@ -45,3 +43,50 @@ lineOverlay.addEventListener("drag", (e) => console.log("yes"));
 document
   .querySelector(".nav-mobile")
   .addEventListener("drag", (e) => console.log(e));
+
+// ---
+// --- Handle membership page sliders --- //
+
+const sliderBtns = document.querySelectorAll(".slider");
+const arrowBtns = document.querySelectorAll(".slider i");
+
+const sliderBtnsArray = Object.values(sliderBtns);
+console.log(sliderBtnsArray);
+
+sliderBtns.forEach((sliderBtn) => {
+  sliderBtn.addEventListener("click", (e) => {
+    console.log(e);
+    const otherBtns = [...sliderBtns].filter(
+      (otherBtn) => otherBtn.textContent != sliderBtn.textContent
+    );
+
+    otherBtns.forEach((otherButton) => {
+      if (otherButton.nextElementSibling.style.maxHeight != "0px") {
+        otherButton.nextElementSibling.style.maxHeight = "0px";
+        otherButton.children[0].style.transform = "translateY(-50%) rotate(0)";
+      }
+    });
+
+    if (!sliderBtn.nextElementSibling.style.maxHeight) {
+      sliderBtn.nextElementSibling.style.maxHeight = "150rem";
+      sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
+    } else if (sliderBtn.nextElementSibling.style.maxHeight == "0px") {
+      sliderBtn.nextElementSibling.style.maxHeight = "150rem";
+      sliderBtn.children[0].style.transform = "translateY(-50%) rotate(180deg)";
+    } else {
+      sliderBtn.nextElementSibling.style.maxHeight = "0px";
+      sliderBtn.children[0].style.transform = "translateY(-50%) rotate(0)";
+    }
+
+    setTimeout(() => {
+      window.scroll({
+        left: 0,
+        top:
+          document.documentElement.scrollTop +
+          sliderBtn.getBoundingClientRect().top -
+          110,
+        behavior: "smooth",
+      });
+    }, 300);
+  });
+});

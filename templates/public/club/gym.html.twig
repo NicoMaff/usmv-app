@@ -1,0 +1,110 @@
+{% extends "base.html.twig" %}
+
+{% block title %}USMV Badminton - Infos / Horaires / Créneaux{% endblock %}
+
+{% block main %}
+
+<main class="club-gym">
+
+  <h1>Les gymnases</h1>
+  
+  <div class="container">
+    <h2>Gymnase des Petits Marais</h2>
+    <div class="content">
+        <iframe src="https://maps.google.com/maps?q=gymnase%20des%20petits%20marais,%20villeparisis&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+        </iframe>
+        <div class="infos">
+          <p><span>Adresse</span> : Chemin des Petits Marais 77270 VILLEPARISIS</p>
+          <p>
+            <span>Accès route</span> : Autoroute A104, sortie Villeparisis Centre<br>
+            <span>Accès SNCF</span> : RER B, arrêt Villeparisis-Mitry le Neuf, puis bus 18 (arrêt Collège Gérard Phillipe). Pour prendre le bus en sortant de la gare, prendre la sortie “Place du Marché”. L’arrêt se trouve devant la pharmacie.
+          </p>
+          <p>
+            <span>Nombre de terrains disponibles</span> : 7<br>
+            <span>Gardien</span> : oui<br>
+            <span>Stationnement</span> : grand parking à disposition au complexe sportif des Petits Marais (ferme à 23h30)<br>
+            Du grand parking, marcher 200 m jusqu’à l’entrée du gumanse, en empruntant la voie piétonne qui longe les terrains de football.
+          </p>
+          <p>
+            Ce <strong>gymnase, l’un des meilleurs de Seine-et-Marne pour la pratique du badminton</strong>, est principalement utilisé pour les créneaux compétiteurs ainsi que pour les tournois BadTour (2 fois par an).
+          </p>
+        </div>
+
+        <table class="table1">
+          <tr>
+            <th></th>
+            <th>Horaires Jeunes Compétiteurs</th>
+            <th>Horaires Adultes Compétiteurs</th>
+          </tr>
+          <tr>
+            <th>Lundi</th>
+            <td><span>18h00 - 20h00</span><span>Entrainement</span></td>
+            <td><span>20h00 - 22h30</span><span>Jeu libre</span></td>
+          </tr>
+          <tr>
+            <th>Mercredi</th>
+            <td></td>
+            <td><span>20h30 - 22h30</span><span>Jeu libre</span></td>
+          </tr>
+          <tr>
+            <th>Vendredi</th>
+            <td><span>18h00 - 20h00</span><span>Entrainement</span></td>
+            <td><span>10h00 - 12h00</span><span>Jeu libre</span></td>
+          </tr>
+          <tr>
+            <th>Dimanche</th>
+            <td><span>10h00 - 12h00</span><span>Jeu libre</span></td>
+          </tr>
+        </table>
+
+        <img src="/assets/img/gymnase-pm.jpg" alt="photo de l'intérieur du gymnase des Petits Marais">
+
+    </div>
+
+    <h2>Gymnase Aubertin</h2>
+
+    <div class="content">
+
+      <iframe src="https://maps.google.com/maps?q=gymnase%20aubergines,%20villeparisis&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
+      <div class="infos">
+        <p><span>Adresse</span> : 69 avenue de Ruzé, 77270 VILLEPARISIS</p>
+        <p>
+          <span>Accès route</span> : Autoroute A104, sortie Villeparisis Centre<br>
+          <span>Accès SNCF</span> : RER B, arrêt Villeparisis-Mitry-le-neuf, puis bus 23 (arrêt Gymnase Aubertin)          
+        </p>
+        <p>
+          <span>Nombre de terrains disponibles</span> : 7<br>
+          <span>Gardien</span> : oui<br>
+          <span>Stationnement</span> : dans la rue, en face du gymnase
+        </p>
+        <p>Ce gymnase est principalement utilisé pour les créneaux Loisirs.</p>
+      </div>
+
+       <table class="table2">
+          <tr>
+            <th></th>
+            <th>Horaires Loisirs</th>
+          </tr>
+          <tr>
+            <th>Mardi</th>
+            <td><span>20h30 - 22h30</span><span>Jeu libre</span></td>
+          </tr>
+          <tr>
+            <th>Jeudi</th>
+            <td><span>20h00 - 22h30</span><span>Jeu libre / Entraînement</span></td>
+          </tr>
+          <tr>
+            <th>Dimanche</th>
+            <td><span>10h00 - 12h00</span><span>Jeu libre</span></td>
+          </tr>
+        </table>
+
+        <img src="/assets/img/gymnase-aubertin.jpg" alt="photo de l'intérieur du gymnase Aubertin">
+    
+    </div>
+  </div>
+  
+</main>
+
+{% endblock %}

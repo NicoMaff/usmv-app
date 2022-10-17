@@ -5,11 +5,16 @@
   "repository": "https://github.com/N1Code7/usmv-app.git",
   "author": "N1Code7 <n1code7@outlook.fr>",
   "license": "MIT",
+  "browserslist": "last 4 versions",
   "scripts": {
-    "sass": "sass --watch ./sass/index.scss:./public/css/style.css"
+    "sass": "sass --watch ./sass/index.scss:./public/css/style.css",
+    "prefix": "postcss ./public/css/style.css --use autoprefixer -d ./public/css/"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.12",
     "gitmoji-cli": "^6.2.0",
+    "postcss": "^8.4.17",
+    "postcss-cli": "^10.0.0",
     "sass": "^1.55.0"
   }
 }

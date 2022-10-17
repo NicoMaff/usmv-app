@@ -3,14 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
         <title>{% block title %}USMV Badminton{% endblock %}</title>
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% block stylesheets %}{% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
 
@@ -41,13 +40,12 @@
                                     <i class="fa-solid fa-circle-chevron-left backButton"></i>
                                     <span>Le club</span>
                                 </div>
-                                <li><a href="#">Présentation</a></li>
-                                <li><a href="#">Infos / Horaires / Créneaux</a></li>
-                                <li><a href="#">Acteurs du club</a></li>
-                                <li><a href="#">Gymnases</a></li>
+                                <li><a href="{{ path("app_club_introduction") }}">Présentation</a></li>
+                                <li><a href="{{ path("app_club_contributors") }}">Acteurs du club</a></li>
+                                <li><a href="{{ path("app_club_gym") }}">Gymnases</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Inscription</a></li>
+                        <li><a href="{{ path("app_membership_index") }}">Inscription</a></li>
                         <li class="tab">Jeunes
                             <ul class="sub-menu">
                                 <div class="sub-menu-header">
@@ -89,13 +87,12 @@
                     <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
                     <li>Le Club
                         <ul class="sub-menu">
-                            <li><a href="#">Présentation</a></li>
-                            <li><a href="#">Infos / Horaires / Créneaux</a></li>
-                            <li><a href="#">Acteurs du club</a></li>
-                            <li><a href="#">Gymnases</a></li>
+                            <li><a href="{{ path("app_club_introduction") }}">Présentation</a></li>
+                            <li><a href="{{ path("app_club_contributors") }}">Acteurs du club</a></li>
+                            <li><a href="{{ path("app_club_gym") }}">Gymnases</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Inscription</a></li>
+                    <li><a href="{{ path("app_membership_index") }}">Inscription</a></li>
                     <li>Jeunes
                         <ul class="sub-menu">
                             <li><a href="#">Créneaux / Infos pratiques</a></li>
@@ -132,10 +129,8 @@
             </nav>
         </header>
 
-        <main>
-            {% block main %}{% endblock %}
-        </main>
-
+        {% block main %}{% endblock %}
+        
         <footer>
             <ul>
                 <li>Nous contacter</li>

@@ -24,8 +24,13 @@ main {
   flex-grow: 2;
   margin: 7rem 1rem 5rem;
 
-  @media (min-width: 600px) {
+  @include ptt {
     margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
+  }
+
+  @include big-screen {
+    max-width: 1500px;
+    margin: 7rem auto 5rem;
   }
 }
 
@@ -38,7 +43,7 @@ h4 {
 
 h1 {
   text-align: center;
-  margin: 1rem auto 1.6rem;
+  margin: 1rem auto 2rem;
   font-weight: 400;
 
   @media (min-width: 600px) {
@@ -49,8 +54,9 @@ h1 {
 
 h2 {
   font-family: $font-body;
-  font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-weight: 580;
+  margin-bottom: 1.2rem;
 }
 
 ul,

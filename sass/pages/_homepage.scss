@@ -1,15 +1,17 @@
-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  // max-height: 75vh;
-  max-width: 35rem;
-  margin: 0 auto 1.5rem;
-  padding: 1rem 1.2rem 0.9rem;
-  background: $bg-3;
-  border-radius: 15px;
+.homepage {
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    // max-height: 75vh;
+    max-width: 35rem;
+    margin: 0 auto 1.5rem;
+    padding: 1rem 1.2rem 0.9rem;
+    background: $bg-3;
+    border-radius: 15px;
 
-  &:last-of-type {
-    margin: 0 auto;
+    &:last-of-type {
+      margin: 0 auto;
+    }
   }
 }

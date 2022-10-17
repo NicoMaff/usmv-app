@@ -39,3 +39,29 @@ $bg-3: #dfe3ec;
 $bg-4: #f4f4f5;
 
 $gradient-1: linear-gradient(180deg, #ea8121, #bf6512);
+
+//
+// --- MIXINS --- //
+@mixin from($size) {
+  @media (min-width: "#{$size}px") {
+    @content;
+  }
+}
+
+@mixin to($size) {
+  @media (max-width: "#{$size}px") {
+    @content;
+  }
+}
+
+@mixin ptt {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin big-screen {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}

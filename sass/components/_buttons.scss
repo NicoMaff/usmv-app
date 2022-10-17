@@ -4,6 +4,9 @@
   align-items: center;
   border: none;
   border-radius: 5px;
+  line-height: 21px;
+  cursor: pointer;
+  font-family: $font-body;
 
   &-menu {
     color: $content-light;
@@ -11,6 +14,19 @@
     padding: 0.6rem 1.2rem;
     font-weight: 600;
     font-size: 1.1rem;
+  }
+
+  &-level1 {
+    color: $content-light;
+    background: $primary-1;
+    padding: 0.9rem 1.2rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 10px;
+
+    &:visited {
+      color: $content-light;
+    }
   }
 
   &-level2 {
