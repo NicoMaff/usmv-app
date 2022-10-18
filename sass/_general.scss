@@ -56,10 +56,14 @@ h2 {
   font-family: $font-body;
   font-size: clamp(1.2rem, 5vmin, 1.5rem);
   font-weight: 580;
-  margin-bottom: 1.2rem;
+  margin-bottom: clamp(1rem, 5vmin, 1.2rem);
 }
 
 ul,
 li {
   list-style: none;
+}
+
+img {
+  object-fit: cover;
 }

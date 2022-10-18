@@ -19,8 +19,35 @@
       padding-left: 1.5rem;
     }
     li {
-      list-style-type: "👉";
+      list-style-type: "▪️";
       padding: 0.3rem;
+    }
+  }
+
+  table.schedule {
+    border-collapse: collapse;
+
+    td {
+      height: 3rem;
+    }
+    th {
+      height: 3.5rem;
+    }
+
+    td,
+    th {
+      text-align: center;
+      border: 1px solid black;
+    }
+  }
+
+  img {
+    max-height: 20vh;
+  }
+
+  .sunday-slot {
+    p:first-of-type {
+      margin-bottom: 0.6rem;
     }
   }
 

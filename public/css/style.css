@@ -72,12 +72,16 @@ h2 {
   font-family: "Montserrat-reg", sans-serif;
   font-size: clamp(1.2rem, 5vmin, 1.5rem);
   font-weight: 580;
-  margin-bottom: 1.2rem;
+  margin-bottom: clamp(1rem, 5vmin, 1.2rem);
 }
 
 ul,
 li {
   list-style: none;
+}
+
+img {
+  object-fit: cover;
 }
 
 .btn {
@@ -1715,8 +1719,28 @@ footer p {
   padding-left: 1.5rem;
 }
 .youths-infos .infos-text li {
-  list-style-type: "👉";
+  list-style-type: "▪️";
   padding: 0.3rem;
+}
+.youths-infos table.schedule {
+  border-collapse: collapse;
+}
+.youths-infos table.schedule td {
+  height: 3rem;
+}
+.youths-infos table.schedule th {
+  height: 3.5rem;
+}
+.youths-infos table.schedule td,
+.youths-infos table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+}
+.youths-infos img {
+  max-height: 20vh;
+}
+.youths-infos .sunday-slot p:first-of-type {
+  margin-bottom: 0.6rem;
 }
 .youths-infos .prices-container table {
   color: #f5f8ff;
