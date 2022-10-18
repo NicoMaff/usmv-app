@@ -1,48 +1,75 @@
 .youths-infos {
+  p {
+    text-align: justify;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
+    gap: 2rem;
+
+    & > p {
+      margin-top: -1rem;
+      @include from(800) {
+        text-align: center;
+      }
+    }
   }
 
   .infos-text {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
-
-    p {
-      text-align: justify;
-    }
+    gap: 0.9rem;
 
     ul {
-      margin-top: -0.6rem;
+      margin-top: -0.9rem;
       padding-left: 1.5rem;
     }
     li {
       list-style-type: "▪️";
-      padding: 0.3rem;
+      padding-top: 0.3rem;
+
+      &:last-of-type {
+        padding-bottom: 0.3rem;
+      }
     }
   }
 
   table.schedule {
     border-collapse: collapse;
+    max-width: 35rem;
+    margin: 0 auto;
 
     td {
-      height: 3rem;
+      height: clamp(3rem, 15vmin, 3.5rem);
     }
     th {
-      height: 3.5rem;
+      height: clamp(3.5rem, 17.5vmin, 4rem);
     }
 
     td,
     th {
       text-align: center;
       border: 1px solid black;
+      padding: 0.3rem 0.9rem;
+      font-size: clamp(0.9rem, 4.5vmin, 1rem);
     }
   }
 
+  .img-container {
+    display: flex;
+    // flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    // margin: 0 auto;
+  }
+
   img {
-    max-height: 20vh;
+    height: clamp(10rem, 50vmin, 22rem);
+    width: clamp(18rem, 80vmin, 38rem);
   }
 
   .sunday-slot {

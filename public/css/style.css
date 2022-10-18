@@ -82,6 +82,7 @@ li {
 
 img {
   object-fit: cover;
+  border-radius: 3px;
 }
 
 .btn {
@@ -1701,43 +1702,67 @@ footer p {
   color: #748cbc;
 }
 
+.youths-infos p {
+  text-align: justify;
+}
 .youths-infos .container {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 2rem;
+}
+.youths-infos .container > p {
+  margin-top: -1rem;
+}
+@media (min-width: 800px) {
+  .youths-infos .container > p {
+    text-align: center;
+  }
 }
 .youths-infos .infos-text {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-}
-.youths-infos .infos-text p {
-  text-align: justify;
+  gap: 0.9rem;
 }
 .youths-infos .infos-text ul {
-  margin-top: -0.6rem;
+  margin-top: -0.9rem;
   padding-left: 1.5rem;
 }
 .youths-infos .infos-text li {
   list-style-type: "▪️";
-  padding: 0.3rem;
+  padding-top: 0.3rem;
+}
+.youths-infos .infos-text li:last-of-type {
+  padding-bottom: 0.3rem;
 }
 .youths-infos table.schedule {
   border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto;
 }
 .youths-infos table.schedule td {
-  height: 3rem;
+  height: clamp(3rem, 15vmin, 3.5rem);
 }
 .youths-infos table.schedule th {
-  height: 3.5rem;
+  height: clamp(3.5rem, 17.5vmin, 4rem);
 }
 .youths-infos table.schedule td,
 .youths-infos table.schedule th {
   text-align: center;
   border: 1px solid black;
+  padding: 0.3rem 0.9rem;
+  font-size: clamp(0.9rem, 4.5vmin, 1rem);
+}
+.youths-infos .img-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
 }
 .youths-infos img {
-  max-height: 20vh;
+  height: clamp(10rem, 50vmin, 22rem);
+  width: clamp(18rem, 80vmin, 38rem);
 }
 .youths-infos .sunday-slot p:first-of-type {
   margin-bottom: 0.6rem;
