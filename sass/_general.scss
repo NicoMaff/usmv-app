@@ -65,6 +65,15 @@ li {
   list-style: none;
 }
 
+p {
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+  color: $link;
+}
+
 img {
   object-fit: cover;
   border-radius: 3px;

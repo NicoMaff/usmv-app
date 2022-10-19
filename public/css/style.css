@@ -81,6 +81,15 @@ li {
   list-style: none;
 }
 
+p {
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+  color: #748cbc;
+}
+
 img {
   object-fit: cover;
   border-radius: 3px;
@@ -1968,6 +1977,86 @@ main.youths-tournaments-list .infos a {
   font-size: clamp(0.8rem, 4.5vmin, 1.1rem);
   text-align: center;
   padding: 0.6rem clamp(0.3rem, 1.5vmin, 0.6rem);
+}
+
+main.competitions-infos h3 {
+  font-family: "Montserrat-reg", sans-serif;
+  margin-bottom: 0.6rem;
+}
+main.competitions-infos a {
+  display: block;
+  font-size: clamp(0.8rem, 4.5vmin, 1.1rem);
+  text-align: center;
+  padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
+}
+main.competitions-infos strong {
+  font-weight: 580;
+}
+main.competitions-infos img {
+  height: 12rem;
+}
+main.competitions-infos .container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+main.competitions-infos .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+main.competitions-infos .img-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+main.competitions-infos table.schedule {
+  border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto 1.2rem;
+}
+main.competitions-infos table.schedule td {
+  height: clamp(3rem, 15vmin, 3.5rem);
+}
+main.competitions-infos table.schedule th {
+  height: clamp(3.5rem, 17.5vmin, 4rem);
+}
+main.competitions-infos table.schedule td,
+main.competitions-infos table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+  padding: 0.3rem 0.9rem;
+  font-size: clamp(0.9rem, 4.5vmin, 1rem);
+}
+main.competitions-infos .slots .img-container {
+  margin-bottom: 1.2rem;
+}
+main.competitions-infos .shuttles .img-container {
+  margin-bottom: 1.2rem;
+}
+main.competitions-infos .prices table {
+  color: #f5f8ff;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #748cbc;
+  border: 1px solid #f5f8ff;
+  border-collapse: collapse;
+}
+main.competitions-infos .prices tr td:first-of-type {
+  width: clamp(13rem, 65vw, 30rem);
+}
+main.competitions-infos .prices tr td:last-of-type {
+  width: clamp(5rem, 25vw, 12rem);
+}
+main.competitions-infos .prices td {
+  font-size: clamp(0.9rem, 4vmin, 1rem);
+  text-align: center;
+  height: clamp(2rem, 10vmin, 3rem);
+  border: 1px solid #f5f8ff;
 }
 
 /*# sourceMappingURL=style.css.map */
