@@ -1998,13 +1998,14 @@ main.competitions-infos img {
 main.competitions-infos .container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: clamp(2rem, 3.2vw, 3.5rem);
 }
 main.competitions-infos .text {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2rem);
+  line-height: clamp(20px, 5vw, 25px);
 }
 main.competitions-infos .img-container {
   display: flex;
@@ -2017,7 +2018,13 @@ main.competitions-infos .img-container {
 main.competitions-infos table.schedule {
   border-collapse: collapse;
   max-width: 35rem;
-  margin: 0 auto 1.2rem;
+  margin: 0 auto;
+}
+@media (min-width: 1000px) {
+  main.competitions-infos table.schedule {
+    margin: 0 0 0 auto;
+    min-width: clamp(22rem, 35vw, 35rem);
+  }
 }
 main.competitions-infos table.schedule td {
   height: clamp(3rem, 15vmin, 3.5rem);
@@ -2032,11 +2039,31 @@ main.competitions-infos table.schedule th {
   padding: 0.3rem 0.9rem;
   font-size: clamp(0.9rem, 4.5vmin, 1rem);
 }
+main.competitions-infos table.schedule td span,
+main.competitions-infos table.schedule th span {
+  display: block;
+  padding: 0.1rem;
+}
 main.competitions-infos .slots .img-container {
   margin-bottom: 1.2rem;
 }
+main.competitions-infos .slots .text:last-of-type {
+  margin-bottom: 0;
+}
+main.competitions-infos .slots .up {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2rem);
+  gap: clamp(1rem, 1.5vw, 3rem);
+}
+@media (min-width: 1000px) {
+  main.competitions-infos .slots .up {
+    flex-direction: row;
+    align-items: center;
+  }
+}
 main.competitions-infos .shuttles .img-container {
-  margin-bottom: 1.2rem;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2rem);
 }
 main.competitions-infos .prices table {
   color: #f5f8ff;
