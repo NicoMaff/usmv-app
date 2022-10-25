@@ -16,7 +16,7 @@ main.competitions-infos {
   }
 
   img {
-    height: 12rem;
+    height: clamp(12rem, 60vmin, 20rem);
   }
 
   .container {
@@ -29,7 +29,7 @@ main.competitions-infos {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    margin-bottom: clamp(1.2rem, 1.9vw, 2rem);
+    margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
     line-height: clamp(20px, 5vw, 25px);
   }
 
@@ -40,8 +40,10 @@ main.competitions-infos {
     align-items: center;
     gap: 1rem;
     width: 100%;
-    // height: 16rem;
-    // margin: 1rem 0;
+
+    @include ptt {
+      justify-content: space-evenly;
+    }
   }
 
   table.schedule {
@@ -77,6 +79,13 @@ main.competitions-infos {
   }
 
   .slots {
+    img {
+      @include ptt {
+        height: clamp(15rem, 25vw, 20rem);
+        width: clamp(25rem, 40vw, 30rem);
+      }
+    }
+
     .img-container {
       margin-bottom: 1.2rem;
     }
@@ -88,23 +97,79 @@ main.competitions-infos {
     .up {
       display: flex;
       flex-direction: column;
-      margin-bottom: clamp(1.2rem, 1.9vw, 2rem);
+      margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
       gap: clamp(1rem, 1.5vw, 3rem);
 
       @include from(1000) {
         flex-direction: row;
         align-items: center;
       }
+    }
+
+    .sunday-slot {
+      padding-top: 1rem;
 
       .text {
-        // max-width: clamp(28rem, 40vw, 60rem);
+        line-height: 20px;
+        gap: 0.3rem;
+      }
+    }
+  }
+
+  .tournaments {
+    img {
+      @include ptt {
+        height: clamp(15rem, 25vw, 20rem);
+        width: clamp(25rem, 40vw, 30rem);
+      }
+    }
+  }
+
+  .partnership {
+    img {
+      height: 100%;
+    }
+
+    .img-container {
+      @include ptt {
+        width: 20rem;
+        margin: 0 auto;
       }
     }
   }
 
   .shuttles {
+    img {
+      height: 100%;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      @include ptt {
+        flex-direction: row;
+      }
+    }
+
     .img-container {
-      margin-bottom: clamp(1.2rem, 1.9vw, 2rem);
+      &:first-of-type {
+        height: 12rem;
+        max-width: 16rem;
+        margin: 0 auto;
+      }
+
+      &:last-of-type {
+        width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
+
+        @include ptt {
+          margin: clamp(1rem, 3vw, 3rem) auto 0;
+        }
+      }
     }
   }
 
