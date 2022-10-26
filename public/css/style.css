@@ -2145,4 +2145,77 @@ main.competitions-infos .prices td {
   border: 1px solid #f5f8ff;
 }
 
+main.competitions-trainings h2 {
+  text-align: center;
+}
+main.competitions-trainings strong {
+  font-weight: 580;
+}
+main.competitions-trainings .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+  line-height: clamp(20px, 5vw, 25px);
+}
+main.competitions-trainings .img-container {
+  height: clamp(12rem, 60vmin, 18rem);
+  width: min(100%, 32rem);
+  margin: 0 auto;
+}
+@media (min-width: 1000px) {
+  main.competitions-trainings .img-container {
+    height: 18rem;
+    width: 27rem;
+  }
+}
+main.competitions-trainings table.schedule {
+  border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto clamp(1.2rem, 1.9vw, 2.5rem);
+}
+@media (min-width: 1000px) {
+  main.competitions-trainings table.schedule {
+    min-width: clamp(22rem, 35vw, 35rem);
+  }
+}
+main.competitions-trainings table.schedule td {
+  height: clamp(3rem, 15vmin, 3.5rem);
+}
+main.competitions-trainings table.schedule th {
+  height: clamp(3.5rem, 17.5vmin, 4rem);
+  font-weight: 580;
+}
+main.competitions-trainings table.schedule td,
+main.competitions-trainings table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+  padding: 0.3rem clamp(0.3rem, 1.2vmin, 0.9rem);
+  font-size: clamp(0.8rem, 4vmin, 1rem);
+}
+main.competitions-trainings table.schedule td span,
+main.competitions-trainings table.schedule th span {
+  display: block;
+  padding: 0.1rem;
+}
+main.competitions-trainings .trainer h3 {
+  font-size: clamp(0.9rem, 4vmin, 1.1rem);
+}
+main.competitions-trainings .trainer .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 1000px) {
+  main.competitions-trainings .trainer .wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+main.competitions-trainings .trainer .text {
+  flex: 2 2;
+  margin-bottom: 0;
+}
+
 /*# sourceMappingURL=style.css.map */
