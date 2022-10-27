@@ -65,3 +65,15 @@ $gradient-1: linear-gradient(180deg, #ea8121, #bf6512);
     @content;
   }
 }
+
+@mixin coarse {
+  @media (pointer: coarse) {
+    @content;
+  }
+}
+
+@mixin fine {
+  @media (pointer: fine) {
+    @content;
+  }
+}

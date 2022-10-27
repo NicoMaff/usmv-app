@@ -1,0 +1,220 @@
+main.competitions-badtour {
+  // *-*-* globals *-*-*
+  h2 {
+    margin-bottom: 0;
+  }
+
+  ul {
+    padding: clamp(0.3rem, 1.5vmin, 0.6rem);
+
+    // @include ptt {
+    //   padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0 clamp(0.3rem, 1.5vmin, 0.6rem)
+    //     clamp(1rem, 5vmin, 2rem);
+    // }
+
+    @include ptt {
+      padding-left: 0.1rem;
+      padding-right: 0;
+    }
+
+    @include from(630) {
+      padding-left: clamp(1rem, 2.5vw, 2rem);
+    }
+  }
+
+  li {
+    padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
+
+    @include fine {
+      &:first-of-type:hover span {
+        animation: bounce 1s ease infinite;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+        transform: scale(2);
+      }
+      // have to make a choice between these two animations !!!
+      &:last-of-type:hover span {
+        animation: hithere 1s ease infinite;
+      }
+    }
+  }
+
+  a {
+    position: relative;
+
+    @include coarse {
+      text-shadow: 1px -1px 10px $link;
+    }
+
+    @include fine {
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 22px;
+        height: 2px;
+        width: 0;
+        transition: width 0.3s ease-out;
+        background: $link;
+      }
+
+      &:hover:after {
+        width: calc(100% - 22px);
+      }
+    }
+  }
+
+  span {
+    display: inline-block;
+
+    @include coarse {
+      animation: bounce 1s ease infinite;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+      transform: scale(2);
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 8vmin, 2.5rem);
+
+    @include big-screen {
+      gap: 4rem;
+    }
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: clamp(12rem, 60vmin, 20rem);
+  }
+
+  // *-*-* bloc1 *-*-*
+  .infos-tournois {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.2rem, 1.5vw, 2rem);
+
+      @include from(1100) {
+        flex-direction: row-reverse;
+        align-items: center;
+      }
+    }
+
+    &-img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // flex-direction: column;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+
+      @include from(1100) {
+        flex-wrap: nowrap;
+        flex-direction: column;
+      }
+    }
+
+    .text {
+      flex: 2 2;
+      gap: clamp(1rem, 1.9vw, 2rem);
+    }
+
+    .img-container {
+      @include ptt {
+        width: clamp(18rem, 35vmin, 25rem);
+        height: clamp(12rem, 25vmin, 15rem);
+      }
+    }
+  }
+
+  // *-*-* bloc2 *-*-*
+  .photos-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(1.2rem, 2.5vw, 3.5rem);
+
+    .img-container {
+      @include ptt {
+        width: clamp(18rem, 35vmin, 30rem);
+        height: clamp(12rem, 25vmin, 20rem);
+      }
+
+      @include big-screen {
+        width: 29rem;
+        height: 19rem;
+      }
+    }
+  }
+
+  // *-*-* bloc3 *-*-*
+  .main-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .img-container {
+      // max-width: 35rem;
+      height: 55vw;
+
+      @include ptt {
+        height: min(37vw, 40rem);
+      }
+    }
+  }
+}
+
+@keyframes bounce {
+  0%,
+  50%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  25% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-4px, 0, 0);
+  }
+}
+
+@keyframes hithere {
+  30% {
+    transform: scale(1.2);
+  }
+  40%,
+  60% {
+    transform: rotate(-20deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(20deg) scale(1.2);
+  }
+  70% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
