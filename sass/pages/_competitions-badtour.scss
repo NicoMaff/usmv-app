@@ -26,16 +26,12 @@ main.competitions-badtour {
     padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
 
     @include fine {
-      &:first-of-type:hover span {
+      &:hover span {
         animation: bounce 1s ease infinite;
         transform: translate3d(0, 0, 0);
         backface-visibility: hidden;
         perspective: 1000px;
         transform: scale(2);
-      }
-      // have to make a choice between these two animations !!!
-      &:last-of-type:hover span {
-        animation: hithere 1s ease infinite;
       }
     }
   }
@@ -197,24 +193,5 @@ main.competitions-badtour {
 
   75% {
     transform: translate3d(-4px, 0, 0);
-  }
-}
-
-@keyframes hithere {
-  30% {
-    transform: scale(1.2);
-  }
-  40%,
-  60% {
-    transform: rotate(-20deg) scale(1.2);
-  }
-  50% {
-    transform: rotate(20deg) scale(1.2);
-  }
-  70% {
-    transform: rotate(0deg) scale(1.2);
-  }
-  100% {
-    transform: scale(1);
   }
 }
