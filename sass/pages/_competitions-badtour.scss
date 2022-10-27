@@ -7,11 +7,6 @@ main.competitions-badtour {
   ul {
     padding: clamp(0.3rem, 1.5vmin, 0.6rem);
 
-    // @include ptt {
-    //   padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0 clamp(0.3rem, 1.5vmin, 0.6rem)
-    //     clamp(1rem, 5vmin, 2rem);
-    // }
-
     @include ptt {
       padding-left: 0.1rem;
       padding-right: 0;
@@ -33,6 +28,10 @@ main.competitions-badtour {
         perspective: 1000px;
         transform: scale(2);
       }
+
+      &:hover a::after {
+        width: calc(100% - 19px);
+      }
     }
   }
 
@@ -53,10 +52,6 @@ main.competitions-badtour {
         width: 0;
         transition: width 0.3s ease-out;
         background: $link;
-      }
-
-      &:hover:after {
-        width: calc(100% - 22px);
       }
     }
   }
@@ -180,6 +175,7 @@ main.competitions-badtour {
   }
 }
 
+// *-*-* keyframes *-*-*
 @keyframes bounce {
   0%,
   50%,

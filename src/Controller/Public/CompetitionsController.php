@@ -27,9 +27,9 @@ class CompetitionsController extends AbstractController
         return $this->render('public/competitions/badtour.html.twig');
     }
 
-    #[Route("/interclubs", "app_competitions_championship")]
-    public function championship(): Response
+    #[Route("/interclubs", "app_competitions_interclubs")]
+    public function interclubs(): Response
     {
-        return $this->render('public/competitions/championship.html.twig');
+        return $this->render('public/competitions/interclubs.html.twig');
     }
 }

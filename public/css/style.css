@@ -2239,15 +2239,15 @@ main.competitions-badtour li {
   padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
 }
 @media (pointer: fine) {
-  main.competitions-badtour li:first-of-type:hover span {
+  main.competitions-badtour li:hover span {
     animation: bounce 1s ease infinite;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
     transform: scale(2);
   }
-  main.competitions-badtour li:last-of-type:hover span {
-    animation: hithere 1s ease infinite;
+  main.competitions-badtour li:hover a::after {
+    width: calc(100% - 19px);
   }
 }
 main.competitions-badtour a {
@@ -2268,9 +2268,6 @@ main.competitions-badtour a {
     width: 0;
     transition: width 0.3s ease-out;
     background: #748cbc;
-  }
-  main.competitions-badtour a:hover:after {
-    width: calc(100% - 22px);
   }
 }
 main.competitions-badtour span {
@@ -2391,21 +2388,95 @@ main.competitions-badtour .main-photo .img-container {
     transform: translate3d(-4px, 0, 0);
   }
 }
-@keyframes hithere {
-  30% {
-    transform: scale(1.2);
+main.competitions-interclubs .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+main.competitions-interclubs h2 {
+  text-align: center;
+  margin-bottom: 0;
+  font-size: clamp(1.2rem, 3vmin, 1.6rem);
+}
+main.competitions-interclubs ul {
+  margin-left: -30px;
+}
+main.competitions-interclubs li {
+  padding: 0.3rem;
+  margin: 0.6rem 0;
+  font-size: clamp(1rem, 5vmin, 1.2rem);
+}
+@media (pointer: fine) {
+  main.competitions-interclubs li:hover span {
+    opacity: 1;
+    animation: bounce 1s ease infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: scale(2);
   }
-  40%, 60% {
-    transform: rotate(-20deg) scale(1.2);
+  main.competitions-interclubs li:hover a:after {
+    width: calc(100% - 26px);
   }
-  50% {
-    transform: rotate(20deg) scale(1.2);
+}
+main.competitions-interclubs a {
+  position: relative;
+  user-select: none;
+  pointer-events: none;
+}
+@media (pointer: coarse) {
+  main.competitions-interclubs a:after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 28px;
+    height: 2px;
+    width: calc(100% - 26px);
+    background: #748cbc;
   }
-  70% {
-    transform: rotate(0deg) scale(1.2);
+}
+@media (pointer: fine) {
+  main.competitions-interclubs a:after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 28px;
+    height: 2px;
+    width: 0;
+    transition: width 0.3s ease-out;
+    background: #748cbc;
   }
-  100% {
-    transform: scale(1);
+}
+main.competitions-interclubs span {
+  display: inline-block;
+  padding: 0 0.3rem;
+  opacity: 0;
+}
+@media (pointer: coarse) {
+  main.competitions-interclubs span {
+    animation: bounce 1s ease infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: scale(2);
+  }
+}
+main.competitions-interclubs .img-container {
+  height: clamp(18rem, 86vmin, 30rem);
+  width: 100%;
+  max-width: 33rem;
+}
+
+@keyframes bounce {
+  0%, 50%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(2px, 0, 0);
+  }
+  75% {
+    transform: translate3d(-4px, 0, 0);
   }
 }
 
