@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}USMV Badminton - Loisirs{% endblock %}
+
+{% block main %}
+
+    <main class="leisures">
+
+        <h1>Loisirs</h1>
+
+        <div class="container">
+
+            <div class="img-container leading-img1">
+                <img src="/assets/img/ill-comique-loisirs.jpg" alt="illustration comique de deux badistes novices">
+            </div>
+
+            <div class="welcome">
+                <h2>Un sport ouvert à tous ! De 7 à 77 ans</h2>
+                <div class="text">
+                    <p>
+                        Le badminton est l’un des sports les plus conviviaux tout en étant une activité sportive à part entière. Pour un joueur débutant, pas besoin de cours ; quelques explications suffisent pour commencer à jouer et à s’amuser. Le plaisir est immédiat.
+                    </p>
+                    <p>
+                        <strong>Il n’y a pas d’âge limite pour pratiquer le badminton. Vous pouvez venir jouer entre amis ou en famille et jouer ensemble quelque soit l’âge des joueurs sur le terrain.</strong>
+                    </p>
+                    <p>
+                        Vous pouvez disputer des matchs endiablés en un contre un (match de simple) ou en deux contre deux (matchs de double). Hommes et femmes peuvent jouer ensemble et/ou l’un contre l’autre (matchs de doubles mixte), et vous verrez on s’amuse encore plus !
+                    </p>
+                    <p>
+                        Les matchs de double sont les matchs les plus plébiscités par les joueurs loisirs.
+                    </p>
+                    
+                </div>
+
+                <h3>"Au bad, il y a une bonne ambiance !"</h3>
+            </div>
+
+            <div class="try-slot">
+                <h2>Je veux essayer !</h2>
+                <div class="wrapper">
+                    <div class="text">
+                        <p>
+                            Vous êtes novice au badminton et vous voulez savoir si ce sport vous plaît ?
+                        </p>
+                        <p>
+                            Pas de problème : contactez l’USM Villeparisis Badminton, <strong>nous vous inviterons</strong> sur une séance de jeu libre (voir jours et horaires) pour <strong>venir tester</strong>. Prenez une bonne paire de chaussures à usage intérieur, une tenue de sport et nous vous prêterons raquette et volant.
+                        </p>
+                    </div>
+                    <div class="img-container">
+                        <img src="/assets/img/creneau-loisirs-1.jpg" alt="Photo de joueurs loisirs en plein match de double homme">
+                    </div>
+                </div>
+            </div>
+
+            <div class="registration">
+                <h2>Le bad c'est good ! Je veux m'inscrire, que dois-je faire ?</h2>
+                <div class="wrapper">
+                    <div class="img-container">
+                        <img src="/assets/img/photo-groupe-loisirs.jpg" alt="Photo de groupe des adhérents du créneau loisirs">
+                    </div>
+                    <div class="text">
+                        <p>
+                            <strong>Vous avez raison, ce sport est génial !</strong>
+                        </p>
+                        <p>
+                            Prenez connaissance des modalités d’inscription sur la plage <a href="{{ path("app_membership_index") }}">Inscription</a>, munissez-vous d’une paire de chaussures de sport à usage intérieur (important), d’une tenue de sport avec laquelle vous êtes à l’aise, d’une raquette et de quelques volants (au début, nous pouvons vous prêter une raquette mais il est fortement recommandé d’avoir sa propre raquette ; si vous n’en avez pas, vous pouvez en acheter une notamment avec notre partenaire Decathlon (réductions aux adhérents), où vous trouverez aussi des volants à la vente).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="leisures-slot">
+                <h2>Les créneaux loisirs</h2>
+                <div class="wrapper">
+                    <div class="tables">
+                        <table class="schedule schedule1">
+                            <tr>
+                                <th>Gymnase Aubertin</th>
+                                <th>Horaires</th>
+                            </tr>
+                            <tr>
+                                <th>Mardi</th>
+                                <td>20h30 - 22h30</td>
+                            </tr>
+                            <tr>
+                                <th>Jeudi</th>
+                                <td>20h00 - 22h30</td>
+                            </tr>
+                        </table>
+                        <table class="schedule schedule2">
+                            <tr>
+                                <th>Gymnase des Petits Marais</th>
+                                <th>Horaires</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span>Dimanche</span>
+                                    <span>(ouvert à tous)</span>
+                                </th>
+                                <td>10h00 - 12h00</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="sunday-slot">
+                        <h3>ℹ️ Créneaux du dimanche</h3>
+                        <div class="text">
+                            <p>Le créneau du dimanche est ouvert à tous : loisirs + tous les jeunes  + compétiteurs !<br></p>
+                            <p>Sauf : jours fériés / vacances scolaires et en cas de réquisition du gymnase par la Mairie ; vous serez averti le cas échéant.<br></p>
+                            <p>⚠️ Aucun encandrant n’est mis en place sur ce créneau ; seuls les jeunes autonomes ou accompagnés d’un responsable légal pourront avoir accès à ce créneau. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prices">
+                <h2>Tarifs (cotisation annuelle)</h2>
+                <table>
+                    <tr>
+                        <td>Adultes Villeparisiens</td>
+                        <td>115€</td>
+                    </tr>
+                    <tr>
+                        <td>Adultes Hors Villeparisis</td>
+                        <td>130€</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="img-container leading-img2">
+                <img src="/assets/img/creneau-loisirs-2.jpg" alt="Plan large des joueurs loirs en plein match">
+            </div>
+
+        </div>
+    
+    </main>
+
+{% endblock %}
