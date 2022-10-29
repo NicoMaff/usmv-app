@@ -27,6 +27,7 @@ body {
 body {
   display: flex;
   flex-direction: column;
+  align-items: center;
   overflow-y: scroll;
   min-width: 100vw;
   min-height: 100vh;
@@ -36,6 +37,7 @@ body {
 main {
   flex-grow: 2;
   margin: 7rem 1rem 5rem;
+  max-width: 1500px;
 }
 @media (min-width: 600px) {
   main {
@@ -44,7 +46,6 @@ main {
 }
 @media (min-width: 1800px) {
   main {
-    max-width: 1500px;
     margin: 7rem auto 5rem;
   }
 }
@@ -70,14 +71,30 @@ h1 {
 
 h2 {
   font-family: "Montserrat-reg", sans-serif;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 5vmin, 1.8rem);
   font-weight: 580;
-  margin-bottom: 1.2rem;
+  margin-bottom: clamp(1rem, 5vmin, 1.2rem);
 }
 
 ul,
 li {
   list-style: none;
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+  color: #748cbc;
+}
+
+img {
+  object-fit: cover;
+  border-radius: 3px;
+  height: 100%;
+  width: 100%;
 }
 
 .btn {
@@ -536,6 +553,7 @@ header {
   gap: 30px;
 }
 .header-mobile .header-container img {
+  height: auto;
   max-width: 100px;
 }
 
@@ -884,6 +902,7 @@ footer {
   background: #354b77;
   color: #f5f8ff;
   min-height: 24rem;
+  min-width: 100vw;
   padding: 2rem 0;
   border-radius: 20px 20px 0 0;
 }
@@ -1695,6 +1714,1026 @@ footer p {
 }
 .membership .contact-infos a:visited {
   color: #748cbc;
+}
+
+.youths-infos p {
+  text-align: justify;
+}
+.youths-infos .container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.youths-infos .container > p {
+  margin-top: -1rem;
+}
+@media (min-width: 800px) {
+  .youths-infos .container > p {
+    text-align: center;
+  }
+}
+.youths-infos .infos-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.youths-infos .infos-text ul {
+  margin-top: -0.9rem;
+  padding-left: 1.5rem;
+}
+.youths-infos .infos-text li {
+  list-style-type: "▪️";
+  padding-top: 0.3rem;
+}
+.youths-infos .infos-text li:last-of-type {
+  padding-bottom: 0.3rem;
+}
+.youths-infos table.schedule {
+  border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto;
+}
+.youths-infos table.schedule td {
+  height: clamp(3rem, 15vmin, 3.5rem);
+}
+.youths-infos table.schedule th {
+  height: clamp(3.5rem, 17.5vmin, 4rem);
+}
+.youths-infos table.schedule td,
+.youths-infos table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+  padding: 0.3rem 0.9rem;
+  font-size: clamp(0.9rem, 4.5vmin, 1rem);
+}
+.youths-infos .img-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+.youths-infos img {
+  height: clamp(10rem, 50vmin, 22rem);
+  width: clamp(18rem, 80vmin, 38rem);
+}
+.youths-infos .sunday-slot p:first-of-type {
+  margin-bottom: 0.6rem;
+}
+.youths-infos .prices-container table {
+  color: #f5f8ff;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #748cbc;
+  border: 1px solid #f5f8ff;
+  border-collapse: collapse;
+}
+.youths-infos .prices-container tr td:first-of-type {
+  width: clamp(13rem, 65vw, 30rem);
+}
+.youths-infos .prices-container tr td:last-of-type {
+  width: clamp(5rem, 25vw, 12rem);
+}
+.youths-infos .prices-container td {
+  font-size: clamp(0.9rem, 4vmin, 1rem);
+  text-align: center;
+  height: clamp(2rem, 10vmin, 3rem);
+  border: 1px solid #f5f8ff;
+}
+
+.youths-school p {
+  text-align: justify;
+}
+.youths-school strong {
+  font-weight: 550;
+}
+.youths-school h3 {
+  text-align: center;
+  color: #748cbc;
+  font-family: "Gotu", sans-serif;
+  font-size: clamp(1.4rem, 7vmin, 1.7rem);
+}
+.youths-school h4 {
+  font-size: 1.1rem;
+  font-weight: 580;
+  font-family: "Montserrat-reg", sans-serif;
+  margin: 0.9rem 0;
+}
+.youths-school .container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.youths-school .content-3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+.youths-school .content-3 img {
+  height: clamp(10rem, 50vmin, 20rem);
+  width: clamp(18rem, 80vmin, 36rem);
+}
+.youths-school .content-4 > .img-container {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 3vmin, 1rem);
+  justify-content: center;
+}
+.youths-school .content-4 > .img-container img {
+  height: clamp(8rem, 45vmin, 15rem);
+}
+.youths-school .content-4 > .img-container img:first-of-type {
+  width: 35%;
+  max-width: 12rem;
+}
+.youths-school .content-4 > .img-container img:last-of-type {
+  width: 65%;
+  max-width: 23rem;
+}
+.youths-school .content p {
+  margin-bottom: 0.6rem;
+}
+.youths-school .content p:last-of-type {
+  margin-bottom: 0;
+}
+.youths-school .content .down {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 1400px) {
+  .youths-school .content .down {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.youths-school .content .down > .img-container {
+  margin: 0 auto;
+  height: clamp(10rem, 50vmin, 17rem);
+  width: clamp(18rem, 80vmin, 30rem);
+}
+@media (min-width: 1400px) {
+  .youths-school .content .text {
+    max-width: clamp(42rem, 47vw, 54rem);
+  }
+}
+.youths-school ul {
+  margin-top: -0.6rem;
+  margin-bottom: 0.6rem;
+  padding-left: 1.5rem;
+}
+.youths-school li {
+  list-style-type: "▪️";
+  padding-top: 0.3rem;
+}
+.youths-school li:last-of-type {
+  padding-bottom: 0.3rem;
+}
+.youths-school .sport-section-infos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 32rem;
+  background: #dfe3ec;
+  padding: 0.6rem;
+  border-radius: 12px;
+  align-self: center;
+  margin: 1rem auto 0;
+}
+@media (min-width: 1200px) {
+  .youths-school .sport-section-infos {
+    flex-direction: row;
+    max-width: 86rem;
+    padding: clamp(0.6rem, 1.5vw, 2.4rem);
+  }
+}
+.youths-school .sport-section-infos .img-container {
+  height: clamp(16rem, 80vmin, 22rem);
+  width: 100%;
+}
+@media (min-width: 1000px) {
+  .youths-school .sport-section-infos .img-container {
+    height: clamp(20rem, 25vw, 25rem);
+    min-width: 20rem;
+  }
+}
+.youths-school .sport-section-infos h4 {
+  text-align: center;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+}
+.youths-school .sport-section-infos p {
+  margin-bottom: 0.9rem;
+  line-height: 24px;
+}
+.youths-school .sport-section-infos p:last-of-type {
+  margin-bottom: 0;
+}
+.youths-school .sport-section-infos span {
+  display: block;
+  text-decoration: underline;
+  margin-bottom: 0.2rem;
+}
+
+main.sportSection p {
+  text-align: justify;
+}
+main.sportSection strong {
+  font-weight: 580;
+}
+main.sportSection .description {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 0.9rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  background: #dfe3ec;
+}
+
+main.youths-tournaments-list p {
+  text-align: justify;
+  line-height: 22px;
+}
+main.youths-tournaments-list a {
+  display: block;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #748cbc;
+}
+main.youths-tournaments-list .infos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 12px;
+  background: #dfe3ec;
+  margin-bottom: 2rem;
+  padding: 0.9rem;
+}
+main.youths-tournaments-list .infos a {
+  font-size: clamp(0.8rem, 4.5vmin, 1.1rem);
+  text-align: center;
+  padding: 0.6rem clamp(0.3rem, 1.5vmin, 0.6rem);
+}
+
+main.competitions-infos h3 {
+  font-family: "Montserrat-reg", sans-serif;
+  margin-bottom: 0.6rem;
+}
+main.competitions-infos a {
+  display: block;
+  font-size: clamp(0.8rem, 4.5vmin, 1.1rem);
+  text-align: center;
+  padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
+}
+main.competitions-infos strong {
+  font-weight: 580;
+}
+main.competitions-infos img {
+  height: clamp(12rem, 60vmin, 20rem);
+}
+main.competitions-infos .container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 3.2vw, 3.5rem);
+}
+main.competitions-infos .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+  line-height: clamp(20px, 5vw, 25px);
+}
+main.competitions-infos .img-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+@media (min-width: 600px) {
+  main.competitions-infos .img-container {
+    justify-content: space-evenly;
+  }
+}
+main.competitions-infos table.schedule {
+  border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto;
+}
+@media (min-width: 1000px) {
+  main.competitions-infos table.schedule {
+    margin: 0 0 0 auto;
+    min-width: clamp(22rem, 35vw, 35rem);
+  }
+}
+main.competitions-infos table.schedule td {
+  height: clamp(3rem, 15vmin, 3.5rem);
+}
+main.competitions-infos table.schedule th {
+  height: clamp(3.5rem, 17.5vmin, 4rem);
+}
+main.competitions-infos table.schedule td,
+main.competitions-infos table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+  padding: 0.3rem 0.9rem;
+  font-size: clamp(0.9rem, 4.5vmin, 1rem);
+}
+main.competitions-infos table.schedule td span,
+main.competitions-infos table.schedule th span {
+  display: block;
+  padding: 0.1rem;
+}
+@media (min-width: 600px) {
+  main.competitions-infos .slots img {
+    height: clamp(15rem, 25vw, 20rem);
+    width: clamp(25rem, 40vw, 30rem);
+  }
+}
+main.competitions-infos .slots .img-container {
+  margin-bottom: 1.2rem;
+}
+main.competitions-infos .slots .text:last-of-type {
+  margin-bottom: 0;
+}
+main.competitions-infos .slots .up {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+  gap: clamp(1rem, 1.5vw, 3rem);
+}
+@media (min-width: 1000px) {
+  main.competitions-infos .slots .up {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+main.competitions-infos .slots .sunday-slot {
+  padding-top: 1rem;
+}
+main.competitions-infos .slots .sunday-slot .text {
+  line-height: 20px;
+  gap: 0.3rem;
+}
+@media (min-width: 600px) {
+  main.competitions-infos .tournaments img {
+    height: clamp(15rem, 25vw, 20rem);
+    width: clamp(25rem, 40vw, 30rem);
+  }
+}
+main.competitions-infos .partnership img {
+  height: 100%;
+}
+@media (min-width: 600px) {
+  main.competitions-infos .partnership .img-container {
+    width: 20rem;
+    margin: 0 auto;
+  }
+}
+main.competitions-infos .shuttles img {
+  height: 100%;
+}
+main.competitions-infos .shuttles-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+@media (min-width: 600px) {
+  main.competitions-infos .shuttles-content {
+    flex-direction: row;
+  }
+}
+main.competitions-infos .shuttles .img-container:first-of-type {
+  height: 12rem;
+  max-width: 16rem;
+  margin: 0 auto;
+}
+main.competitions-infos .shuttles .img-container:last-of-type {
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  main.competitions-infos .shuttles .img-container:last-of-type {
+    margin: clamp(1rem, 3vw, 3rem) auto 0;
+  }
+}
+main.competitions-infos .prices table {
+  color: #f5f8ff;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #748cbc;
+  border: 1px solid #f5f8ff;
+  border-collapse: collapse;
+}
+main.competitions-infos .prices tr td:first-of-type {
+  width: clamp(13rem, 65vw, 30rem);
+}
+main.competitions-infos .prices tr td:last-of-type {
+  width: clamp(5rem, 25vw, 12rem);
+}
+main.competitions-infos .prices td {
+  font-size: clamp(0.9rem, 4vmin, 1rem);
+  text-align: center;
+  height: clamp(2rem, 10vmin, 3rem);
+  border: 1px solid #f5f8ff;
+}
+
+main.competitions-trainings h2 {
+  text-align: center;
+}
+main.competitions-trainings strong {
+  font-weight: 580;
+}
+main.competitions-trainings .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+  line-height: clamp(20px, 5vw, 25px);
+}
+main.competitions-trainings .img-container {
+  height: clamp(12rem, 60vmin, 18rem);
+  width: min(100%, 32rem);
+  margin: 0 auto;
+}
+@media (min-width: 1000px) {
+  main.competitions-trainings .img-container {
+    height: 18rem;
+    width: 27rem;
+  }
+}
+main.competitions-trainings table.schedule {
+  border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto clamp(1.2rem, 1.9vw, 2.5rem);
+}
+@media (min-width: 1000px) {
+  main.competitions-trainings table.schedule {
+    min-width: clamp(22rem, 35vw, 35rem);
+  }
+}
+main.competitions-trainings table.schedule td {
+  height: clamp(3rem, 15vmin, 3.5rem);
+}
+main.competitions-trainings table.schedule th {
+  height: clamp(3.5rem, 17.5vmin, 4rem);
+  font-weight: 580;
+}
+main.competitions-trainings table.schedule td,
+main.competitions-trainings table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+  padding: 0.3rem clamp(0.3rem, 1.2vmin, 0.9rem);
+  font-size: clamp(0.8rem, 4vmin, 1rem);
+}
+main.competitions-trainings table.schedule td span,
+main.competitions-trainings table.schedule th span {
+  display: block;
+  padding: 0.1rem;
+}
+main.competitions-trainings .trainer h3 {
+  font-size: clamp(0.9rem, 4vmin, 1.1rem);
+}
+main.competitions-trainings .trainer .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 1000px) {
+  main.competitions-trainings .trainer .wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+main.competitions-trainings .trainer .text {
+  flex: 2 2;
+  margin-bottom: 0;
+}
+
+main.competitions-badtour h2 {
+  margin-bottom: 0;
+}
+main.competitions-badtour ul {
+  padding: clamp(0.3rem, 1.5vmin, 0.6rem);
+}
+@media (min-width: 600px) {
+  main.competitions-badtour ul {
+    padding-left: 0.1rem;
+    padding-right: 0;
+  }
+}
+@media (min-width: 630px) {
+  main.competitions-badtour ul {
+    padding-left: clamp(1rem, 2.5vw, 2rem);
+  }
+}
+main.competitions-badtour li {
+  padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
+}
+@media (pointer: fine) {
+  main.competitions-badtour li:hover span {
+    animation: bounce 1s ease infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: scale(2);
+  }
+  main.competitions-badtour li:hover a::after {
+    width: calc(100% - 19px);
+  }
+}
+main.competitions-badtour a {
+  position: relative;
+}
+@media (pointer: coarse) {
+  main.competitions-badtour a {
+    text-shadow: 1px -1px 10px #748cbc;
+  }
+}
+@media (pointer: fine) {
+  main.competitions-badtour a:after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 22px;
+    height: 2px;
+    width: 0;
+    transition: width 0.3s ease-out;
+    background: #748cbc;
+  }
+}
+main.competitions-badtour span {
+  display: inline-block;
+}
+@media (pointer: coarse) {
+  main.competitions-badtour span {
+    animation: bounce 1s ease infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: scale(2);
+  }
+}
+main.competitions-badtour .container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 8vmin, 2.5rem);
+}
+@media (min-width: 1800px) {
+  main.competitions-badtour .container {
+    gap: 4rem;
+  }
+}
+main.competitions-badtour .text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+main.competitions-badtour .img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: clamp(12rem, 60vmin, 20rem);
+}
+main.competitions-badtour .infos-tournois {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+main.competitions-badtour .infos-tournois .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 1.5vw, 2rem);
+}
+@media (min-width: 1100px) {
+  main.competitions-badtour .infos-tournois .wrapper {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+}
+main.competitions-badtour .infos-tournois-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+@media (min-width: 1100px) {
+  main.competitions-badtour .infos-tournois-img {
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+}
+main.competitions-badtour .infos-tournois .text {
+  flex: 2 2;
+  gap: clamp(1rem, 1.9vw, 2rem);
+}
+@media (min-width: 600px) {
+  main.competitions-badtour .infos-tournois .img-container {
+    width: clamp(18rem, 35vmin, 25rem);
+    height: clamp(12rem, 25vmin, 15rem);
+  }
+}
+main.competitions-badtour .photos-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1.2rem, 2.5vw, 3.5rem);
+}
+@media (min-width: 600px) {
+  main.competitions-badtour .photos-wrapper .img-container {
+    width: clamp(18rem, 35vmin, 30rem);
+    height: clamp(12rem, 25vmin, 20rem);
+  }
+}
+@media (min-width: 1800px) {
+  main.competitions-badtour .photos-wrapper .img-container {
+    width: 29rem;
+    height: 19rem;
+  }
+}
+main.competitions-badtour .main-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main.competitions-badtour .main-photo .img-container {
+  height: 55vw;
+}
+@media (min-width: 600px) {
+  main.competitions-badtour .main-photo .img-container {
+    height: min(37vw, 40rem);
+  }
+}
+
+@keyframes bounce {
+  0%, 50%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(2px, 0, 0);
+  }
+  75% {
+    transform: translate3d(-4px, 0, 0);
+  }
+}
+main.competitions-interclubs .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+main.competitions-interclubs h2 {
+  text-align: center;
+  margin-bottom: 0;
+  font-size: clamp(1.2rem, 3vmin, 1.6rem);
+}
+main.competitions-interclubs ul {
+  margin-left: -30px;
+}
+main.competitions-interclubs li {
+  padding: 0.3rem;
+  margin: 0.6rem 0;
+  font-size: clamp(1rem, 5vmin, 1.2rem);
+}
+@media (pointer: fine) {
+  main.competitions-interclubs li:hover span {
+    opacity: 1;
+    animation: bounce 1s ease infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: scale(2);
+  }
+  main.competitions-interclubs li:hover a:after {
+    width: calc(100% - 26px);
+  }
+}
+main.competitions-interclubs a {
+  position: relative;
+  user-select: none;
+  pointer-events: none;
+}
+@media (pointer: coarse) {
+  main.competitions-interclubs a:after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 26px;
+    height: 2px;
+    width: calc(100% - 26px);
+    background: #748cbc;
+  }
+}
+@media (pointer: fine) {
+  main.competitions-interclubs a:after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 28px;
+    height: 2px;
+    width: 0;
+    transition: width 0.3s ease-out;
+    background: #748cbc;
+  }
+}
+main.competitions-interclubs span {
+  display: inline-block;
+  padding: 0 0.3rem;
+  opacity: 0;
+}
+@media (pointer: coarse) {
+  main.competitions-interclubs span {
+    animation: bounce 1s ease infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: scale(2);
+  }
+}
+main.competitions-interclubs .img-container {
+  height: clamp(18rem, 86vmin, 30rem);
+  width: 100%;
+  max-width: 33rem;
+}
+
+@keyframes bounce {
+  0%, 50%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(2px, 0, 0);
+  }
+  75% {
+    transform: translate3d(-4px, 0, 0);
+  }
+}
+main.leisures strong {
+  font-weight: 580;
+}
+main.leisures a {
+  font-size: 1.1rem;
+  position: relative;
+}
+main.leisures a::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: #748cbc;
+}
+main.leisures .container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 3.5vw, 3.5rem);
+}
+main.leisures .img-container {
+  height: clamp(13rem, 65vw, 35rem);
+  width: 100%;
+}
+@media (min-width: 600px) {
+  main.leisures .img-container {
+    height: 55vw;
+  }
+}
+main.leisures .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  line-height: clamp(20px, 5vw, 25px);
+}
+main.leisures table.schedule {
+  border-collapse: collapse;
+  max-width: 35rem;
+  margin: 0 auto;
+}
+main.leisures table.schedule tr th:first-of-type {
+  width: clamp(8rem, 40vmin, 20rem);
+}
+main.leisures table.schedule td {
+  height: clamp(3rem, 15vmin, 3.5rem);
+  min-width: clamp(7.7rem, 38vmin, 10rem);
+}
+main.leisures table.schedule th {
+  height: clamp(3.5rem, 17.5vmin, 4rem);
+}
+main.leisures table.schedule td,
+main.leisures table.schedule th {
+  text-align: center;
+  border: 1px solid black;
+  padding: 0.3rem 0.9rem;
+  font-size: clamp(0.8rem, 3.5vmin, 1rem);
+}
+main.leisures table.schedule td span,
+main.leisures table.schedule th span {
+  display: block;
+  padding: 0.1rem;
+}
+main.leisures .leading-img1 {
+  max-height: 35rem;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+main.leisures .welcome h3 {
+  text-align: center;
+  color: #748cbc;
+}
+main.leisures .welcome .text {
+  margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+}
+main.leisures .try-slot .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+@media (min-width: 1000px) {
+  main.leisures .try-slot .wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.6rem;
+  }
+}
+main.leisures .try-slot .text {
+  flex: 2 2;
+}
+main.leisures .try-slot .img-container {
+  max-height: 20rem;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+main.leisures .registration {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+main.leisures .registration h2 {
+  margin-bottom: 0;
+}
+main.leisures .registration .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+@media (min-width: 1000px) {
+  main.leisures .registration .wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.6rem;
+  }
+}
+main.leisures .registration .img-container {
+  max-height: 20rem;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+main.leisures .registration .text {
+  flex: 2 2;
+}
+main.leisures .leisures-slot .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+@media (min-width: 1400px) {
+  main.leisures .leisures-slot .wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.6rem;
+  }
+}
+main.leisures .leisures-slot .tables {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+@media (min-width: 1050px) {
+  main.leisures .leisures-slot .tables {
+    flex-direction: row;
+  }
+}
+@media (min-width: 1400px) {
+  main.leisures .leisures-slot .tables {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+}
+main.leisures .leisures-slot .sunday-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 2 2;
+}
+@media (min-width: 1400px) {
+  main.leisures .leisures-slot .sunday-slot {
+    gap: 1rem;
+  }
+}
+@media (min-width: 1400px) {
+  main.leisures .leisures-slot .sunday-slot .text {
+    gap: 1rem;
+    line-height: 28px;
+  }
+}
+main.leisures .prices table {
+  color: #f5f8ff;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: #748cbc;
+  border: 1px solid #f5f8ff;
+  border-collapse: collapse;
+}
+main.leisures .prices tr td:first-of-type {
+  width: clamp(13rem, 65vw, 30rem);
+}
+main.leisures .prices tr td:last-of-type {
+  width: clamp(5rem, 25vw, 12rem);
+}
+main.leisures .prices td {
+  font-size: clamp(0.9rem, 4vmin, 1rem);
+  text-align: center;
+  height: clamp(2rem, 10vmin, 3rem);
+  border: 1px solid #f5f8ff;
+}
+main.leisures .leading-img2 {
+  max-height: 30rem;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+main.partners a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+main.partners strong {
+  font-weight: 580;
+}
+main.partners .container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 15vw, 5rem);
+}
+main.partners .img-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin: 0 auto;
+}
+@media (min-width: 1500px) {
+  main.partners .img-container {
+    gap: clamp(5rem, 5vw, 10rem);
+  }
+}
+@media (min-width: 1800px) {
+  main.partners .img-container {
+    gap: 12rem;
+  }
+}
+main.partners .historic-partner .img-container {
+  height: clamp(10rem, 28vmin, 16rem);
+  width: clamp(16rem, 60%, 26rem);
+}
+@media (min-width: 600px) {
+  main.partners .historic-partner .img-container {
+    height: clamp(10rem, 25vmin, 16rem);
+  }
+}
+main.partners .sport-partners a {
+  max-width: 17rem;
+}
+main.partners .technical-partner .img-container {
+  height: clamp(4rem, 20vmin, 6rem);
+  width: min(90%, 30rem);
+}
+@media (min-width: 1800px) {
+  main.partners .technical-partner .img-container {
+    height: 7rem;
+    width: 35rem;
+  }
+}
+main.partners .become-partner .text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 /*# sourceMappingURL=style.css.map */

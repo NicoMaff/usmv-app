@@ -14,6 +14,7 @@ body {
 body {
   display: flex;
   flex-direction: column;
+  align-items: center;
   overflow-y: scroll;
   min-width: 100vw;
   min-height: 100vh;
@@ -23,13 +24,13 @@ body {
 main {
   flex-grow: 2;
   margin: 7rem 1rem 5rem;
+  max-width: 1500px;
 
   @include ptt {
     margin: 7rem clamp(5rem, 12vmin, 13rem) 5rem;
   }
 
   @include big-screen {
-    max-width: 1500px;
     margin: 7rem auto 5rem;
   }
 }
@@ -54,12 +55,28 @@ h1 {
 
 h2 {
   font-family: $font-body;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 5vmin, 1.8rem);
   font-weight: 580;
-  margin-bottom: 1.2rem;
+  margin-bottom: clamp(1rem, 5vmin, 1.2rem);
 }
 
 ul,
 li {
   list-style: none;
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+  color: $link;
+}
+
+img {
+  object-fit: cover;
+  border-radius: 3px;
+  height: 100%;
+  width: 100%;
 }
