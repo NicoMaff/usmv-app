@@ -1,0 +1,80 @@
+main.partners {
+  // *-*-* globals *-*-*
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  strong {
+    font-weight: 580;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 15vw, 5rem);
+  }
+
+  .img-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 0 auto;
+
+    @include from(1500) {
+      gap: clamp(5rem, 5vw, 10rem);
+    }
+
+    @include big-screen {
+      gap: 12rem;
+    }
+  }
+
+  // *-*-* bloc 1 : historic partner *-*-*
+  .historic-partner {
+    .img-container {
+      height: clamp(10rem, 28vmin, 16rem);
+      width: clamp(16rem, 60%, 26rem);
+
+      @include ptt {
+        height: clamp(10rem, 25vmin, 16rem);
+      }
+    }
+  }
+
+  // *-*-* bloc 2 : sport partners *-*-*
+  .sport-partners {
+    a {
+      max-width: 17rem;
+    }
+  }
+
+  // *-*-* bloc3 : technical partner *-*-*
+  .technical-partner {
+    .img-container {
+      height: clamp(4rem, 20vmin, 6rem);
+      width: min(90%, 30rem);
+
+      @include big-screen {
+        height: 7rem;
+        width: 35rem;
+      }
+    }
+  }
+
+  // *-*-* bloc4 : become partner *-*-*
+  .become-partner {
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+  }
+}
