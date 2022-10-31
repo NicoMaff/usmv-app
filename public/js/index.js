@@ -51,7 +51,7 @@ const sliderBtns = document.querySelectorAll(".slider");
 const arrowBtns = document.querySelectorAll(".slider i");
 
 const sliderBtnsArray = Object.values(sliderBtns);
-console.log(sliderBtnsArray);
+// console.log(sliderBtnsArray);
 
 sliderBtns.forEach((sliderBtn) => {
   sliderBtn.addEventListener("click", (e) => {
@@ -90,3 +90,32 @@ sliderBtns.forEach((sliderBtn) => {
     }, 300);
   });
 });
+
+//
+// --- HANDLE FACEBOOK PLUGIN WIDTH ---
+const facebookSection = document.querySelector(".facebook-extract");
+const fbIframe = document.querySelector(".facebook-extract > iframe");
+
+const fbObserver = new ResizeObserver((entries) => {
+  entries.forEach((entry) => {
+    console.log(entry);
+    if (entry.contentRect.width < 180) {
+      fbIframe.setAttribute("width", 180);
+    } else if (entry.contentRect.width > 500) {
+      fbIframe.setAttribute("width", 500);
+    } else {
+      fbIframe.setAttribute("width", entry.contentRect.width);
+      fbIframe.setAttribute(
+        "src",
+        `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=${Math.ceil(
+          entry.contentRect.width
+        )}&height=1500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`
+      );
+    }
+
+    console.log("width", entry.contentRect.width);
+    console.log("height", entry.contentRect.height);
+  });
+});
+
+fbObserver.observe(facebookSection);

@@ -1,0 +1,13 @@
+section.facebook-extract {
+  // flex: 1 0 1000px;
+
+  align-items: center;
+  // width: fit-content !important;
+  // display: none;
+
+  @include from(1000) {
+    grid-row: 1/4;
+    grid-column: 2/3;
+    // width: 100%;
+  }
+}

@@ -141,23 +141,23 @@ img {
   font-size: 0.7rem;
 }
 
-.news .carousel {
+section.news .carousel {
   min-height: clamp(15rem, 45vmin, 33rem);
   max-width: clamp(12rem, 45vmin, 26rem);
   margin-top: 1rem;
 }
 @media (min-width: 600px) {
-  .news .carousel {
+  section.news .carousel {
     padding: 0 0.6rem;
   }
 }
-.news .swiper-wrapper {
+section.news .swiper-wrapper {
   margin-bottom: 3rem;
 }
-.news .card {
+section.news .card {
   border-radius: 12px;
 }
-.news .card a {
+section.news .card a {
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -165,7 +165,7 @@ img {
   position: relative;
   height: clamp(13rem, 42vmin, 25rem);
 }
-.news .card-title {
+section.news .card-title {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -177,25 +177,25 @@ img {
   padding: 0.4rem 0.6rem;
 }
 @media (min-width: 600px) {
-  .news .card-title {
+  section.news .card-title {
     padding: 1.2rem 0.6rem;
   }
 }
-.news .card h3 {
+section.news .card h3 {
   text-align: right;
   font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
   color: #f5f8ff;
   border-radius: 12px;
   text-shadow: none;
 }
-.news .card img {
+section.news .card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   background-position: center;
   border-radius: 12px;
 }
-.news .btn-container {
+section.news .btn-container {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -520,6 +520,16 @@ img {
   justify-content: end;
   align-items: center;
   margin-top: 0.6rem;
+}
+
+section.facebook-extract {
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  section.facebook-extract {
+    grid-row: 1/4;
+    grid-column: 2/3;
+  }
 }
 
 header {
@@ -952,14 +962,32 @@ footer p {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  max-width: 35rem;
-  margin: 0 auto 1.5rem;
+  width: min(100%, 35rem);
+  margin: 0 auto;
   padding: 1rem 1.2rem 0.9rem;
   background: #dfe3ec;
   border-radius: 15px;
 }
+@media (min-width: 1000px) {
+  .homepage section {
+    width: clamp(22rem, 35vw, 35rem);
+  }
+}
 .homepage section:last-of-type {
   margin: 0 auto;
+}
+.homepage .container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+@media (min-width: 1000px) {
+  .homepage .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+  }
 }
 
 .club-introduction h2 {
