@@ -141,66 +141,6 @@ img {
   font-size: 0.7rem;
 }
 
-section.news .carousel {
-  min-height: clamp(15rem, 45vmin, 33rem);
-  max-width: clamp(12rem, 45vmin, 26rem);
-  margin-top: 1rem;
-}
-@media (min-width: 600px) {
-  section.news .carousel {
-    padding: 0 0.6rem;
-  }
-}
-section.news .swiper-wrapper {
-  margin-bottom: 3rem;
-}
-section.news .card {
-  border-radius: 12px;
-}
-section.news .card a {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: end;
-  position: relative;
-  height: clamp(13rem, 42vmin, 25rem);
-}
-section.news .card-title {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  border-radius: 0 0 12px 12px;
-  background: rgba(240, 240, 240, 0.4);
-  padding: 0.4rem 0.6rem;
-}
-@media (min-width: 600px) {
-  section.news .card-title {
-    padding: 1.2rem 0.6rem;
-  }
-}
-section.news .card h3 {
-  text-align: right;
-  font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
-  color: #f5f8ff;
-  border-radius: 12px;
-  text-shadow: none;
-}
-section.news .card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-position: center;
-  border-radius: 12px;
-}
-section.news .btn-container {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-}
-
 .articles-list {
   display: flex;
   justify-content: center;
@@ -468,70 +408,6 @@ section.news .btn-container {
   object-fit: cover;
 }
 
-.contact-form .form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 100%;
-}
-.contact-form .form-row {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 0.6rem;
-  gap: 0.3rem;
-  min-width: 100%;
-  margin: 0.6rem 0;
-}
-.contact-form .form-row:last-of-type {
-  margin-bottom: 0;
-}
-.contact-form .form-row input,
-.contact-form .form-row select {
-  min-height: 1.6rem;
-  width: 100%;
-  padding: 0.6rem;
-  text-align: center;
-  border-radius: 6px;
-  border: none;
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1882352941);
-  font-size: 1rem;
-  font-family: "Montserrat-reg", sans-serif;
-  background: #fff;
-  color: #222222;
-  -webkit-appearance: none;
-}
-.contact-form .form-row textarea {
-  resize: vertical;
-  min-height: 8rem;
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: none;
-  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1882352941);
-  font-size: 1rem;
-  font-family: "Montserrat-reg", sans-serif;
-  -webkit-appearance: none;
-}
-.contact-form .btn-container {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  margin-top: 0.6rem;
-}
-
-section.facebook-extract {
-  padding: 1.2rem;
-  align-items: center;
-}
-@media (min-width: 1000px) {
-  section.facebook-extract {
-    grid-row: 1/4;
-    grid-column: 2/3;
-  }
-}
 header {
   display: flex;
   justify-content: center;
@@ -988,6 +864,130 @@ footer p {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto;
   }
+}
+.homepage section.news .carousel {
+  min-height: clamp(15rem, 45vmin, 33rem);
+  max-width: clamp(12rem, 45vmin, 26rem);
+  margin-top: 1rem;
+}
+@media (min-width: 600px) {
+  .homepage section.news .carousel {
+    padding: 0 0.6rem;
+  }
+}
+.homepage section.news .swiper-wrapper {
+  margin-bottom: 3rem;
+}
+.homepage section.news .card {
+  border-radius: 12px;
+}
+.homepage section.news .card a {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  position: relative;
+  height: clamp(13rem, 42vmin, 25rem);
+}
+.homepage section.news .card-title {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0 0 12px 12px;
+  background: rgba(240, 240, 240, 0.4);
+  padding: 0.4rem 0.6rem;
+}
+@media (min-width: 600px) {
+  .homepage section.news .card-title {
+    padding: 1.2rem 0.6rem;
+  }
+}
+.homepage section.news .card h3 {
+  text-align: right;
+  font-size: clamp(0.9rem, 0.5vmin, 1.2rem);
+  color: #f5f8ff;
+  border-radius: 12px;
+  text-shadow: none;
+}
+.homepage section.news .card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-position: center;
+  border-radius: 12px;
+}
+.homepage section.news .btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.homepage section.facebook-extract {
+  padding: 1.2rem;
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .homepage section.facebook-extract {
+    grid-row: 1/4;
+    grid-column: 2/3;
+  }
+}
+.homepage .contact-form .form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
+}
+.homepage .contact-form .form-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 0.6rem;
+  gap: 0.3rem;
+  min-width: 100%;
+  margin: 0.6rem 0;
+}
+.homepage .contact-form .form-row:last-of-type {
+  margin-bottom: 0;
+}
+.homepage .contact-form .form-row input,
+.homepage .contact-form .form-row select {
+  min-height: 1.6rem;
+  width: 100%;
+  padding: 0.6rem;
+  text-align: center;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1882352941);
+  font-size: 1rem;
+  font-family: "Montserrat-reg", sans-serif;
+  background: #fff;
+  color: #222222;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.homepage .contact-form .form-row textarea {
+  resize: vertical;
+  min-height: 8rem;
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1882352941);
+  font-size: 1rem;
+  font-family: "Montserrat-reg", sans-serif;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.homepage .contact-form .btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 0.6rem;
 }
 
 .club-introduction h2 {
