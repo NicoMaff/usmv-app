@@ -523,6 +523,7 @@ section.news .btn-container {
 }
 
 section.facebook-extract {
+  padding: 1.2rem;
   align-items: center;
 }
 @media (min-width: 1000px) {
@@ -531,7 +532,6 @@ section.facebook-extract {
     grid-column: 2/3;
   }
 }
-
 header {
   display: flex;
   justify-content: center;
