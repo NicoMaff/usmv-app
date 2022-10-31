@@ -118,6 +118,21 @@
       grid-column: 2/3;
       // width: 100%;
     }
+
+    iframe {
+      height: calc(100vh - 85px);
+    }
+
+    .blue-test {
+      display: block;
+      height: calc(100vh - 85px);
+      background: blue;
+      width: 100%;
+
+      @include from(1000) {
+        height: 100%;
+      }
+    }
   }
 
   // *-*-* section 3 : calendar / events *-*-*

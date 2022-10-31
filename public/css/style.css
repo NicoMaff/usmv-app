@@ -934,6 +934,20 @@ footer p {
     grid-column: 2/3;
   }
 }
+.homepage section.facebook-extract iframe {
+  height: calc(100vh - 85px);
+}
+.homepage section.facebook-extract .blue-test {
+  display: block;
+  height: calc(100vh - 85px);
+  background: blue;
+  width: 100%;
+}
+@media (min-width: 1000px) {
+  .homepage section.facebook-extract .blue-test {
+    height: 100%;
+  }
+}
 .homepage .contact-form .form {
   display: flex;
   flex-direction: column;
