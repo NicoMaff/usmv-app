@@ -15,99 +15,106 @@
             </div>
         {% endfor %}
         <h1>Bienvenue à l'USMV Badminton</h1>
-        <section class="news">
-            <h2>À la une</h2>
-            <div class="carousel swiper mySwiper">
-                <div class="swiper-wrapper">
-                    {% for article in articles %}
-                        <div class="card swiper-slide">
-                                <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
-                                    <div class="card-title">
-                                        <h3>{{article.title}}</h3>
-                                    </div>
-                                    <img src="{{article.urlImageMain}}" alt="">
-                                </a>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-            <div class="btn-container">
-                <a class="btn btn-level2" href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
-            </div>
-        </section>
 
-        <section class="facebook-extract">
-        </section>
-        
-        <section class="events-extract">
-            <h2>Calendrier</h2>
-            <div class="cards">
-                {% for event in events %}
-                    <a href="#" class="card">
-                    {% set trans_day_hash = {
-                        "Monday": "Lun",
-                        "Tuesday": "Mar",
-                        "Wednesday": "Mer",
-                        "Thursday": "Jeu",
-                        "Friday": "Ven",
-                        "Saturday": "Sam",
-                        "Sunday": "Dim"
-                        }
-                    %}
-                        <div class="card-date">
-                            <span>{{ trans_day_hash[event.startDate|date("l")] }}</span>
-                            <span>{{ event.startDate|date("d/m/y") }}</span>
-                        </div>
-                        <p class="card-description">
-                            <span>{{ event.content }}</span>
-                        </p>
-                    </a>
-                {% endfor %}
-            </div>
-            <div class="btn-container">
-                <a href="{{ path("app_homepage_listEvents") }}" class="btn btn-level2">Voir plus</a>
-            </div>
-        </section>
-
-        <section class="contact-form">
-            <h2>Formulaire de contact</h2>
-            <p>Pour toute question ou demande de renseigements, merci de renseigner les champs ci-dessous :</p>
-             {# {{ form_start(form) }} #}
-            <form method="POST" class="form">
-                <div class="form-row">
-                    {{ form_label(form.last_name) }}
-                    {{ form_widget(form.last_name) }}
-                    {{ form_errors(form.last_name)}}
-                </div>
-                <div class="form-row">
-                    {{ form_label(form.first_name) }}
-                    {{ form_widget(form.first_name) }}
-                    {{ form_errors(form.first_name)}}
-                </div>
-                <div class="form-row">
-                    {{ form_label(form.email) }}
-                    {{ form_widget(form.email) }}
-                    {{ form_errors(form.email)}}
-                </div>
-                <div class="form-row">
-                    {{ form_label(form.subject) }}
-                    {{ form_widget(form.subject) }}
-                    {{ form_errors(form.subject)}}
-                </div>
-                <div class="form-row">
-                    {{ form_label(form.message) }}
-                    {{ form_widget(form.message) }}
-                    {{ form_errors(form.message)}}
+        <div class="container">
+            <section class="news">
+                <h2>À la une</h2>
+                <div class="carousel swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        {% for article in articles %}
+                            <div class="card swiper-slide">
+                                    <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
+                                        <div class="card-title">
+                                            <h3>{{article.title}}</h3>
+                                        </div>
+                                        <img src="{{article.urlImageMain}}" alt="">
+                                    </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
                 <div class="btn-container">
-                    <button type="submit" class="btn btn-level1">Envoyer</button>
+                    <a class="btn btn-level2" href="{{ path("app_homepage_displayAllArticles") }}">Voir tous les articles</a>
                 </div>
-                    {# {{ form_widget(form.submit)}} #}
-                {{ form_rest(form) }}
-            </form>
-            {# {{ form_end(form) }} #}
-        </section>
+            </section>
+
+            <section class="facebook-extract">
+            {# <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline%2C%20events%2Cmessages&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe> #}
+                {# <div class="blue-test"></div> #}
+                <iframe src=""  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </section>
+
+            <section class="events-extract">
+                <h2>Calendrier</h2>
+                <div class="cards">
+                    {% for event in events %}
+                        <a href="#" class="card">
+                        {% set trans_day_hash = {
+                            "Monday": "Lun",
+                            "Tuesday": "Mar",
+                            "Wednesday": "Mer",
+                            "Thursday": "Jeu",
+                            "Friday": "Ven",
+                            "Saturday": "Sam",
+                            "Sunday": "Dim"
+                            }
+                        %}
+                            <div class="card-date">
+                                <span>{{ trans_day_hash[event.startDate|date("l")] }}</span>
+                                <span>{{ event.startDate|date("d/m/y") }}</span>
+                            </div>
+                            <p class="card-description">
+                                <span>{{ event.content }}</span>
+                            </p>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="btn-container">
+                    <a href="{{ path("app_homepage_listEvents") }}" class="btn btn-level2">Voir plus</a>
+                </div>
+            </section>
+
+            <section class="contact-form">
+                <h2>Formulaire de contact</h2>
+                <p>Pour toute question ou demande de renseigements, merci de renseigner les champs ci-dessous :</p>
+                {# {{ form_start(form) }} #}
+                <form method="POST" class="form">
+                    <div class="form-row">
+                        {{ form_label(form.last_name) }}
+                        {{ form_widget(form.last_name) }}
+                        {{ form_errors(form.last_name)}}
+                    </div>
+                    <div class="form-row">
+                        {{ form_label(form.first_name) }}
+                        {{ form_widget(form.first_name) }}
+                        {{ form_errors(form.first_name)}}
+                    </div>
+                    <div class="form-row">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email)}}
+                    </div>
+                    <div class="form-row">
+                        {{ form_label(form.subject) }}
+                        {{ form_widget(form.subject) }}
+                        {{ form_errors(form.subject)}}
+                    </div>
+                    <div class="form-row">
+                        {{ form_label(form.message) }}
+                        {{ form_widget(form.message) }}
+                        {{ form_errors(form.message)}}
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn-level1">Envoyer</button>
+                    </div>
+                        {# {{ form_widget(form.submit)}} #}
+                    {{ form_rest(form) }}
+                </form>
+                {# {{ form_end(form) }} #}
+            </section>
+
+        </div>
     </main>
 
 {% endblock %}
