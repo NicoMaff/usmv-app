@@ -4,6 +4,9 @@
   align-items: center;
   border: none;
   border-radius: 5px;
+  line-height: 21px;
+  cursor: pointer;
+  font-family: $font-body;
 
   &-menu {
     color: $content-light;

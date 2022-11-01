@@ -1,0 +1,240 @@
+main.leisures {
+  // *-*-* globals *-*-*
+  strong {
+    font-weight: 580;
+  }
+
+  a {
+    font-size: 1.1rem;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: $link;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 3.5vw, 3.5rem);
+  }
+
+  .img-container {
+    height: clamp(13rem, 65vw, 35rem);
+    width: 100%;
+
+    @include ptt {
+      height: 55vw;
+    }
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    line-height: clamp(20px, 5vw, 25px);
+  }
+
+  table.schedule {
+    border-collapse: collapse;
+    max-width: 35rem;
+    margin: 0 auto;
+
+    tr {
+      th:first-of-type {
+        width: clamp(8rem, 40vmin, 20rem);
+      }
+    }
+
+    td {
+      height: clamp(3rem, 15vmin, 3.5rem);
+      min-width: clamp(7.7rem, 38vmin, 10rem);
+    }
+
+    th {
+      height: clamp(3.5rem, 17.5vmin, 4rem);
+    }
+
+    td,
+    th {
+      text-align: center;
+      border: 1px solid black;
+      padding: 0.3rem 0.9rem;
+      font-size: clamp(0.8rem, 3.5vmin, 1rem);
+
+      span {
+        display: block;
+        padding: 0.1rem;
+      }
+    }
+  }
+
+  // *-*-* bloc1 *-*-*
+  .leading-img1 {
+    max-height: 35rem;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+
+  // *-*-* bloc2 *-*-*
+  .welcome {
+    h3 {
+      text-align: center;
+      color: $bg-2;
+    }
+
+    .text {
+      margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+    }
+  }
+
+  // *-*-* bloc3 *-*-*
+  .try-slot {
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      @include from(1000) {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.6rem;
+      }
+    }
+
+    .text {
+      flex: 2 2;
+    }
+
+    .img-container {
+      max-height: 20rem;
+      max-width: 30rem;
+      margin: 0 auto;
+    }
+  }
+
+  // *-*-* bloc4 *-*-*
+  .registration {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    h2 {
+      margin-bottom: 0;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      @include from(1000) {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.6rem;
+      }
+    }
+
+    .img-container {
+      max-height: 20rem;
+      max-width: 30rem;
+      margin: 0 auto;
+    }
+
+    .text {
+      flex: 2 2;
+    }
+  }
+
+  // *-*-* bloc5 *-*-*
+  .leisures-slot {
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+
+      @include from(1400) {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.6rem;
+      }
+    }
+
+    .tables {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      @include from(1050) {
+        flex-direction: row;
+      }
+
+      @include from(1400) {
+        flex-direction: column;
+        gap: 1.6rem;
+      }
+    }
+
+    .sunday-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 2 2;
+
+      @include from(1400) {
+        gap: 1rem;
+      }
+
+      .text {
+        @include from(1400) {
+          gap: 1rem;
+          line-height: 28px;
+        }
+      }
+    }
+  }
+
+  // *-*-* bloc6 *-*-*
+  .prices {
+    table {
+      color: $content-light;
+      margin: 0 auto;
+      border-radius: 12px;
+      background: $bg-2;
+      border: 1px solid $content-light;
+      border-collapse: collapse;
+    }
+
+    tr {
+      td:first-of-type {
+        width: clamp(13rem, 65vw, 30rem);
+      }
+
+      td:last-of-type {
+        width: clamp(5rem, 25vw, 12rem);
+      }
+    }
+
+    td {
+      font-size: clamp(0.9rem, 4vmin, 1rem);
+      text-align: center;
+      height: clamp(2rem, 10vmin, 3rem);
+      border: 1px solid $content-light;
+    }
+  }
+
+  // *-*-* bloc7 *-*-*
+  .leading-img2 {
+    max-height: 30rem;
+    max-width: 50rem;
+    margin: 0 auto;
+  }
+}

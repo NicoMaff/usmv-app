@@ -1,0 +1,203 @@
+main.competitions-infos {
+  h3 {
+    font-family: $font-body;
+    margin-bottom: 0.6rem;
+  }
+
+  a {
+    display: block;
+    font-size: clamp(0.8rem, 4.5vmin, 1.1rem);
+    text-align: center;
+    padding: clamp(0.3rem, 1.5vmin, 0.6rem) 0;
+  }
+
+  strong {
+    font-weight: 580;
+  }
+
+  img {
+    height: clamp(12rem, 60vmin, 20rem);
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 3.2vw, 3.5rem);
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+    line-height: clamp(20px, 5vw, 25px);
+  }
+
+  .img-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+
+    @include ptt {
+      justify-content: space-evenly;
+    }
+  }
+
+  table.schedule {
+    border-collapse: collapse;
+    max-width: 35rem;
+    margin: 0 auto;
+
+    @include from(1000) {
+      margin: 0 0 0 auto;
+      min-width: clamp(22rem, 35vw, 35rem);
+    }
+
+    td {
+      height: clamp(3rem, 15vmin, 3.5rem);
+    }
+
+    th {
+      height: clamp(3.5rem, 17.5vmin, 4rem);
+    }
+
+    td,
+    th {
+      text-align: center;
+      border: 1px solid black;
+      padding: 0.3rem 0.9rem;
+      font-size: clamp(0.9rem, 4.5vmin, 1rem);
+
+      span {
+        display: block;
+        padding: 0.1rem;
+      }
+    }
+  }
+
+  .slots {
+    img {
+      @include ptt {
+        height: clamp(15rem, 25vw, 20rem);
+        width: clamp(25rem, 40vw, 30rem);
+      }
+    }
+
+    .img-container {
+      margin-bottom: 1.2rem;
+    }
+
+    .text:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .up {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: clamp(1.2rem, 1.9vw, 2.5rem);
+      gap: clamp(1rem, 1.5vw, 3rem);
+
+      @include from(1000) {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .sunday-slot {
+      padding-top: 1rem;
+
+      .text {
+        line-height: 20px;
+        gap: 0.3rem;
+      }
+    }
+  }
+
+  .tournaments {
+    img {
+      @include ptt {
+        height: clamp(15rem, 25vw, 20rem);
+        width: clamp(25rem, 40vw, 30rem);
+      }
+    }
+  }
+
+  .partnership {
+    img {
+      height: 100%;
+    }
+
+    .img-container {
+      @include ptt {
+        width: 20rem;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .shuttles {
+    img {
+      height: 100%;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+
+      @include ptt {
+        flex-direction: row;
+      }
+    }
+
+    .img-container {
+      &:first-of-type {
+        height: 12rem;
+        max-width: 16rem;
+        margin: 0 auto;
+      }
+
+      &:last-of-type {
+        width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
+
+        @include ptt {
+          margin: clamp(1rem, 3vw, 3rem) auto 0;
+        }
+      }
+    }
+  }
+
+  .prices {
+    table {
+      color: $content-light;
+      margin: 0 auto;
+      border-radius: 12px;
+      background: $bg-2;
+      border: 1px solid $content-light;
+      border-collapse: collapse;
+    }
+
+    tr {
+      td:first-of-type {
+        width: clamp(13rem, 65vw, 30rem);
+      }
+
+      td:last-of-type {
+        width: clamp(5rem, 25vw, 12rem);
+      }
+    }
+
+    td {
+      font-size: clamp(0.9rem, 4vmin, 1rem);
+      text-align: center;
+      height: clamp(2rem, 10vmin, 3rem);
+      border: 1px solid $content-light;
+    }
+  }
+}

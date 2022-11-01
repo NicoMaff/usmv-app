@@ -1,0 +1,109 @@
+main.competitions-interclubs {
+  // *-*-* globals *-*-*
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: clamp(1.2rem, 3vmin, 1.6rem);
+  }
+
+  ul {
+    margin-left: -30px;
+  }
+
+  li {
+    padding: 0.3rem;
+    margin: 0.6rem 0;
+    font-size: clamp(1rem, 5vmin, 1.2rem);
+
+    @include fine {
+      &:hover span {
+        opacity: 1;
+        animation: bounce 1s ease infinite;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+        transform: scale(2);
+      }
+
+      &:hover a:after {
+        width: calc(100% - 26px);
+      }
+    }
+  }
+
+  a {
+    position: relative;
+    user-select: none;
+    pointer-events: none;
+
+    @include coarse {
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 26px;
+        height: 2px;
+        width: calc(100% - 26px);
+        background: $link;
+      }
+    }
+
+    @include fine {
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 28px;
+        height: 2px;
+        width: 0;
+        transition: width 0.3s ease-out;
+        background: $link;
+      }
+    }
+  }
+
+  span {
+    display: inline-block;
+    padding: 0 0.3rem;
+    opacity: 0;
+
+    @include coarse {
+      animation: bounce 1s ease infinite;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+      transform: scale(2);
+    }
+  }
+
+  .img-container {
+    height: clamp(18rem, 86vmin, 30rem);
+    width: 100%;
+    max-width: 33rem;
+  }
+}
+
+// *-*-* keyframes *-*-*
+@keyframes bounce {
+  0%,
+  50%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  25% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  75% {
+    transform: translate3d(-4px, 0, 0);
+  }
+}

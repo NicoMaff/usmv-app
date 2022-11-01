@@ -9,8 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% block stylesheets %}{% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
 
@@ -41,40 +40,39 @@
                                     <i class="fa-solid fa-circle-chevron-left backButton"></i>
                                     <span>Le club</span>
                                 </div>
-                                <li><a href="#">Présentation</a></li>
-                                <li><a href="#">Infos / Horaires / Créneaux</a></li>
-                                <li><a href="#">Acteurs du club</a></li>
-                                <li><a href="#">Gymnases</a></li>
+                                <li><a href="{{ path("app_club_introduction") }}">Présentation</a></li>
+                                <li><a href="{{ path("app_club_contributors") }}">Acteurs du club</a></li>
+                                <li><a href="{{ path("app_club_gym") }}">Gymnases</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Inscription</a></li>
+                        <li><a href="{{ path("app_membership_index") }}">Inscription</a></li>
                         <li class="tab">Jeunes
                             <ul class="sub-menu">
                                 <div class="sub-menu-header">
                                     <i class="fa-solid fa-circle-chevron-left backButton"></i>
-                                    <span>Le club</span>
+                                    <span>Jeunes</span>
                                 </div>
-                                <li><a href="#">Créneaux / Infos pratiques</a></li>
-                                <li><a href="#">L'école de badminton</a></li>
-                                <li><a href="#">La section sportive (collège)</a></li>
-                                <li><a href="#">Demande d'inscription à un tournoi</a></li>
-                                <li><a href="#">Compétitions jeunes</a></li>
+                                <li><a href="{{ path("app_youths_infos") }}">Créneaux / Infos pratiques</a></li>
+                                <li><a href="{{ path("app_youths_school") }}">L'école de badminton</a></li>
+                                <li><a href="{{ path("app_youths_sportSection") }}">La section sportive (collège)</a></li>
+                                <li><a href="{{ path("app_youths_tournamentForm") }}">Demande d'inscription à un tournoi</a></li>
+                                <li><a href="{{ path("app_youths_tournamentsList") }}">Compétitions jeunes</a></li>
                             </ul>
                         </li>
                         <li class="tab">Compétitions
                             <ul class="sub-menu">
                                 <div class="sub-menu-header">
                                     <i class="fa-solid fa-circle-chevron-left backButton"></i>
-                                    <span>Le club</span>
+                                    <span>Compétitions</span>
                                 </div>
-                                <li><a href="#">Créneaux / Infos pratiques</a></li>
-                                <li><a href="#">Entraînements</a></li>
-                                <li><a href="#">Tournois "BadTour"</a></li>
-                                <li><a href="#">InterClubs / Équipes</a></li>
+                                <li><a href="{{ path("app_competitions_infos") }}">Créneaux / Infos pratiques</a></li>
+                                <li><a href="{{ path("app_competitions_trainings") }}">Entraînements</a></li>
+                                <li><a href="{{ path("app_competitions_badtour") }}">Tournois "BadTour"</a></li>
+                                <li><a href="{{ path("app_competitions_interclubs") }}">InterClubs / Équipes</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Loisirs</a></li>
-                        <li><a href="#">Partenaires</a></li>
+                        <li><a href="{{ path("app_leisures_index") }}">Loisirs</a></li>
+                        <li><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
                         <li><a href="#">Liens</a></li>
                     </ul>
                 </div>
@@ -89,39 +87,38 @@
                     <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
                     <li>Le Club
                         <ul class="sub-menu">
-                            <li><a href="#">Présentation</a></li>
-                            <li><a href="#">Infos / Horaires / Créneaux</a></li>
-                            <li><a href="#">Acteurs du club</a></li>
-                            <li><a href="#">Gymnases</a></li>
+                            <li><a href="{{ path("app_club_introduction") }}">Présentation</a></li>
+                            <li><a href="{{ path("app_club_contributors") }}">Acteurs du club</a></li>
+                            <li><a href="{{ path("app_club_gym") }}">Gymnases</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Inscription</a></li>
+                    <li><a href="{{ path("app_membership_index") }}">Inscription</a></li>
                     <li>Jeunes
                         <ul class="sub-menu">
-                            <li><a href="#">Créneaux / Infos pratiques</a></li>
-                            <li><a href="#">L'école de badminton</a></li>
-                            <li><a href="#">La section sportive (collège)</a></li>
-                            <li><a href="#">Demande d'inscription à un tournoi</a></li>
-                            <li><a href="#">Compétitions jeunes</a></li>
+                            <li><a href="{{ path("app_youths_infos") }}">Créneaux / Infos pratiques</a></li>
+                            <li><a href="{{ path("app_youths_school") }}">L'école de badminton</a></li>
+                            <li><a href="{{ path("app_youths_sportSection") }}">La section sportive (collège)</a></li>
+                            <li><a href="{{ path("app_youths_tournamentForm") }}">Demande d'inscription à un tournoi</a></li>
+                            <li><a href="{{ path("app_youths_tournamentsList") }}">Compétitions jeunes</a></li>
                         </ul>
                     </li>
                     <li>Compétitions
                         <ul class="sub-menu">
-                            <li><a href="#">Créneaux / Infos pratiques</a></li>
-                            <li><a href="#">Entraînements</a></li>
-                            <li><a href="#">Tournois "BadTour"</a></li>
-                            <li><a href="#">InterClubs / Équipes</a></li>
+                            <li><a href="{{ path("app_competitions_infos") }}">Créneaux / Infos pratiques</a></li>
+                            <li><a href="{{ path("app_competitions_trainings") }}">Entraînements</a></li>
+                            <li><a href="{{ path("app_competitions_badtour") }}">Tournois "BadTour"</a></li>
+                            <li><a href="{{ path("app_competitions_interclubs") }}">InterClubs / Équipes</a></li>
                         </ul>
                     </li>
                     <li class="tablet-responsive"><i class="fa-solid fa-ellipsis"></i>
                         <ul class="other-links">
-                            <li><a href="#">Loisirs</a></li>
-                            <li><a href="#">Partenaires</a></li>
+                            <li><a href="{{ path("app_leisures_index") }}">Loisirs</a></li>
+                            <li><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
                             <li><a href="#">Liens</a></li>
                         </ul>
                     </li>
-                    <li class="desktop-responsive"><a href="#">Loisirs</a></li>
-                    <li class="desktop-responsive"><a href="#">Partenaires</a></li>
+                    <li class="desktop-responsive"><a href="{{ path("app_leisures_index") }}">Loisirs</a></li>
+                    <li class="desktop-responsive"><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
                     <li class="desktop-responsive"><a href="#">Liens</a></li>
                 </ul>
                 <div class="profile-icons">
@@ -132,10 +129,8 @@
             </nav>
         </header>
 
-        <main>
-            {% block main %}{% endblock %}
-        </main>
-
+        {% block main %}{% endblock %}
+        
         <footer>
             <ul>
                 <li>Nous contacter</li>
