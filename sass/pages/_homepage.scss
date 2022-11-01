@@ -4,10 +4,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    // max-height: 75vh;
     width: min(100%, 35rem);
     margin: 0 auto;
-    // margin: 0 auto 1.5rem;
     padding: 1rem 1.2rem 0.9rem;
     background: $bg-3;
     border-radius: 15px;
@@ -91,7 +89,6 @@
         height: 100%;
         object-fit: cover;
         background-position: center;
-        // max-width: clamp(15rem, 80vmin, 30rem);
         border-radius: 12px;
       }
     }
@@ -106,21 +103,24 @@
   // *-*-* section 2 : facebook plugin *-*-*
   section.facebook-extract {
     padding: 1.2rem;
-    // flex: 1 0 1000px;
-
-    // justify-content: center;
     align-items: center;
-    // width: fit-content !important;
-    // display: none;
 
     @include from(1000) {
       grid-row: 1/4;
       grid-column: 2/3;
-      // width: 100%;
+    }
+
+    @include from(1630) {
+      padding: 1.8rem;
     }
 
     iframe {
       height: calc(100vh - 85px);
+      width: min(100%, 500px);
+
+      @include from(1000) {
+        height: 100%;
+      }
     }
 
     .blue-test {

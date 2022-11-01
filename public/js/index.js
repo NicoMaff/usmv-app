@@ -92,85 +92,35 @@ sliderBtns.forEach((sliderBtn) => {
 });
 
 //
-// --- HANDLE FACEBOOK PLUGIN WIDTH ---
-// const facebookSection = document.querySelector(".facebook-extract");
-// const fbIframe = document.querySelector(".facebook-extract > iframe");
-// const iframeHeight = Math.floor(window.innerHeight - 85);
+// --- HANDLE FACEBOOK PLUGIN WIDTH RESPONSIVE ---
+const facebookSection = document.querySelector(".facebook-extract");
+const fbIframe = document.querySelector(".facebook-extract > iframe");
 
-// console.log(iframeHeight);
+const facebookObserver = new ResizeObserver((entries) => {
+  entries.forEach((entry) => {
+    console.log("facebookObserver");
 
-// const windowObserver = new ResizeObserver((entries) => {
-//   entries.forEach((entry) => {
-//     console.log("windowObserver");
-//     if (entry.contentRect.width <= 320) {
-//       console.log("test1");
-//       fbIframe.setAttribute("width", 249);
-//       // fbIframe.setAttribute("height", iframeHeight);
-//       fbIframe.setAttribute(
-//         "src",
-//         "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=340&height=331&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-//         //`https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=249&small_header=false&hide_cover=false&show_facepile=false&appId`
-//       );
-//     }
+    if (window.innerWidth <= 320) {
+      fbIframe.setAttribute(
+        "src",
+        `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=249&height=${facebookSection.offsetHeight}&small_header=false&hide_cover=false&show_facepile=false&appId`
+      );
+    } else if (entry.contentRect.width >= 500) {
+      fbIframe.setAttribute(
+        "src",
+        `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=500&height=${facebookSection.offsetHeight}&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`
+      );
+    } else {
+      fbIframe.setAttribute(
+        "src",
+        `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=${Math.floor(
+          entry.contentRect.width
+        )}&height=${
+          facebookSection.offsetHeight
+        }&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`
+      );
+    }
+  });
+});
 
-//     if (facebookSection.offsetWidth - entry.contentRect.width >= 0) {
-//       console.log("test2");
-//       // iframe must represent 82,4% of device window width
-//       fbIframe.setAttribute(
-//         "width",
-//         Math.floor(entry.contentRect.width * 0.824)
-//       );
-//       fbIframe.setAttribute("height", iframeHeight);
-//       fbIframe.setAttribute(
-//         "src",
-//         `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=${Math.floor(
-//           entry.contentRect.width * 0.824
-//         )}&height=${iframeHeight}&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`
-//       );
-//     }
-
-//     if (window.innerWidth - facebookSection.offsetWidth >= 12.8) {
-//       console.log("test5");
-//       fbIframe.setAttribute(
-//         "width",
-//         Math.floor(entry.contentRect.width * 0.824)
-//       );
-//       fbIframe.setAttribute(
-//         "src",
-//         "https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=340&height=331&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-//       );
-//     }
-//   });
-// });
-
-// if (window.innerWidth >= 500) {
-//   windowObserver.unobserve(document.body);
-// } else {
-//   windowObserver.observe(document.body);
-// }
-
-// const facebookObserver = new ResizeObserver((entries) => {
-//   entries.forEach((entry) => {
-//     console.log("facebookObserver");
-//     if (entry.contentRect.width >= 500) {
-//       console.log("test3");
-//       fbIframe.setAttribute("width", 500);
-//       fbIframe.setAttribute("height", iframeHeight);
-//       fbIframe.setAttribute(
-//         "src",
-//         `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=500&height=${iframeHeight}&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`
-//       );
-//       // } else {
-//       //   console.log("test4");
-//       //   fbIframe.setAttribute("width", Math.floor(entry.contentRect.width));
-//       //   fbIframe.setAttribute(
-//       //     "src",
-//       //     `https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fusmvilleparisisbadminton%2F&tabs=timeline&width=${Math.floor(
-//       //       entry.contentRect.width
-//       //     )}&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId`
-//       //   );
-//     }
-//   });
-// });
-
-// facebookObserver.observe(facebookSection);
+facebookObserver.observe(facebookSection);
