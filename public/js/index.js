@@ -98,8 +98,6 @@ const fbIframe = document.querySelector(".facebook-extract > iframe");
 
 const facebookObserver = new ResizeObserver((entries) => {
   entries.forEach((entry) => {
-    console.log("facebookObserver");
-
     if (window.innerWidth <= 320) {
       fbIframe.setAttribute(
         "src",
@@ -124,3 +122,18 @@ const facebookObserver = new ResizeObserver((entries) => {
 });
 
 facebookObserver.observe(facebookSection);
+
+//
+// --- HANDLE CAROUSEL RESPONSIVE ---
+const newsSection = document.querySelector(".news");
+const carousel = document.getElementById("newsCarousel");
+
+const carouselObserver = new ResizeObserver((entries) => {
+  entries.forEach((entry) => {
+    console.log("test");
+    carousel.style.width = `${entry.contentRect.width * 0.8}px`;
+    carousel.style.height = `${entry.contentRect.width * 0.8}px`;
+  });
+});
+
+carouselObserver.observe(newsSection);

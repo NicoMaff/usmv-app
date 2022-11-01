@@ -35,9 +35,9 @@
   // *-*-* section 1 : news *-*-*
   section.news {
     .carousel {
-      min-height: clamp(15rem, 45vmin, 33rem);
-      max-width: clamp(12rem, 45vmin, 26rem);
-      margin-top: 1rem;
+      max-width: 22rem;
+      max-height: 22rem;
+      margin: 1rem auto 3.5rem;
 
       @media (min-width: 600px) {
         padding: 0 0.6rem;
@@ -46,6 +46,10 @@
 
     .swiper-wrapper {
       margin-bottom: 3rem;
+    }
+
+    .swiper-pagination {
+      bottom: -35px;
     }
 
     .card {
@@ -57,7 +61,8 @@
         justify-content: end;
         align-items: end;
         position: relative;
-        height: clamp(13rem, 42vmin, 25rem);
+        height: 100%;
+        // height: clamp(13rem, 42vmin, 25rem);
       }
 
       &-title {

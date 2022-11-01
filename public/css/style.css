@@ -866,9 +866,9 @@ footer p {
   }
 }
 .homepage section.news .carousel {
-  min-height: clamp(15rem, 45vmin, 33rem);
-  max-width: clamp(12rem, 45vmin, 26rem);
-  margin-top: 1rem;
+  max-width: 22rem;
+  max-height: 22rem;
+  margin: 1rem auto 3.5rem;
 }
 @media (min-width: 600px) {
   .homepage section.news .carousel {
@@ -877,6 +877,9 @@ footer p {
 }
 .homepage section.news .swiper-wrapper {
   margin-bottom: 3rem;
+}
+.homepage section.news .swiper-pagination {
+  bottom: -35px;
 }
 .homepage section.news .card {
   border-radius: 12px;
@@ -887,7 +890,7 @@ footer p {
   justify-content: end;
   align-items: end;
   position: relative;
-  height: clamp(13rem, 42vmin, 25rem);
+  height: 100%;
 }
 .homepage section.news .card-title {
   display: flex;
