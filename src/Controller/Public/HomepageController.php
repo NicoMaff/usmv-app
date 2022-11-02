@@ -3,16 +3,17 @@
 namespace App\Controller\Public;
 
 use App\Form\ContactType;
+use Symfony\Component\Mime\Email;
+use App\Repository\EventRepository;
+use Symfony\Component\Mime\Address;
 use App\Repository\ArticleRepository;
 use App\Repository\ContactRepository;
-use App\Repository\EventRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 
 class HomepageController extends AbstractController
 {
@@ -28,15 +29,18 @@ class HomepageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
 
-            $contactRepo->add($contact, true);
+            // $contactRepo->add($contact, true);
 
             $email = (new Email())
-                ->from($contact->getEmail())
-                ->to("n1code7@outlook.fr")
-                // ->replyTo($contact->getEmail())
-                ->subject("Formulaire de contact - Question générale")
-                ->text("test")
-                ->html("<strong>TEST</strong>");
+                ->from('hello@example.com')
+                ->to('you@example.com')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('Time for Symfony Mailer!')
+                ->text('Sending emails is fun again!')
+                ->html('<p>See Twig integration for better HTML integration!</p>');
 
             $mailer->send($email);
 
@@ -96,6 +100,45 @@ class HomepageController extends AbstractController
 
         return $this->render("public/homepage/listEvents.html.twig", [
             "events" => $events
+        ]);
+    }
+
+    #[Route("/email", "app_homepage_mail")]
+    public function sendEmail(Request $request, MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('hello@example.com')
+            ->to('n1code7@outlook.fr')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('test 3')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        // dd($email);
+        $mailer->send($email);
+
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     // $contact = $form->getData();
+
+        //     // $contactRepo->add($contact, true);
+
+
+
+
+
+        //     $this->addFlash("success", "Votre question / demande d'information(s) a bien été transmise !");
+
+        //     return $this->redirectToRoute("app_homepage_mail");
+        // }
+
+        return $this->render('public/homepage/sendEmail.html.twig', [
+            "form" => $form->createView(),
         ]);
     }
 }
