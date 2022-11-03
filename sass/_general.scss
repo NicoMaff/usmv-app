@@ -80,3 +80,26 @@ img {
   height: 100%;
   width: 100%;
 }
+
+.flash {
+  display: block;
+  padding: 1.2rem;
+  margin: 2rem 0;
+  border-radius: 5px;
+
+  &-success {
+    background: rgba($success-1, 0.4);
+  }
+
+  &-danger {
+    background: rgba($danger-1, 0.4);
+  }
+
+  &-warning {
+    background: rgba($warning, 0.4);
+  }
+
+  &-infos {
+    background: rgba($infos, 0.4);
+  }
+}

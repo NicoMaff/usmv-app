@@ -9,11 +9,14 @@
 {% block main %}
 
     <main class="homepage">
-        {% for message in app.flashes('success') %}
-            <div class="flash-notice">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="flash flash-{{ label }}">
                 {{ message }}
             </div>
         {% endfor %}
+    {% endfor %}
+
         <h1>Bienvenue à l'USMV Badminton</h1>
 
         <div class="container">
@@ -78,7 +81,7 @@
             <section class="contact-form">
                 <h2>Formulaire de contact</h2>
                 <p>Pour toute question ou demande de renseigements, merci de renseigner les champs ci-dessous :</p>
-                {# {{ form_start(form) }} #}
+                
                 <form method="POST" class="form">
                     <div class="form-row">
                         {{ form_label(form.last_name) }}
@@ -96,22 +99,28 @@
                         {{ form_errors(form.email)}}
                     </div>
                     <div class="form-row">
-                        {{ form_label(form.subject) }}
-                        {{ form_widget(form.subject) }}
-                        {{ form_errors(form.subject)}}
+                        {{ form_label(form.recipient) }}
+                        {{ form_widget(form.recipient) }}
+                        {{ form_errors(form.recipient)}}
                     </div>
                     <div class="form-row">
                         {{ form_label(form.message) }}
                         {{ form_widget(form.message) }}
                         {{ form_errors(form.message)}}
                     </div>
-                    <div class="btn-container">
-                        <button type="submit" class="btn btn-level1">Envoyer</button>
+                    <div class="form-row">
+                        <div class="send-copy">
+                            {{ form_label(form.sendCopy) }}
+                            {{ form_widget(form.sendCopy) }}
+                            {{ form_errors(form.sendCopy)}}
+                        </div>
+                        <div class="btn-container">
+                            <button type="submit" class="btn btn-level1">Envoyer</button>
+                        </div>
                     </div>
-                        {# {{ form_widget(form.submit)}} #}
                     {{ form_rest(form) }}
                 </form>
-                {# {{ form_end(form) }} #}
+
             </section>
 
         </div>

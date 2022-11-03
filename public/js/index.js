@@ -51,7 +51,6 @@ const sliderBtns = document.querySelectorAll(".slider");
 const arrowBtns = document.querySelectorAll(".slider i");
 
 const sliderBtnsArray = Object.values(sliderBtns);
-// console.log(sliderBtnsArray);
 
 sliderBtns.forEach((sliderBtn) => {
   sliderBtn.addEventListener("click", (e) => {
@@ -130,7 +129,6 @@ const carousel = document.getElementById("newsCarousel");
 
 const carouselObserver = new ResizeObserver((entries) => {
   entries.forEach((entry) => {
-    console.log("test");
     carousel.style.width = `${entry.contentRect.width * 0.8}px`;
     carousel.style.height = `${entry.contentRect.width * 0.8}px`;
   });
