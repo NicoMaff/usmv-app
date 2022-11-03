@@ -162,9 +162,32 @@
 
         &:last-of-type {
           margin-bottom: 0;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          .send-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+
+            @include from(400) {
+              flex-direction: row;
+            }
+
+            label {
+              text-align: center;
+
+              @include from(400) {
+                min-width: 10rem;
+              }
+            }
+          }
         }
 
-        input,
+        input[type="text"],
+        input[type="email"],
         select {
           min-height: 1.6rem;
           width: 100%;
@@ -202,7 +225,7 @@
       display: flex;
       justify-content: end;
       align-items: center;
-      margin-top: 0.6rem;
+      // margin-top: 0.6rem;
     }
   }
 }

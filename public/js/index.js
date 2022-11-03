@@ -120,7 +120,7 @@ const facebookObserver = new ResizeObserver((entries) => {
   });
 });
 
-// facebookObserver.observe(facebookSection);
+facebookObserver.observe(facebookSection);
 
 //
 // --- HANDLE CAROUSEL RESPONSIVE ---

@@ -28,21 +28,33 @@ class HomepageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
-
-            // $contactRepo->add($contact, true);
+            $contactRepo->add($contact, true);
 
             $email = (new Email())
-                ->from('hello@example.com')
-                ->to('you@example.com')
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('Time for Symfony Mailer!')
-                ->text('Sending emails is fun again!')
-                ->html('<p>See Twig integration for better HTML integration!</p>');
+                ->from(Address::create($contact->getFirstName() . " " . $contact->getLastName() . " <" . $contact->getEmail() . ">"))
+                ->to($contact->getRecipient())
+                ->replyTo($contact->getEmail())
+                ->subject("[Site USMV Badminton] - Formulaire de contact")
+                ->html(
+                    "<h1 style=\"font-size: 22px; font-weight: 580;\">Formulaire de contact</h1>
+                    <p>" . $contact->getMessage() . "</p>"
+                );
 
             $mailer->send($email);
+
+            if ($contact->getSendCopy()) {
+                $copyEmail = (new Email())
+                    ->from(Address::create("Ne pas répondre <no-reply@villeparisisbadminton77.fr>"))
+                    ->to($contact->getEmail())
+                    ->subject("[Site USMV Badminton] - Copie du formulaire de contact")
+                    ->html(
+                        "<h1 style=\"font-size: 22px; font-weight: 580;\">Copie du formulaire de contact</h1>
+                        <h2 style=\"font-size: 18px; font-weight: 480;\">Mon message :</h2>
+                        <p>" . $contact->getMessage() . "</p>"
+                    );
+
+                $mailer->send($copyEmail);
+            }
 
             $this->addFlash("success", "Votre question / demande d'information(s) a bien été transmise !");
 
@@ -100,45 +112,6 @@ class HomepageController extends AbstractController
 
         return $this->render("public/homepage/listEvents.html.twig", [
             "events" => $events
-        ]);
-    }
-
-    #[Route("/email", "app_homepage_mail")]
-    public function sendEmail(Request $request, MailerInterface $mailer): Response
-    {
-        $email = (new Email())
-            ->from('hello@example.com')
-            ->to('n1code7@outlook.fr')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
-            ->text('test 3')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
-
-        // dd($email);
-        $mailer->send($email);
-
-        $form = $this->createForm(ContactType::class);
-        $form->handleRequest($request);
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     // $contact = $form->getData();
-
-        //     // $contactRepo->add($contact, true);
-
-
-
-
-
-        //     $this->addFlash("success", "Votre question / demande d'information(s) a bien été transmise !");
-
-        //     return $this->redirectToRoute("app_homepage_mail");
-        // }
-
-        return $this->render('public/homepage/sendEmail.html.twig', [
-            "form" => $form->createView(),
         ]);
     }
 }

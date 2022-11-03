@@ -97,6 +97,25 @@ img {
   width: 100%;
 }
 
+.flash {
+  display: block;
+  padding: 1.2rem;
+  margin: 2rem 0;
+  border-radius: 5px;
+}
+.flash-success {
+  background: rgba(34, 128, 32, 0.4);
+}
+.flash-danger {
+  background: rgba(157, 20, 20, 0.4);
+}
+.flash-warning {
+  background: rgba(187, 125, 33, 0.4);
+}
+.flash-infos {
+  background: rgba(219, 223, 28, 0.4);
+}
+
 .btn {
   display: flex;
   justify-content: center;
@@ -980,8 +999,31 @@ footer p {
 }
 .homepage .contact-form .form-row:last-of-type {
   margin-bottom: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
-.homepage .contact-form .form-row input,
+.homepage .contact-form .form-row:last-of-type .send-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+@media (min-width: 400px) {
+  .homepage .contact-form .form-row:last-of-type .send-copy {
+    flex-direction: row;
+  }
+}
+.homepage .contact-form .form-row:last-of-type .send-copy label {
+  text-align: center;
+}
+@media (min-width: 400px) {
+  .homepage .contact-form .form-row:last-of-type .send-copy label {
+    min-width: 10rem;
+  }
+}
+.homepage .contact-form .form-row input[type=text],
+.homepage .contact-form .form-row input[type=email],
 .homepage .contact-form .form-row select {
   min-height: 1.6rem;
   width: 100%;
@@ -1015,7 +1057,6 @@ footer p {
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-top: 0.6rem;
 }
 
 .club-introduction h2 {

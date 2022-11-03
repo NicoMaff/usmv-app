@@ -27,7 +27,9 @@ class Contact
     private ?string $message = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $subject = null;
+    private ?string $recipient = null;
+
+    public ?bool $sendCopy = false;
 
     public function getId(): ?int
     {
@@ -82,15 +84,20 @@ class Contact
         return $this;
     }
 
-    public function getSubject(): ?string
+    public function getRecipient(): ?string
     {
-        return $this->subject;
+        return $this->recipient;
     }
 
-    public function setSubject(string $subject): self
+    public function setRecipient(string $recipient): self
     {
-        $this->subject = $subject;
+        $this->recipient = $recipient;
 
         return $this;
+    }
+
+    public function getSendCopy(): ?bool
+    {
+        return $this->sendCopy;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -29,22 +30,26 @@ class ContactType extends AbstractType
                 "label" => "Email :",
                 "required" => true
             ])
-            ->add("subject", ChoiceType::class, [
+            ->add("recipient", ChoiceType::class, [
                 "label" => "Sujet :",
                 "required" => true,
+                "placeholder" => "Veuillez sélectionner un sujet 🤔",
                 "choices" => [
-                    "test" => "n1code7@outlook.fr"
-                    // "Général" => "contact@villeparisisbadminton77.fr",
-                    // "Adhésions / Renouvellement" => "adhesion@villeparisisbadminton77.fr",
-                    // "Tournois Badtour" => "tournois@villeparisisbadminton77.fr",
-                    // "Jeunes" => "jeunes@villeparisisbadminton77.fr",
-                    // "Compétiteurs" => "competitions@villeparisisbadminton77.fr",
-                    // "Loisirs" => "loisirs@villeparisisbadminton77.fr"
+                    "Général" => "contact@villeparisisbadminton77.fr",
+                    "Adhésions / Renouvellement" => "adhesion@villeparisisbadminton77.fr",
+                    "Tournois Badtour" => "tournois@villeparisisbadminton77.fr",
+                    "Jeunes" => "jeunes@villeparisisbadminton77.fr",
+                    "Compétiteurs" => "competitions@villeparisisbadminton77.fr",
+                    "Loisirs" => "loisirs@villeparisisbadminton77.fr"
                 ]
             ])
             ->add('message', TextareaType::class, [
                 "label" => "Message :",
                 "required" => true
+            ])
+            ->add("sendCopy", CheckboxType::class, [
+                "label" => "Recevoir une copie",
+                "required" => false,
             ]);
     }
 
