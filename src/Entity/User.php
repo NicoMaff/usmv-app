@@ -87,6 +87,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
+    // /**
+    //  * Méthode getUsername qui permet de retourner le champ qui est utilisé pour l'authentification.
+    //  *
+    //  * @return string
+    //  */
+    // public function getUsername(): string {
+    //     return $this->getUserIdentifier();
+    // }
+
     /**
      * @see UserInterface
      */
@@ -186,18 +195,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatarUrl(?string $avatar_url): self
     {
         $this->avatar_url = $avatar_url;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
 
         return $this;
     }

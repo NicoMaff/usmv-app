@@ -9,6 +9,7 @@ security:
       entity:
         class: App\Entity\User
         property: email
+
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,10 +17,13 @@ security:
     main:
       lazy: true
       provider: app_user_provider
-      json_login:
-        check_path: api_security_login
+      form_login:
+        login_path: app_security_login
+        check_path: app_security_login
+      #   json_login:
+      #     check_path: api_security_login
       logout:
-        path: api_security_logout
+        path: app_security_logout
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
