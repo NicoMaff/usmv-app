@@ -65,30 +65,23 @@ class SecurityController extends AbstractController
         $jsonReceived = $request->getContent();
         // dd($jsonReceived);
 
-        try {
-            $user = $serializer->deserialize($jsonReceived, USER::class, "json");
-            // dd($user);
-            $user->setCreatedAt(new \DateTimeImmutable());
+        $user = $serializer->deserialize($jsonReceived, USER::class, "json");
+        // dd($user);
+        $user->setCreatedAt(new \DateTimeImmutable());
 
-            $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
+        $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
+        $user->setPassword($hashedPassword);
 
-            $user->setValidatedAccount(false);
+        $user->setValidatedAccount(false);
 
-            $errors = $validator->validate($user);
+        $errors = $validator->validate($user);
 
-            if (count($errors) > 0) {
-                return $this->json($errors, 400);
-            }
-
-            $repository->add($user, true);
-
-            return $this->json($user, 201, [], []);
-        } catch (NotEncodableValueException $e) {
-            return $this->json([
-                "status" => 400,
-                "message" => $e->getMessage()
-            ], 400);
+        if (count($errors) > 0) {
+            return $this->json($errors, 400);
         }
+
+        $repository->add($user, true);
+
+        return $this->json($user, 201, [], []);
     }
 }
