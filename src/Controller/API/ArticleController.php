@@ -15,19 +15,23 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route("api/")]
 class ArticleController extends AbstractController
 {
-    #[Route("articles", name: "app_article_api_list", methods: "GET")]
+    // Get all articles
+    #[Route("articles/", name: "api_article_list", methods: "GET")]
     public function list(ArticleRepository $repository): Response
     {
         return $this->json($repository->findAll(), 200, [], ["groups" => "article:read"]);
     }
 
-    #[Route("article/{id}", name: "app_article_api_listOne")]
+
+    // Get ONE article from its ID
+    #[Route("article/{id}/", name: "api_article_listOne", methods: "GET")]
     public function listOne(ArticleRepository $repository, int $id): Response
     {
         return $this->json($repository->find($id), 200, [], ["groups" => "article:read"]);
     }
 
-    #[Route("article/new", name: "app_article_api_new", methods: "POST")]
+    // Create a new article
+    #[Route("article/new/", name: "api_article_new", methods: "POST")]
     public function new(Request $request, ArticleRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
         $jsonReceived = $request->getContent();
@@ -56,7 +60,8 @@ class ArticleController extends AbstractController
         }
     }
 
-    #[Route("article/update/{id}", name: "app_article_api_update", methods: "PUT")]
+    // Update one article from its ID
+    #[Route("article/update/{id}/", name: "api_article_update", methods: "PUT")]
     public function replace(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id): Response
     {
         $jsonReceived = $request->getContent();
@@ -96,7 +101,8 @@ class ArticleController extends AbstractController
         }
     }
 
-    #[Route("article/delete/{id}", name: "app_article_api_delete", methods: "DELETE")]
+    //Delete on article from its ID
+    #[Route("article/delete/{id}/", name: "api_article_delete", methods: "DELETE")]
     public function delete(ArticleRepository $repository, Request $request, ValidatorInterface $validator, SerializerInterface $serializer, int $id): Response
     {
         try {

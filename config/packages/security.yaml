@@ -1,4 +1,5 @@
 security:
+  enable_authenticator_manager: true
   # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
@@ -11,31 +12,45 @@ security:
         property: email
 
   firewalls:
+    # activate different ways to authenticate
+    # https://symfony.com/doc/current/security.html#the-firewall
+
+    # https://symfony.com/doc/current/security/impersonating_user.html
+    # switch_user: true
+
+    login:
+      pattern: ^/api/login
+      stateless: true
+      provider: app_user_provider
+      json_login:
+        username_path: email
+        # check_path: api_security_login
+        check_path: /api/login_check
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
+    api:
+      pattern: ^/api
+      stateless: true
+      jwt: ~
     main:
       lazy: true
       provider: app_user_provider
-      form_login:
-        login_path: app_security_login
-        check_path: app_security_login
-      #   json_login:
-      #     check_path: api_security_login
+      # form_login:
+      #   login_path: app_security_login
+      #   check_path: app_security_login
       logout:
         path: app_security_logout
-
-      # activate different ways to authenticate
-      # https://symfony.com/doc/current/security.html#the-firewall
-
-      # https://symfony.com/doc/current/security/impersonating_user.html
-      # switch_user: true
+        target: app_security_login
 
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+    # - { path: ^/api, roles: ROLE_USER }
+    # - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    # - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
   security:
@@ -49,3 +64,5 @@ when@test:
         cost: 4 # Lowest possible value for bcrypt
         time_cost: 3 # Lowest possible value for argon
         memory_cost: 10 # Lowest possible value for argon
+    # role_hierarchy:
+    #   ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
