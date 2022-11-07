@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -16,12 +17,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("user:read", "user:create", "user:update")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(["user:read", "user:create", "user:update"])]
+    #[Assert\NotBlank()]
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private array $roles = ["ROLE_USER"];
 
     /**
@@ -32,33 +37,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         min: 6,
         minMessage: "Votre mot de passe doit comporter 6 caractères minimum",
     )]
+    #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
     private ?string $password = null;
 
+    #[Assert\EqualTo(
+        propertyPath: "password",
+        message: "Les deux mots de passe saisis ne sont pas identiques !"
+    )]
+    #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
+    public ?string $confirmPassword = null;
+
+    #[Assert\Length(
+        min: 6,
+        minMessage: "Votre mot de passe doit comporter 6 caractères minimum",
+    )]
+    public ?string $previousPassword = null;
+
     #[ORM\Column(length: 100)]
+    #[Groups(["user:read", "user:create", "user:update"])]
+    #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
     private ?string $last_name = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(["user:read", "user:create", "user:update"])]
+    #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
     private ?string $first_name = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
+    #[Groups("user:read", "user:createByA", "user:update")]
     private ?string $gender = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $birth_date = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $avatar_url = null;
 
     #[ORM\Column]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private ?bool $validated_account = false;
+
+    #[ORM\Column(length: 50)]
+    #[Groups(["user:read", "user:create", "user:update"])]
+    private ?string $state = "inactive";
 
     #[Timestampable(on: "create")]
     #[ORM\Column]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[Timestampable(on: "update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeInterface $updated_at = null;
+
 
     public function getId(): ?int
     {
@@ -103,8 +137,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // guarantee every user at least has ROLE_MEMBER
+        $roles[] = 'ROLE_MEMBER';
 
         return array_unique($roles);
     }
@@ -232,6 +266,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }

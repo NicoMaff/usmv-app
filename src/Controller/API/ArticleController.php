@@ -16,21 +16,21 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ArticleController extends AbstractController
 {
     // Get all articles
-    #[Route("articles", name: "api_articles_readAll", methods: "GET")]
+    #[Route("articles", name: "api_article_readAll", methods: "GET")]
     public function readAll(ArticleRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, [], ["groups" => "article:read"]);
     }
 
     // Get ONE article from its ID
-    #[Route("article/{id}", name: "api_articles_readOne", methods: "GET")]
+    #[Route("article/{id}", name: "api_article_readOne", methods: "GET")]
     public function readOne(ArticleRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, [], ["groups" => "article:read"]);
     }
 
     // Create a new article
-    #[Route("article", name: "api_articles_create", methods: "POST")]
+    #[Route("article", name: "api_article_create", methods: "POST")]
     public function create(Request $request, ArticleRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
         $jsonReceived = $request->getContent();
@@ -54,7 +54,7 @@ class ArticleController extends AbstractController
     }
 
     // Update one article from its ID
-    #[Route("article/{id}", name: "api_articles_update", methods: "PUT")]
+    #[Route("article/{id}", name: "api_article_update", methods: "PUT")]
     public function update(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id): JsonResponse
     {
         $jsonReceived = $request->getContent();
@@ -88,7 +88,7 @@ class ArticleController extends AbstractController
     }
 
     //Delete on article from its ID
-    #[Route("article/{id}", name: "api_articles_delete", methods: "DELETE")]
+    #[Route("article/{id}", name: "api_article_delete", methods: "DELETE")]
     public function delete(ArticleRepository $repository, int $id): JsonResponse
     {
         $repository->remove($repository->find($id), true);
