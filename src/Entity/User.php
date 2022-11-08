@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100)]
     #[Groups(["user:read", "user:create", "user:update"])]
-    private array $roles = ["ROLE_USER"];
+    private array $roles = ["ROLE_MEMBER"];
 
     /**
      * @var string The hashed password
