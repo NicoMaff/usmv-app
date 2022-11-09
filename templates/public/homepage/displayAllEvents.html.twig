@@ -16,8 +16,9 @@
       "Sunday": "dimanche"
       }
     %}
+    {{ knp_pagination_render(pagination) }}
     <div class="events">
-      {% for event in events %}
+      {% for event in pagination %}
         <div class="event">
     
           <div class="event-date">
@@ -49,6 +50,7 @@
       {% endfor %}
     
     </div>
+    {{ knp_pagination_render(pagination) }}
   </main>
 
 {% endblock %}

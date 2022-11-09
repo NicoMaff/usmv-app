@@ -95,23 +95,30 @@ class HomepageController extends AbstractController
         ]);
     }
 
-    // #[Route("/calendrier", name: "app_homepage_fullCalendar")]
-    // public function fullCalendar(EventRepository $repository): Response
-    // {
-    //     $events = $repository->findAll();
+    #[Route("/evenement/{id}", "app_homepage_displayOneEvent")]
+    public function displayOnEvent(EventRepository $repository, int $id): Response
+    {
+        $event = $repository->find($id);
 
-    //     return $this->render("public/homepage/displayCalendar.html.twig", [
-    //         "events" => $events
-    //     ]);
-    // }
+        return $this->render("public/homepage/displayOneEvent.html.twig", [
+            "event" => $event
+        ]);
+    }
 
-    #[Route("/liste-evenements", name: "app_homepage_listEvents")]
-    public function listEvents(EventRepository $repository): Response
+    #[Route("/evenements", name: "app_homepage_displayAllEvents")]
+    public function displayAllEvents(EventRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $events = $repository->findAll();
 
-        return $this->render("public/homepage/listEvents.html.twig", [
-            "events" => $events
+        $pagination = $paginator->paginate(
+            $events,
+            $request->query->getInt("page", 1),
+            12
+        );
+
+        return $this->render("public/homepage/displayAllEvents.html.twig", [
+            "events" => $events,
+            "pagination" => $pagination
         ]);
     }
 }

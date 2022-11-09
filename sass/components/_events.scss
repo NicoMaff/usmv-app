@@ -1,4 +1,8 @@
 .events-extract {
+  span {
+    font-size: clamp(0.8rem, 4vmin, 0.9rem);
+  }
+
   .cards {
     display: flex;
     flex-direction: column;
@@ -48,7 +52,7 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         // text-align: justify;
-        font-size: 0.9rem;
+        // font-size: 0.9rem;
       }
     }
   }
