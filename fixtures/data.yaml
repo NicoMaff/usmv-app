@@ -28,3 +28,12 @@ App\Entity\Event:
     content: <sentence(10)>
     url_image: <imageUrl(640, 480, null)>
     createdAt: <(new \DateTimeImmutable())>
+
+App\Entity\User:
+  user{1}:
+    last_name: "DUPONT"
+    first_name: Arthur
+    gender: "masculin"
+    email: "a.d@mail.com"
+    password: "password"
+    createdAt: <(new \DateTimeImmutable())>
