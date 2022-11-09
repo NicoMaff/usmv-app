@@ -35,53 +35,53 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route("/api/login", "api_security_login")]
-    public function apiLogin(#[CurrentUser] ?User $user): Response
-    {
-        if ($user === null) {
-            return $this->json([
-                "message" => "missing credentials",
-            ], Response::HTTP_UNAUTHORIZED);
-        }
+    // #[Route("/api/login", "api_security_login")]
+    // public function apiLogin(#[CurrentUser] ?User $user): Response
+    // {
+    //     if ($user === null) {
+    //         return $this->json([
+    //             "message" => "missing credentials",
+    //         ], Response::HTTP_UNAUTHORIZED);
+    //     }
 
-        $token = "10";
+    //     $token = "10";
 
-        return $this->json([
-            "user" => $user->getUserIdentifier(),
-            "token" => $token
-        ]);
-    }
+    //     return $this->json([
+    //         "user" => $user->getUserIdentifier(),
+    //         "token" => $token
+    //     ]);
+    // }
 
-    #[Route(path: '/logout', name: 'app_security_logout')]
-    public function logout(): void
-    {
-        // throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-        // return $this->redirectToRoute("app_homepage_index");
-    }
+    // #[Route(path: '/logout', name: 'app_security_logout')]
+    // public function logout(): void
+    // {
+    // throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    // return $this->redirectToRoute("app_homepage_index");
+    // }
 
-    #[Route("/api/registration", "api_security_registration")]
-    public function registration(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserRepository $repository, UserPasswordHasherInterface $hasher): Response
-    {
-        $jsonReceived = $request->getContent();
-        // dd($jsonReceived);
+    // #[Route("/api/registration", "api_security_registration")]
+    // public function registration(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserRepository $repository, UserPasswordHasherInterface $hasher): Response
+    // {
+    //     $jsonReceived = $request->getContent();
+    //     // dd($jsonReceived);
 
-        $user = $serializer->deserialize($jsonReceived, USER::class, "json");
-        // dd($user);
-        $user->setCreatedAt(new \DateTimeImmutable());
+    //     $user = $serializer->deserialize($jsonReceived, USER::class, "json");
+    //     // dd($user);
+    //     $user->setCreatedAt(new \DateTimeImmutable());
 
-        $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
-        $user->setPassword($hashedPassword);
+    //     $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
+    //     $user->setPassword($hashedPassword);
 
-        $user->setValidatedAccount(false);
+    //     $user->setValidatedAccount(false);
 
-        $errors = $validator->validate($user);
+    //     $errors = $validator->validate($user);
 
-        if (count($errors) > 0) {
-            return $this->json($errors, 400);
-        }
+    //     if (count($errors) > 0) {
+    //         return $this->json($errors, 400);
+    //     }
 
-        $repository->add($user, true);
+    //     $repository->add($user, true);
 
-        return $this->json($user, 201, [], []);
-    }
+    //     return $this->json($user, 201, [], []);
+    // }
 }

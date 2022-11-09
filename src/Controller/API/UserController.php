@@ -120,6 +120,7 @@ class UserController extends AbstractController
      * Get all users
      */
     #[Route('users', 'api_user_readAll', methods: "GET")]
+    #[IsGranted("ROLE_ADMIN")]
     public function readAll(UserRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, [], ["groups" => "user:read"]);
