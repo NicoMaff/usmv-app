@@ -7,7 +7,7 @@
   .event {
     display: grid;
     grid-template-columns: 1fr 6rem;
-    grid-template-rows: 35% 65%;
+    grid-template-rows: 27% 73%;
     margin-bottom: 1.5rem;
     border: 2px solid $bg-2;
     border-radius: 15px;
@@ -50,12 +50,14 @@
 
     &-illustration {
       padding: 0.6rem 0.3rem;
+      width: 5.5rem;
+      height: 5.5rem;
 
-      img {
-        width: 95%;
-        height: 100%;
-        object-fit: cover;
-      }
+      // img {
+      //   width: 95%;
+      //   height: 100%;
+      //   object-fit: cover;
+      // }
     }
   }
 }
@@ -73,8 +75,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: min(100%, 38rem);
-    height: min(100%, 29rem);
+    width: min(75vmin, 35rem);
+    height: min(75vmin, 35rem);
     margin: 0 auto;
   }
 
