@@ -1,12 +1,31 @@
 {% extends "base.html.twig" %}
 
-{% block title %}USMV Badminton - Événement - {{ event.title }}{% endblock %}
-
+{% block title %}USMV Badminton - Événement - {% if event.endDate %}Du {{ event.startDate|date("d/m/y", "Europe/Paris") }} {{ event.endDate|date("d/m/y", "Europe/Paris") }}{% else %}Le {{ event.startDate|date("d/m/y", "Europe/Paris") }}{% endif %}{% endblock %}
+  
 {% block main %}
 
   <main>
   
-    
+    <div class="event-details">
+      <div class="btn-container">
+        <a class="btn btn-level2" href="{{ path("app_homepage_displayAllEvents") }}">Voir tous les événements</a>
+      </div>
+
+      {% if event.endDate %}
+        <h1>Du {{ event.startDate|date("d/m/y", "Europe/Paris") }} au {{ event.endDate|date("d/m/y", "Europe/Paris") }}</h1>
+      {% else %}
+          <h1>Le {{ event.startDate|date("d/m/y", "Europe/Paris") }}</h1>
+      {% endif %}
+
+      <p>{{event.content}}</p>
+      <div class="img-container">
+        <img src="{{ event.urlImage }}" alt="illustration de l'événement du {{ event.startDate|date("d/m/y", "Europe/Paris") }}">
+      </div>
+      
+      <div class="btn-container">
+        <a class="btn btn-level2" href="{{ path("app_homepage_displayAllEvents") }}">Voir tous les événements</a>
+      </div>
+    </div>
   
   </main>
 

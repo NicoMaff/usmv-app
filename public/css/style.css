@@ -320,69 +320,13 @@ img {
   align-items: center;
 }
 
-.events-extract span {
-  font-size: clamp(0.8rem, 4vmin, 0.9rem);
-}
-.events-extract .cards {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-.events-extract .card {
-  display: grid;
-  grid-template-columns: 4.5rem 1fr;
-  grid-template-rows: 1fr;
-  margin: 0.3rem 0;
-  width: 100%;
-  text-decoration: none;
-  color: #222222;
-}
-.events-extract .card:visited {
-  color: #222222;
-}
-.events-extract .card-date {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.9rem;
-  font-family: "Montserrat-reg", sans-serif;
-  font-weight: 500;
-  background: #748cbc;
-  color: #f5f8ff;
-  border-radius: 12px 3px 3px 12px;
-  margin-right: 0.3rem;
-  padding: 0.6rem;
-  min-width: 2.5rem;
-}
-.events-extract .card-description {
-  text-overflow: ellipsis;
-  max-width: 100%;
-  background: #f4f4f5;
-  border-radius: 3px 12px 12px 3px;
-  padding: 0.6rem 0.3rem;
-}
-.events-extract .card-description span {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-.events-extract .btn-container {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-}
-
-.events {
+.events-list {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
-.event {
+.events-list .event {
   display: grid;
   grid-template-columns: 1fr 6rem;
   grid-template-rows: 35% 65%;
@@ -391,11 +335,13 @@ img {
   border-radius: 15px;
   width: 100%;
   max-width: 44rem;
+  color: #222222;
+  cursor: pointer;
 }
-.event:last-of-type {
+.events-list .event:last-of-type {
   margin-bottom: 0;
 }
-.event-date {
+.events-list .event-date {
   grid-column: 1/3;
   display: flex;
   flex-direction: column;
@@ -407,26 +353,48 @@ img {
   border-radius: 12px 12px 3px 3px;
 }
 @media (min-width: 420px) {
-  .event-date {
+  .events-list .event-date {
     flex-direction: row;
     justify-content: start;
     align-items: center;
     gap: 0.3rem;
   }
 }
-.event-date .bold {
+.events-list .event-date .bold {
   font-weight: 500;
 }
-.event-content {
+.events-list .event-content {
+  padding: 0.6rem 0.6rem;
+  align-self: center;
+}
+.events-list .event-illustration {
   padding: 0.6rem 0.3rem;
 }
-.event-illustration {
-  padding: 0.6rem 0.3rem;
-}
-.event-illustration img {
+.events-list .event-illustration img {
   width: 95%;
   height: 100%;
   object-fit: cover;
+}
+
+.event-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.event-details h1 {
+  margin-bottom: 0;
+}
+.event-details .img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: min(100%, 38rem);
+  height: min(100%, 29rem);
+  margin: 0 auto;
+}
+.event-details .btn-container {
+  display: flex;
+  align-items: center;
 }
 
 header {
@@ -982,6 +950,60 @@ footer p {
   .homepage section.facebook-extract .blue-test {
     height: 100%;
   }
+}
+.homepage .events-extract span {
+  font-size: clamp(0.8rem, 4vmin, 0.9rem);
+}
+.homepage .events-extract .events {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.homepage .events-extract .event {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  grid-template-rows: 1fr;
+  margin: 0.3rem 0;
+  width: 100%;
+  text-decoration: none;
+  color: #222222;
+}
+.homepage .events-extract .event:visited {
+  color: #222222;
+}
+.homepage .events-extract .event-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  font-family: "Montserrat-reg", sans-serif;
+  font-weight: 500;
+  background: #748cbc;
+  color: #f5f8ff;
+  border-radius: 12px 3px 3px 12px;
+  margin-right: 0.3rem;
+  padding: 0.6rem;
+  min-width: 2.5rem;
+}
+.homepage .events-extract .event-description {
+  text-overflow: ellipsis;
+  max-width: 100%;
+  background: #f4f4f5;
+  border-radius: 3px 12px 12px 3px;
+  padding: 0.6rem 0.3rem;
+}
+.homepage .events-extract .event-description span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.homepage .events-extract .btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 .homepage .contact-form .form {
   display: flex;

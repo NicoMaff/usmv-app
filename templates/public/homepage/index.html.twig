@@ -45,14 +45,14 @@
             </section>
 
             <section class="facebook-extract">
-                <iframe src=""  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <iframe src=""  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
             </section>
 
             <section class="events-extract">
                 <h2>Calendrier</h2>
-                <div class="cards">
+                <div class="events">
                     {% for event in events %}
-                        <a href="#" class="card">
+                        <a href="{{ path("app_homepage_displayOneEvent", {id: event.id}) }}" class="event">
                         {% set trans_day_hash = {
                             "Monday": "Lun",
                             "Tuesday": "Mar",
@@ -63,11 +63,11 @@
                             "Sunday": "Dim"
                             }
                         %}
-                            <div class="card-date">
+                            <div class="event-date">
                                 <span>{{ trans_day_hash[event.startDate|date("l")] }}</span>
                                 <span>{{ event.startDate|date("d/m/y") }}</span>
                             </div>
-                            <p class="card-description">
+                            <p class="event-description">
                                 <span>{{ event.content }}</span>
                             </p>
                         </a>
@@ -129,6 +129,7 @@
 {% endblock %}
 
 {% block js %}
+    <script src="/js/homepage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>
       var swiper = new Swiper(".mySwiper", {
