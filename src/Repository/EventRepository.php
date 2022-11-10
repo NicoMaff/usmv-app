@@ -39,14 +39,12 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLast5(): array
+    public function findNext5FromToday(): array
     {
         return $this->createQueryBuilder("event")
-            // ->select("MONTH(event.start_date) AS gBMonth")
-            ->where('event.end_date >= :now')
+            ->where('event.start_date >= :now')
             ->setParameter("now", new \DateTime())
-            // ->groupBy("gBMonth")
-            ->orderBy("event.start_date", "DESC")
+            ->orderBy("event.start_date", "ASC")
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();

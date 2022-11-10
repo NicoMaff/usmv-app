@@ -21,7 +21,7 @@ class HomepageController extends AbstractController
     public function index(Request $request, ArticleRepository $articleRepo, EventRepository $eventRepo, ContactRepository $contactRepo, MailerInterface $mailer): Response
     {
         $articles = $articleRepo->findLast10();
-        $events = $eventRepo->findLast5();
+        $events = $eventRepo->findNext5FromToday();
 
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
