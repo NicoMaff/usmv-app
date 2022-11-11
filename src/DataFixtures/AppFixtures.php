@@ -25,12 +25,12 @@ class AppFixtures extends Fixture
 
         for ($i = 1; $i <= 30; $i++) {
             $article = new Article();
-            $article->setTitle($faker->realText(mt_rand(10, 15)))
+            $article->setTitle($faker->realText(mt_rand(50, 70)))
                 ->setContent($faker->text(300))
-                ->setUrlImageMain(mt_rand(1, 20) === 1 ? "assets/img/news-by-default.jpg" : $faker->imageURL(640, 480))
-                ->setUrlImageAdditional1(mt_rand(0, 2) === 1 ? $faker->imageURL(640, 480) : null)
-                ->setUrlImageAdditional2(mt_rand(0, 4) === 1 ? $faker->imageURL(640, 480) : null)
-                ->setUrlImageAdditional2(mt_rand(0, 9) === 1 ? $faker->imageURL(640, 480) : null)
+                ->setUrlImageMain(mt_rand(1, 20) === 1 ? "assets/img/news-by-default.jpg" : "https://picsum.photos/640/480")
+                ->setUrlImageAdditional1(mt_rand(0, 2) === 1 ? "https://picsum.photos/640/480" : null)
+                ->setUrlImageAdditional2(mt_rand(0, 4) === 1 ? "https://picsum.photos/640/480" : null)
+                ->setUrlImageAdditional2(mt_rand(0, 9) === 1 ? "https://picsum.photos/640/480" : null)
                 ->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($article);
@@ -41,8 +41,8 @@ class AppFixtures extends Fixture
             $event
                 ->setStartDate($faker->dateTimeBetween("-1 week", "+2 weeks"))
                 ->setEndDate(mt_rand(1, 2) === 1 ? null : $faker->dateTimeBetween("+1 week", "+4 weeks"))
-                ->setContent($faker->realText(20))
-                ->setUrlImage($faker->imageURL(640, 480))
+                ->setContent($faker->realText(mt_rand(40, 60)))
+                ->setUrlImage("https://picsum.photos/640/480")
                 ->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($event);

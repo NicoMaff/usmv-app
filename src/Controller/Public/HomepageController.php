@@ -21,7 +21,13 @@ class HomepageController extends AbstractController
     public function index(Request $request, ArticleRepository $articleRepo, EventRepository $eventRepo, ContactRepository $contactRepo, MailerInterface $mailer): Response
     {
         $articles = $articleRepo->findLast10();
-        $events = $eventRepo->findNext5FromToday();
+
+        $eventsReceived = $eventRepo->findAllFromToday(); // to get all events from today (to day is included)
+        $eventsSelected = [];
+        for ($i = 0; $i <= 4; $i++) {
+            array_push($eventsSelected, $eventsReceived[$i]);
+        }
+        $events = array_reverse($eventsSelected); // to put newest events first
 
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
