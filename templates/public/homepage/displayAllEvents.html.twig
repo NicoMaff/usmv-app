@@ -16,10 +16,11 @@
       "Sunday": "dimanche"
       }
     %}
-    <div class="events">
-      {% for event in events %}
-        <div class="event">
-    
+    {{ knp_pagination_render(pagination) }}
+    <div class="events-list">
+      {% for event in pagination %}
+        <a href="{{ path("app_homepage_displayOneEvent", {id:event.id}) }}" class="event">
+
           <div class="event-date">
             {% if event.endDate != NULL %}
               <div class="from">
@@ -39,16 +40,20 @@
               </div>
             {% endif %}
           </div>
+
           <div class="event-content">
             <p>{{ event.content }}</p>
           </div>
+
           <div class="event-illustration">
             <img src="{{ event.urlImage }}" alt="illustration de l'événement {{ event.content }}">
           </div>
-        </div>
+
+        </a>
       {% endfor %}
     
     </div>
+    {{ knp_pagination_render(pagination) }}
   </main>
 
 {% endblock %}

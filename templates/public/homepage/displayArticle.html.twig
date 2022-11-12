@@ -22,13 +22,13 @@
       <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
       <p>{{article.content}}</p>
       <div class="additional-img">
-        {% if article.urlImageAdditional1 != "NULL" %}
+        {% if article.urlImageAdditional1 != null %}
           <img src="{{article.urlImageAdditional1}}" alt="image secondaire de l'article {{article.title}}">
         {% endif %}
-        {% if article.urlImageAdditional2 != "NULL" %}
+        {% if article.urlImageAdditional2 != null %}
           <img src="{{article.urlImageAdditional2}}" alt="image secondaire de l'article {{article.title}}">
         {% endif %}
-        {% if article.urlImageAdditional3 != "NULL" %}
+        {% if article.urlImageAdditional3 != null %}
           <img src="{{article.urlImageAdditional3}}" alt="image secondaire de l'article {{article.title}}">
         {% endif %}
       </div>

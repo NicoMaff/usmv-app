@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Event;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Event>
@@ -39,13 +39,25 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLast5(): array
+    public function findAllFromToday(): array
     {
-        return $this->createQueryBuilder("event")
-            ->where('event.end_date >= :now')
-            ->setParameter("now", new \DateTime())
-            ->orderBy("event.start_date", "DESC")
-            ->setMaxResults(5)
+        return $this->createQueryBuilder("e")
+            ->where('e.startDate > :yesterday')
+            ->setParameter("yesterday", (new \DateTime())->modify("-1 day"))
+            // by default, DateTime is set at 00:00:00, it now sets at yesterday to include "today"
+            ->andWhere("e.isVisible = true")
+            ->orderBy("e.startDate", "ASC")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function find400SortByStartDate(): array
+    {
+        return $this->createQueryBuilder("e")
+            ->where("e.startDate > :date")
+            ->setParameter("date", (new \DateTime())->modify("-401 days"))
+            ->andWhere("e.isVisible = true")
+            ->orderBy("e.startDate", "DESC")
             ->getQuery()
             ->getResult();
     }

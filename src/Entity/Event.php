@@ -5,8 +5,9 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -14,31 +15,47 @@ class Event
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["event:create"])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank]
-    private ?\DateTimeInterface $start_date = null;
+    private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Assert\NotBlank]
-    private ?\DateTimeInterface $end_date = null;
+    #[Assert\GreaterThan(
+        propertyPath: "startDate",
+        message: "La date de fin de l'événement ne doit pas précéder la date de début !"
+    )]
+    private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 10,
+        max: 500,
+        minMessage: "Le contenu doit contenir au moins 10 caractères.",
+        maxMessage: "Le contenu ne doit pas contenir plus de 500 caractères."
+    )]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $url_image = null;
+    private ?string $urlImage = null;
 
     #[ORM\Column]
-    #[Timestampable(on: "create")]
+    private ?bool $isVisible = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
-    #[Timestampable(on: "update")]
     private ?\DateTimeImmutable $updatedAt = null;
 
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -47,24 +64,24 @@ class Event
 
     public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $start_date): self
+    public function setStartDate(\DateTimeInterface $startDate): self
     {
-        $this->start_date = $start_date;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->end_date;
+        return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeInterface $end_date): self
+    public function setEndDate(?\DateTimeInterface $endDate): self
     {
-        $this->end_date = $end_date;
+        $this->endDate = $endDate;
 
         return $this;
     }
@@ -83,12 +100,12 @@ class Event
 
     public function getUrlImage(): ?string
     {
-        return $this->url_image;
+        return $this->urlImage;
     }
 
-    public function setUrlImage(?string $url_image): self
+    public function setUrlImage(?string $urlImage): self
     {
-        $this->url_image = $url_image;
+        $this->urlImage = $urlImage;
 
         return $this;
     }
@@ -113,6 +130,18 @@ class Event
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }
