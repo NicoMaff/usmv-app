@@ -43,6 +43,7 @@ class AppFixtures extends Fixture
                 ->setEndDate(mt_rand(1, 2) === 1 ? null : $faker->dateTimeBetween("+1 week", "+4 weeks"))
                 ->setContent($faker->realText(mt_rand(40, 60)))
                 ->setUrlImage("https://picsum.photos/640/480")
+                ->setIsVisible(mt_rand(0, 3) !== 3 ? true : false)
                 ->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($event);

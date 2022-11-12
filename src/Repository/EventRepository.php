@@ -42,10 +42,11 @@ class EventRepository extends ServiceEntityRepository
     public function findAllFromToday(): array
     {
         return $this->createQueryBuilder("e")
-            ->where('e.start_date > :yesterday')
+            ->where('e.startDate > :yesterday')
             ->setParameter("yesterday", (new \DateTime())->modify("-1 day"))
             // by default, DateTime is set at 00:00:00, it now sets at yesterday to include "today"
-            ->orderBy("e.start_date", "ASC")
+            ->andWhere("e.isVisible = true")
+            ->orderBy("e.startDate", "ASC")
             ->getQuery()
             ->getResult();
     }
@@ -53,9 +54,10 @@ class EventRepository extends ServiceEntityRepository
     public function find400SortByStartDate(): array
     {
         return $this->createQueryBuilder("e")
-            ->where("e.start_date > :date")
+            ->where("e.startDate > :date")
             ->setParameter("date", (new \DateTime())->modify("-401 days"))
-            ->orderBy("e.start_date", "DESC")
+            ->andWhere("e.isVisible = true")
+            ->orderBy("e.startDate", "DESC")
             ->getQuery()
             ->getResult();
     }
