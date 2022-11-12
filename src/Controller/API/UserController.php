@@ -66,8 +66,6 @@ class UserController extends AbstractController
         $user->setPassword($hashedPassword);
         $user->setState("active");
         $user->setValidatedAccount(true);
-        $user->setCreatedAt(new \DateTimeImmutable());
-
 
         $repository->add($user, true);
 
@@ -96,8 +94,6 @@ class UserController extends AbstractController
         $user->setRoles(["ROLE_ADMIN"]);
         $user->setState("active");
         $user->setValidatedAccount(true);
-        $user->setCreatedAt(new \DateTimeImmutable());
-
 
         $repository->add($user, true);
 
@@ -132,7 +128,7 @@ class UserController extends AbstractController
      */
     #[Route("user/{id}/personal-infos", name: "api_user_updatePersonalInfos", methods: "PATCH")]
     #[IsGranted("ROLE_MEMBER")]
-    public function updatePersonalInfosOne(UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, Request $request, int $id): JsonResponse
+    public function updatePersonalInfosOne(UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
         $user = $repository->find($id);
         $jsonReceived = $request->getContent();
@@ -141,15 +137,12 @@ class UserController extends AbstractController
         if ($newUserInfos->getFirstName()) {
             $user->setFirstName($newUserInfos->getFirstName());
         }
-
         if ($newUserInfos->getLastName()) {
             $user->setLastName($newUserInfos->getLastName());
         }
-
         if ($newUserInfos->getEmail()) {
             $user->setEmail($newUserInfos->getEmail());
         }
-
         if ($newUserInfos->getPassword()) {
             $validPassword = $hasher->isPasswordValid($user, $newUserInfos->previousPassword);
 
@@ -160,12 +153,16 @@ class UserController extends AbstractController
                 throw new Exception("Votre précédent mot de passe n'est pas correct !");
             }
         }
-
         if ($newUserInfos->getAvatarUrl()) {
             $user->setAvatarUrl($newUserInfos->getAvatarUrl());
         }
 
         $user->setUpdatedAt(new \DateTimeImmutable());
+
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
 
         $repository->add($user, true);
 
@@ -178,7 +175,7 @@ class UserController extends AbstractController
      */
     #[Route("user/{id}/member-infos", name: "api_user_updateMemberInfos", methods: "PATCH")]
     // #[IsGranted("ROLE_ADMIN")]
-    public function updateMemberInfos(UserRepository $repository, SerializerInterface $serializer, Request $request, int $id): JsonResponse
+    public function updateMemberInfos(UserRepository $repository, SerializerInterface $serializer, Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
         $user = $repository->find($id);
 
@@ -189,40 +186,36 @@ class UserController extends AbstractController
         if ($newUserInfos->getFirstName()) {
             $user->setFirstName($newUserInfos->getFirstName());
         }
-
         if ($newUserInfos->getLastName()) {
             $user->setLastName($newUserInfos->getLastName());
         }
-
         if ($newUserInfos->getGender()) {
             $user->setGender($newUserInfos->getGender());
         }
-
         if ($newUserInfos->getEmail()) {
             $user->setEmail($newUserInfos->getEmail());
         }
-
         if ($newUserInfos->getBirthDate()) {
             $user->setBirthDate($newUserInfos->getBirthDate());
         }
-
         if ($newUserInfos->getAvatarUrl()) {
             $user->setAvatarUrl($newUserInfos->getAvatarUrl());
         }
-
         if ($newUserInfos->getRoles()) {
             $user->setRoles($newUserInfos->getRoles());
         }
-
         if ($newUserInfos->isValidatedAccount()) {
             $user->setValidatedAccount($newUserInfos->isValidatedAccount());
         }
-
         if ($newUserInfos->getState()) {
             $user->setState($newUserInfos->getState());
         }
-
         $user->setUpdatedAt(new \DateTimeImmutable());
+
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            return $this->json($errors, 400);
+        }
 
         $repository->add($user, true);
 
