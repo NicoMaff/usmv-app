@@ -329,7 +329,7 @@ img {
 .events-list .event {
   display: grid;
   grid-template-columns: 1fr 6rem;
-  grid-template-rows: 27% 73%;
+  grid-template-rows: 3.1rem 1fr;
   margin-bottom: 1.5rem;
   border: 2px solid #748cbc;
   border-radius: 15px;
@@ -337,6 +337,11 @@ img {
   max-width: 44rem;
   color: #222222;
   cursor: pointer;
+}
+@media (min-width: 1000px) {
+  .events-list .event {
+    min-width: 44rem;
+  }
 }
 .events-list .event:last-of-type {
   margin-bottom: 0;
@@ -371,6 +376,8 @@ img {
   padding: 0.6rem 0.3rem;
   width: 5.5rem;
   height: 5.5rem;
+  justify-self: center;
+  align-self: center;
 }
 
 .event-details {

@@ -114,7 +114,7 @@ class HomepageController extends AbstractController
     #[Route("/evenements", name: "app_homepage_displayAllEvents")]
     public function displayAllEvents(EventRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-        $events = $repository->findAll();
+        $events = $repository->find400SortByStartDate();
 
         $pagination = $paginator->paginate(
             $events,

@@ -7,14 +7,20 @@
   .event {
     display: grid;
     grid-template-columns: 1fr 6rem;
-    grid-template-rows: 27% 73%;
+    grid-template-rows: 3.1rem 1fr; //5.4rem;
     margin-bottom: 1.5rem;
     border: 2px solid $bg-2;
     border-radius: 15px;
     width: 100%;
     max-width: 44rem;
+
     color: $content-dark;
     cursor: pointer;
+
+    @include from(1000) {
+      // grid-template-rows: 27% 73%;
+      min-width: 44rem;
+    }
 
     &:last-of-type {
       margin-bottom: 0;
@@ -31,7 +37,7 @@
       background: $bg-2;
       border-radius: 12px 12px 3px 3px;
 
-      @media (min-width: 420px) {
+      @include from(420) {
         flex-direction: row;
         justify-content: start;
         align-items: center;
@@ -52,6 +58,8 @@
       padding: 0.6rem 0.3rem;
       width: 5.5rem;
       height: 5.5rem;
+      justify-self: center;
+      align-self: center;
 
       // img {
       //   width: 95%;
