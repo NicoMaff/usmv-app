@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 
 .article {
@@ -10,20 +11,12 @@
   flex-direction: column;
   align-items: center;
 
-  img {
+  .img-container {
     width: 100%;
     max-width: 36rem;
-    object-fit: cover;
-    border-radius: 12px;
   }
 
   &-details {
-    @media (min-width: 600px) {
-      h1 {
-        font-size: clamp(2rem, 4vw, 2.5rem);
-      }
-    }
-
     .btn-container {
       display: flex;
       align-items: center;
@@ -72,43 +65,31 @@
   }
 
   &-overview {
-    display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 1.2rem;
     background: $bg-3;
-    padding: clamp(0.6rem, 3vmin, 1.5rem);
-    margin-bottom: 1.5rem;
-    max-width: 100%;
+    padding: clamp(0.8rem, 3vmin, 1.5rem);
+    width: 100%;
+    max-width: 35rem;
     border-radius: 12px;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    @media (min-width: 600px) {
-      max-width: 35rem;
-      margin-bottom: 0;
-      margin: 1rem;
-    }
-
     h2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 1.2rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    img {
-      margin-bottom: 0.6rem;
+      margin-bottom: 0;
+      min-height: 3.1rem;
     }
 
     p {
-      padding: 0.6rem 0.6rem 0.9rem;
-      width: 100%;
-      max-width: 36rem;
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
       text-align: justify;
+      padding: 0 0.3rem;
     }
 
     .bottom {
@@ -126,7 +107,6 @@
     .btn-container,
     span {
       display: flex;
-      // justify-content: end;
       align-items: center;
     }
   }

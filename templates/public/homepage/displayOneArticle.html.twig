@@ -19,7 +19,9 @@
           le {{article.updatedAt|date("d/m/y \à G:i", "Europe/Paris")}}
         {% endif %}
       </div>
-      <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
+      <div class="img-container">
+        <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
+      </div>
       <p>{{article.content}}</p>
       <div class="additional-img">
         {% if article.urlImageAdditional1 != null %}
