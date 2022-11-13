@@ -22,6 +22,12 @@ class Article
     #[ORM\Column(length: 100)]
     #[Groups("article:read", "article:write", "article:update")]
     #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 3,
+        max: 100,
+        minMessage: "Le titre doit comporter plus de 5 caractères",
+        maxMessage: "Le titre ne doit pas comporter plus de 5 caractères"
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -54,6 +60,11 @@ class Article
     #[ORM\Column(nullable: true)]
     #[Groups("article:read", "article:write")]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
