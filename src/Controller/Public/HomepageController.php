@@ -74,12 +74,12 @@ class HomepageController extends AbstractController
         ]);
     }
 
-    #[Route("/article/{id}", name: "app_homepage_displayArticle")]
-    public function displayArticle(ArticleRepository $repository, int $id): Response
+    #[Route("/article/{id}", name: "app_homepage_displayOneArticle")]
+    public function displayOneArticle(ArticleRepository $repository, int $id): Response
     {
         $article = $repository->find($id);
 
-        return $this->render("public/homepage/displayArticle.html.twig", [
+        return $this->render("public/homepage/displayOneArticle.html.twig", [
             "article" => $article,
         ]);
     }

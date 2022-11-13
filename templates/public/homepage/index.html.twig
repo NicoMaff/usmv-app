@@ -28,7 +28,7 @@
                     <div class="swiper-wrapper">
                         {% for article in articles %}
                             <div class="card swiper-slide">
-                                    <a href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">
+                                    <a href="{{ path("app_homepage_displayOneArticle", {"id": article.id}) }}">
                                         <div class="card-title">
                                             <h3>{{article.title}}</h3>
                                         </div>

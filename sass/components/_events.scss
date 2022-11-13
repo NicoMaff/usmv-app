@@ -7,7 +7,7 @@
   .event {
     display: grid;
     grid-template-columns: 1fr 6rem;
-    grid-template-rows: 3.1rem 1fr; //5.4rem;
+    grid-template-rows: 3.1rem 1fr;
     margin-bottom: 1.5rem;
     border: 2px solid $bg-2;
     border-radius: 15px;
@@ -18,7 +18,6 @@
     cursor: pointer;
 
     @include from(1000) {
-      // grid-template-rows: 27% 73%;
       min-width: 44rem;
     }
 
@@ -60,12 +59,6 @@
       height: 5.5rem;
       justify-self: center;
       align-self: center;
-
-      // img {
-      //   width: 95%;
-      //   height: 100%;
-      //   object-fit: cover;
-      // }
     }
   }
 }

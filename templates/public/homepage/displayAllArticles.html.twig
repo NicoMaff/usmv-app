@@ -11,7 +11,9 @@
       {% for article in pagination %}
         <article class="article article-overview">
           <h2>{{ article.title }}</h2>
-          <img src="{{ article.urlImageMain }}" alt="illustration de {{ article.title }}">
+          <div class="img-container">
+            <img src="{{ article.urlImageMain }}" alt="illustration de {{ article.title }}">
+          </div>
           <p>{{ article.content }}</p>
           <div class="bottom">
             <span>
@@ -24,7 +26,7 @@
               {% endif %}
             </span>
             <div class="btn-container">
-              <a class="btn btn-level2 btn-small" href="{{ path("app_homepage_displayArticle", {"id": article.id}) }}">Voir la suite</a>
+              <a class="btn btn-level2 btn-small" href="{{ path("app_homepage_displayOneArticle", {"id": article.id}) }}">Voir la suite</a>
             </div>
           </div>
           </article>
