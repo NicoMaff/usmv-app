@@ -34,6 +34,8 @@ class UserController extends AbstractController
             return $this->json($errors, 400);
         }
 
+        $user->setLastName(strtoupper($user->getLastName()));
+        $user->setFirstName(ucwords($user->getFirstName()));
         $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
         $user->setPassword($hashedPassword);
         $user->setState("pending");
@@ -62,6 +64,8 @@ class UserController extends AbstractController
             return $this->json($errors, 400);
         }
 
+        $user->setLastName(strtoupper($user->getLastName()));
+        $user->setFirstName(ucwords($user->getFirstName()));
         $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
         $user->setPassword($hashedPassword);
         $user->setState("active");
@@ -89,6 +93,8 @@ class UserController extends AbstractController
             return $this->json($errors, 400);
         }
 
+        $user->setLastName(strtoupper($user->getLastName()));
+        $user->setFirstName(ucwords($user->getFirstName()));
         $hashedPassword = $hasher->hashPassword($user, $user->getPassword());
         $user->setPassword($hashedPassword);
         $user->setRoles(["ROLE_ADMIN"]);
@@ -135,10 +141,10 @@ class UserController extends AbstractController
         $newUserInfos = $serializer->deserialize($jsonReceived, User::class, "json");
 
         if ($newUserInfos->getFirstName()) {
-            $user->setFirstName($newUserInfos->getFirstName());
+            $user->setFirstName(ucwords($newUserInfos->getFirstName()));
         }
         if ($newUserInfos->getLastName()) {
-            $user->setLastName($newUserInfos->getLastName());
+            $user->setLastName(strtoupper($newUserInfos->getLastName()));
         }
         if ($newUserInfos->getEmail()) {
             $user->setEmail($newUserInfos->getEmail());
@@ -184,10 +190,10 @@ class UserController extends AbstractController
         $newUserInfos = $serializer->deserialize($jsonReceived, User::class, "json");
 
         if ($newUserInfos->getFirstName()) {
-            $user->setFirstName($newUserInfos->getFirstName());
+            $user->setFirstName(ucwords($newUserInfos->getFirstName()));
         }
         if ($newUserInfos->getLastName()) {
-            $user->setLastName($newUserInfos->getLastName());
+            $user->setLastName(strtoupper($newUserInfos->getLastName()));
         }
         if ($newUserInfos->getGender()) {
             $user->setGender($newUserInfos->getGender());

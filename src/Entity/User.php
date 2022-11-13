@@ -23,6 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
     #[Assert\NotBlank()]
+    #[Assert\Email(message: "L'email utilisé n'est pas valide")]
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
