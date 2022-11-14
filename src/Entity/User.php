@@ -6,11 +6,16 @@ use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+/**
+ * @Vich\Uploadable()
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -57,12 +62,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     #[Groups(["user:read", "user:create", "user:update"])]
     #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
-    private ?string $last_name = null;
+    private ?string $lastName = null;
 
     #[ORM\Column(length: 100)]
     #[Groups(["user:read", "user:create", "user:update"])]
     #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
-    private ?string $first_name = null;
+    private ?string $firstName = null;
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Groups("user:read", "user:createByA", "user:update")]
@@ -70,15 +75,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
-    private ?string $birth_date = null;
+    private ?string $birthDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
-    private ?string $avatar_url = null;
+    private ?string $avatarUrl = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["user:read", "user:create", "user:update"])]
+    private ?string $avatarName = null;
+
+    /**
+     * @Vich\UploadableField(mapping="users", fileNameProperty="avatarName")
+     */
+    private ?File $avatarFile = null;
 
     #[ORM\Column]
     #[Groups(["user:read", "user:create", "user:update"])]
-    private ?bool $validated_account = false;
+    private ?bool $validatedAccount = false;
 
     #[ORM\Column(length: 50)]
     #[Groups(["user:read", "user:create", "user:update"])]
@@ -87,16 +101,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Timestampable(on: "create")]
     #[ORM\Column]
     #[Groups(["user:read", "user:create", "user:update"])]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[Timestampable(on: "update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
-    private ?\DateTimeInterface $updated_at = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
     {
-        $this->created_at = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -181,24 +195,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getLastName(): ?string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
-    public function setLastName(string $last_name): self
+    public function setLastName(string $lastName): self
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
     public function getFirstName(): ?string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
-    public function setFirstName(string $first_name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
 
         return $this;
     }
@@ -217,60 +231,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getBirthDate(): ?string
     {
-        return $this->birth_date;
+        return $this->birthDate;
     }
 
-    public function setBirthDate(?string $birth_date): self
+    public function setBirthDate(?string $birthDate): self
     {
-        $this->birth_date = $birth_date;
+        $this->birthDate = $birthDate;
 
         return $this;
     }
 
     public function getAvatarUrl(): ?string
     {
-        return $this->avatar_url;
+        return $this->avatarUrl;
     }
 
-    public function setAvatarUrl(?string $avatar_url): self
+    public function setAvatarUrl(?string $avatarUrl): self
     {
-        $this->avatar_url = $avatar_url;
+        $this->avatarUrl = $avatarUrl;
 
         return $this;
     }
 
-    public function isValidatedAccount(): ?bool
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $avatarFile
+     */
+    public function setImageFile(?File $avatarFile = null): void
     {
-        return $this->validated_account;
+        $this->avatarFile = $avatarFile;
+
+        if (null !== $avatarFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
-    public function setValidatedAccount(bool $validated_account): self
+    public function getAvatarFile(): ?File
     {
-        $this->validated_account = $validated_account;
+        return $this->avatarFile;
+    }
+
+    public function setAvatarName(?string $avatarName): void
+    {
+        $this->avatarName = $avatarName;
+    }
+
+    public function getAvatarName(): ?string
+    {
+        return $this->avatarName;
+    }
+
+
+    public function isValidatedAccount(): ?bool
+    {
+        return $this->validatedAccount;
+    }
+
+    public function setValidatedAccount(bool $validatedAccount): self
+    {
+        $this->validatedAccount = $validatedAccount;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

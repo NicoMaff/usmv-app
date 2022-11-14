@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route("api/")]
 // #[IsGranted("ROLE_ADMIN")]
-class ArticleController extends AbstractController
+class ApiArticleController extends AbstractController
 {
     /**
      * CREATE

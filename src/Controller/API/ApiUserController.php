@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route("api/")]
-class UserController extends AbstractController
+class ApiUserController extends AbstractController
 {
     /**
      * CREATE
@@ -25,6 +25,7 @@ class UserController extends AbstractController
     // #[IsGranted("ROLE_MEMBER")]
     public function createAccount(UserRepository $repository, UserPasswordHasherInterface $hasher, Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
+        // dd($request);
         $jsonReceived = $request->getContent();
 
         $user = $serializer->deserialize($jsonReceived, User::class, "json");
@@ -32,6 +33,10 @@ class UserController extends AbstractController
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
+        }
+
+        if ($user->getAvatarFile()) {
+            $user->set;
         }
 
         $user->setLastName(strtoupper($user->getLastName()));
