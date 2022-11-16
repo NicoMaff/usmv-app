@@ -39,3 +39,52 @@ backButtons.forEach((button) => {
     e.target.parentNode.parentNode.classList.remove("move-in")
   );
 });
+
+/**
+ * Handle overlay's swipe on Mobile device
+ */
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+navMobile.addEventListener(
+  "touchstart",
+  function (event) {
+    console.log(event);
+    // touchStartX = event.screenX;
+    // touchStartY = event.screenY;
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+  },
+  false
+);
+
+navMobile.addEventListener(
+  "touchend",
+  function (event) {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+    handleGesure();
+  },
+  false
+);
+
+function handleGesure() {
+  const swiped = "swiped: ";
+  if (touchEndX < touchStartX) {
+    console.log(swiped + "left!");
+  }
+  if (touchEndX > touchStartX) {
+    console.log(swiped + "right!");
+  }
+  if (touchEndY < touchStartY) {
+    console.log(swiped + "down!");
+  }
+  if (touchEndY > touchStartY) {
+    console.log(swiped + "left!");
+  }
+  if (touchEndY == touchStartY) {
+    console.log("tap!");
+  }
+}
