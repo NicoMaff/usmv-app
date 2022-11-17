@@ -46,7 +46,7 @@ navMobile.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   touchEndY = e.changedTouches[0].clientY;
 
-  if (touchEndY - touchStartY >= 200) {
+  if (touchEndY - touchStartY >= 150) {
     navMobile.classList.remove("open");
     navMobile.classList.add("close");
     subMenus.forEach((item) => item.classList.remove("move-in"));
