@@ -8,13 +8,11 @@
   background: $bg-3;
   position: fixed;
   bottom: -100vh;
-  // bottom: -700px;
-  // transform: translateY(110%);
   transition: transform 0.3s ease-out;
   border-radius: 80px 80px 0 0;
   border-top: 1px solid black;
   box-shadow: 0px -5px 10px 1px #0000004d;
-  z-index: -1;
+  z-index: 2;
 
   @media screen and (min-width: 600px) {
     display: none;
@@ -298,6 +296,15 @@
   .tablet-responsive {
     display: none;
 
+    &:hover:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 50px;
+      width: 150%;
+    }
+
     @media (min-width: 600px) {
       display: block;
       position: relative;
@@ -314,8 +321,8 @@
         align-items: center;
         position: absolute;
         top: 54px;
-        right: -50px;
-        transform: translateY(-100px);
+        left: 50%;
+        transform: translate(-50%, -100px);
         min-width: 7rem;
         min-height: 4rem;
         background: $bg-1;
@@ -338,7 +345,7 @@
       &:hover .other-links {
         transition: opacity 0.3s linear;
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, 0);
       }
     }
 

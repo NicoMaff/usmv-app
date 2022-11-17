@@ -16,7 +16,9 @@
         <header class="header-mobile">
             <div class="header-container">
                 <div class="header-content">
-                    <img src="/assets/img/logo-club.png" alt="logo du club">
+                    <a href="{{ path("app_homepage_index") }}">
+                        <img src="/assets/img/logo-club.png" alt="logo du club">
+                    </a>
                 </div>
                 <div class="header-content">
                     <button class="btn btn-menu" id="menuButton">Menu</button>
@@ -24,12 +26,13 @@
                 
             </div>
 
-            <nav class="nav-mobile" draggable="true">
+            {# <nav class="nav-mobile" draggable="true"> #}
+            <nav class="nav-mobile">
                 <div class="nav-container">
                     <div class="line"></div>
                     <div class="profile-icons">
                         <a href="#"><i class="fa-solid fa-user"></i></a>
-                        <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+                        {# <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a> #}
                     </div>
                     <ul class="menu">
                         <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
@@ -82,7 +85,9 @@
 
         <header class="header-desktop">
             <nav class="nav-desktop">
-                <img src="/assets/img/logo-club.png" alt="logo du club">
+                <a href="{{ path("app_homepage_index") }}">
+                    <img src="/assets/img/logo-club.png" alt="logo du club">
+                </a>
                 <ul class="menu">
                     <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
                     <li>Le Club
@@ -123,7 +128,7 @@
                 </ul>
                 <div class="profile-icons">
                     <a href="#"><i class="fa-solid fa-user"></i></a>
-                    <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a>
+                    {# <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a> #}
                 </div>
             
             </nav>
