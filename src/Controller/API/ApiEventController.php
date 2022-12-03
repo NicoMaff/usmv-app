@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route("api/")]
-#[IsGranted("ROLE_ADMIN")]
+// #[IsGranted("ROLE_ADMIN")]
 class ApiEventController extends AbstractController
 {
     /**
