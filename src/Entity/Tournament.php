@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TournamentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TournamentRepository::class)]
 class Tournament
@@ -21,6 +22,7 @@ class Tournament
     private ?string $city = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan("endDate")]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -30,27 +32,47 @@ class Tournament
     private ?string $season = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?int $standardPrice1 = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?int $standardPrice2 = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?int $standardPrice3 = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?int $elitePrice1 = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?int $elitePrice2 = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
     private ?int $elitePrice3 = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    private ?int $priceSingle = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    private ?int $priceDouble = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    private ?int $priceMixed = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\LessThanOrEqual("randomDraw")]
     private ?\DateTimeInterface $registrationClosingDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\LessThan("startDate")]
     private ?\DateTimeInterface $randomDraw = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -73,6 +95,11 @@ class Tournament
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    public function __construct()
+    {
+        return $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -207,6 +234,42 @@ class Tournament
     public function setElitePrice3(?int $elitePrice3): self
     {
         $this->elitePrice3 = $elitePrice3;
+
+        return $this;
+    }
+
+    public function getPriceSingle(): ?int
+    {
+        return $this->priceSingle;
+    }
+
+    public function setPriceSingle(?int $priceSingle): self
+    {
+        $this->priceSingle = $priceSingle;
+
+        return $this;
+    }
+
+    public function getPriceDouble(): ?int
+    {
+        return $this->priceDouble;
+    }
+
+    public function setPriceDouble(?int $priceDouble): self
+    {
+        $this->priceDouble = $priceDouble;
+
+        return $this;
+    }
+
+    public function getPriceMixed(): ?int
+    {
+        return $this->priceMixed;
+    }
+
+    public function setPriceMixed(?int $priceMixed): self
+    {
+        $this->priceMixed = $priceMixed;
 
         return $this;
     }
