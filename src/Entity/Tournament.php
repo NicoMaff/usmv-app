@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Repository\TournamentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: TournamentRepository::class)]
+#[Vich\Uploadable]
 class Tournament
 {
     #[ORM\Id]
@@ -22,13 +25,14 @@ class Tournament
     private ?string $city = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\GreaterThan("endDate")]
+    #[Assert\LessThan(propertyPath: "endDate")]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\Length(min: 9, max: 9)]
     private ?string $season = null;
 
     #[ORM\Column(nullable: true)]
@@ -68,11 +72,11 @@ class Tournament
     private ?int $priceMixed = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Assert\LessThanOrEqual("randomDraw")]
+    #[Assert\LessThanOrEqual(propertyPath: "randomDraw")]
     private ?\DateTimeInterface $registrationClosingDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Assert\LessThan("startDate")]
+    #[Assert\LessThan(propertyPath: "startDate")]
     private ?\DateTimeInterface $randomDraw = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -95,6 +99,12 @@ class Tournament
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    #[Vich\UploadableField(mapping: 'tournaments', fileNameProperty: 'regulationUrl')]
+    private ?File $regulationFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $regulationUrl = null;
 
     public function __construct()
     {
@@ -354,6 +364,43 @@ class Tournament
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getRegulationFile(): ?File
+    {
+        return $this->regulationFile;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setRegulationFile(?File $regulationFile = null): void
+    {
+        $this->regulationFile = $regulationFile;
+
+        if (null !== $regulationFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getRegulationUrl(): ?string
+    {
+        return $this->regulationUrl;
+    }
+
+    public function setRegulationUrl(?string $regulationUrl): self
+    {
+        $this->regulationUrl = $regulationUrl;
 
         return $this;
     }
