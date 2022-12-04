@@ -13,10 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable()
- */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -77,6 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $birthDate = null;
 
+    #[Vich\UploadableField(mapping: 'users', fileNameProperty: 'avatarUrl')]
+    private ?File $avatarFile = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $avatarUrl = null;
@@ -84,11 +85,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $avatarName = null;
-
-    /**
-     * @Vich\UploadableField(mapping="users", fileNameProperty="avatarName")
-     */
-    private ?File $avatarFile = null;
 
     #[ORM\Column]
     #[Groups(["user:read", "user:create", "user:update"])]
@@ -253,6 +249,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
@@ -273,21 +274,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
     }
 
-    public function getAvatarFile(): ?File
+    public function getAvatarName(): ?string
     {
-        return $this->avatarFile;
+        return $this->avatarName;
     }
 
     public function setAvatarName(?string $avatarName): void
     {
         $this->avatarName = $avatarName;
     }
-
-    public function getAvatarName(): ?string
-    {
-        return $this->avatarName;
-    }
-
 
     public function isValidatedAccount(): ?bool
     {
