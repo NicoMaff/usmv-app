@@ -4,17 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Tournament;
 use App\Repository\TournamentRepository;
-use Error;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Vich\UploaderBundle\FileAbstraction\ReplacingFile;
 
 #[Route("/api")]
 // #[IsGranted("ROLE_MEMBER")]
@@ -27,19 +27,15 @@ class ApiTournamentController extends AbstractController
     #[Route('/tournament', name: 'api_tournament_createOne', methods: "POST")]
     public function createOne(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
-        // dd($request->request->get("data"));
-        // dd(json_decode($request->request->get("data"))->id);
-        // if ($repository->find(json_decode($request->request->get("data"))->id)) {
-        //     $file = $request->files->get("fileName");
-        //     $tournament = $repository->find(json_decode($request->request->get("data"))->id);
-        //     $tournament->setRegulationFile(new ReplacingFile($file));
-        //     dd($tournament);
-        // }
-
-
         $jsonReceived = $request->request->get("data");
-        $fileUploaded = $request->files->get("fileName");
-        // dd($jsonReceived, $fileUploaded);
+
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get("fileName");
+        // dd($jsonReceived, $uploadedFile);
+
+
+        dd($uploadedFile->move($this->getParameter("kernel.project_dir") . "/public/assets/img/tournaments/"));
+
         $tournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
         if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
@@ -53,24 +49,20 @@ class ApiTournamentController extends AbstractController
         }
 
 
-        $originalFileName = pathinfo($fileUploaded->getClientOriginalName(), PATHINFO_FILENAME);
+        $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFileName = $slugger->slug($originalFileName);
-        $fileUploaded->move(
-            $this->getParameter("kernel.project_dir") . "/public/assets/img/tournaments",
-            $safeFileName . "-" . uniqid() . "." . $fileUploaded->guessExtension()
-        );
-        dd($fileUploaded);
 
-        $tournament->setRegulationFile($fileUploaded);
-        dd($tournament);
-        // dd($safeFileName . "-" . uniqid() . "." . $fileUploaded->guessExtension());
-        // $newFileName = $safeFileName . "-" . uniqid() . "." . $file->guess
-        // try {
 
-        // }
-        // $tournament->setRegulationFile($file);
-        // dd($tournament);
+        try {
+            $uploadedFile->move(
+                $this->getParameter("kernel.project_dir") . "/public/assets/img/tournaments",
+                $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension()
+            );
+        } catch (FileException $e) {
+            echo $e->getMessage();
+        }
 
+        dd($uploadedFile);
         $errors = $validator->validate($tournament);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
