@@ -28,13 +28,7 @@ class ApiTournamentController extends AbstractController
     public function createOne(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
         $jsonReceived = $request->request->get("data");
-
-        /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("fileName");
-        // dd($jsonReceived, $uploadedFile);
-
-
-        dd($uploadedFile->move($this->getParameter("kernel.project_dir") . "/public/assets/img/tournaments/"));
 
         $tournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
@@ -48,21 +42,20 @@ class ApiTournamentController extends AbstractController
             throw new Exception("The interval between the start and the end of the tournament is too long");
         }
 
-
         $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFileName = $slugger->slug($originalFileName);
 
-
         try {
             $uploadedFile->move(
-                $this->getParameter("kernel.project_dir") . "/public/assets/img/tournaments",
+                $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations",
                 $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension()
             );
         } catch (FileException $e) {
             echo $e->getMessage();
         }
 
-        dd($uploadedFile);
+        $tournament->setRegulationUrl($safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension());
+
         $errors = $validator->validate($tournament);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
