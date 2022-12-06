@@ -6,14 +6,17 @@ vich_uploader:
 
   mappings:
     users:
-      uri_prefix: /assets/img/users
+      uri_prefix: /img/users
       upload_destination: "%kernel.project_dir%/public/assets/img/users"
-      namer: Vich\UploaderBundle\Naming\OrignameNamer
-    articles:
-      uri_prefix: /assets/img/articles
-      upload_destination: "%kernel.project_dir%/public/assets/img/articles"
-      namer: Vich\UploaderBundle\Naming\OrignameNamer
-    events:
-      uri_prefix: /assets/img/events
-      upload_destination: "%kernel.project_dir%/public/assets/img/events"
-      namer: Vich\UploaderBundle\Naming\OrignameNamer
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+      inject_on_load: true # should the file be deleted when the entity is removed
+      delete_on_update: true # should the file be deleted when a new file is uploaded
+      delete_on_remove: true # should the file be injected into the uploadable entity when it is loaded from the data store. The object will be an instance of Symfony\Component\HttpFoundation\File\File
+
+    tournaments:
+      uri_prefix: /img/tournaments
+      upload_destination: "%kernel.project_dir%/public/assets/tournamentsRegulations"
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+      inject_on_load: true # should the file be deleted when the entity is removed
+      delete_on_update: true # should the file be deleted when a new file is uploaded
+      delete_on_remove: true # should the file be injected into the uploadable entity when it is loaded from the data store. The object will be an instance of Symfony\Component\HttpFoundation\File\File

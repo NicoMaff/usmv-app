@@ -327,7 +327,7 @@ class ApiUserController extends AbstractController
             $repository->remove($user, true);
             return $this->json([
                 "status" => 200,
-                "message" => "L'utilisateur avec l'id #$id a bien été supprimé."
+                "message" => "The member with the id #$id has been correctly deleted"
             ], 200);
         }
     }
@@ -351,12 +351,12 @@ class ApiUserController extends AbstractController
         if (in_array("ROLE_ADMIN", $user->getRoles())) {
             return $this->json([
                 "status" => 200,
-                "message" => "L'administrateur avec l'id #$id a bien été supprimé."
+                "message" => "The admin with the id #$id has been correctly deleted"
             ], 200);
         } else {
             return $this->json([
                 "status" => 200,
-                "message" => "Le membre avec l'id #$id a bien été supprimé."
+                "message" => "The member with the id #$id has been correctly deleted"
             ], 200);
         }
     }

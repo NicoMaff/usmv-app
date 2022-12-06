@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Faker\Factory;
 use App\Entity\Article;
 use App\Entity\Event;
+use App\Entity\Tournament;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -82,6 +83,27 @@ class AppFixtures extends Fixture
             ->setRoles(["ROLE_SUPERADMIN"])
             ->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($superadmin);
+
+        for ($i = 1; $i <= 10; $i++) {
+            $tournament = new Tournament();
+            $tournament
+                ->setName(mt_rand(1, 3) === 1 ? $faker->realText(mt_rand(40, 60)) : null)
+                ->setCity($faker->city())
+                ->setStartDate($faker->dateTimeBetween("now", "+6 months"))
+                ->setEndDate(mt_rand(1, 5) === 1 ? $faker->dateTimeInInterval($tournament->getStartDate(), "+2 days") : $faker->dateTimeInInterval($tournament->getStartDate(), "+1 day"))
+                ->setSeason("2022/2023")
+                ->setStandardPrice1(mt_rand(15, 17))
+                ->setStandardPrice2(mt_rand(5, 8))
+                ->setStandardPrice3(mt_rand(1, 10) === 1 ? mt_rand(4, 6) : null)
+                ->setRegistrationClosingDate($faker->dateTimeInInterval($tournament->getStartDate(), "-1 month"))
+                ->setRandomDraw($faker->dateTimeInInterval($tournament->getStartDate(), "-2 weeks"))
+                ->setEmailContact($faker->email())
+                ->setTelContact($faker->phoneNumber())
+                ->setRegistrationMethod(mt_rand(1, 3) === 1 ? (mt_rand(1, 2) === 1 ? "Courrier" : "Autres") : "Badnet")
+                ->setPaymentMethod(mt_rand(1, 3) === 1 ? (mt_rand(1, 3) === 1 ? "Chèque" : "CB") : "Badnet")
+                ->setCreatedAt(new \DateTimeImmutable());
+            $manager->persist($tournament);
+        }
 
         $manager->flush();
     }
