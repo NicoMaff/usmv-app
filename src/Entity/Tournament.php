@@ -100,11 +100,11 @@ class Tournament
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[Vich\UploadableField(mapping: 'tournaments', fileNameProperty: 'regulationUrl')]
-    private ?File $regulationFile = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $regulationFileName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $regulationUrl = null;
+    private ?string $regulationFileUrl = null;
 
     public function __construct()
     {
@@ -368,39 +368,25 @@ class Tournament
         return $this;
     }
 
-    public function getRegulationFile(): ?File
+    public function getRegulationFileName(): ?string
     {
-        return $this->regulationFile;
+        return $this->regulationFileName;
     }
 
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
-     */
-    public function setRegulationFile(?File $regulationFile = null): void
+    public function setRegulationFileName(?string $regulationFileName): self
     {
-        $this->regulationFile = $regulationFile;
-
-        if (null !== $regulationFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
+        $this->regulationFileName = $regulationFileName;
+        return $this;
     }
 
-    public function getRegulationUrl(): ?string
+    public function getRegulationFileUrl(): ?string
     {
-        return $this->regulationUrl;
+        return $this->regulationFileUrl;
     }
 
-    public function setRegulationUrl(?string $regulationUrl): self
+    public function setRegulationFileUrl(?string $regulationFileUrl): self
     {
-        $this->regulationUrl = $regulationUrl;
+        $this->regulationFileUrl = $regulationFileUrl;
 
         return $this;
     }

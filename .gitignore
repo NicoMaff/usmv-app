@@ -27,4 +27,4 @@ node_modules/
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
-/public/assets/img/tournaments
+/public/assets/tournamentsRegulations

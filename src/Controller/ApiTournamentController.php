@@ -27,8 +27,15 @@ class ApiTournamentController extends AbstractController
     #[Route('/tournament', name: 'api_tournament_createOne', methods: "POST")]
     public function createOne(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
-        $jsonReceived = $request->request->get("data");
-        $uploadedFile = $request->files->get("fileName");
+        if ($request->request->get("data")) {
+            $jsonReceived = $request->request->get("data");
+        } else {
+            $jsonReceived = $request->getContent();
+        }
+
+        if ($request->files->get("file")) {
+            $uploadedFile = $request->files->get("file");
+        }
 
         $tournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
@@ -42,19 +49,22 @@ class ApiTournamentController extends AbstractController
             throw new Exception("The interval between the start and the end of the tournament is too long");
         }
 
-        $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFileName = $slugger->slug($originalFileName);
+        if (isset($uploadedFile)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
 
-        try {
-            $uploadedFile->move(
-                $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations",
-                $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension()
-            );
-        } catch (FileException $e) {
-            echo $e->getMessage();
+            try {
+                $uploadedFile->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $tournament->setRegulationFileName($newFileName);
+            $tournament->setRegulationFileUrl($destination . $newFileName);
         }
-
-        $tournament->setRegulationUrl($safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension());
 
         $errors = $validator->validate($tournament);
         if (count($errors) > 0) {
@@ -89,12 +99,28 @@ class ApiTournamentController extends AbstractController
     /**
      * UPDATE
      * An admin can update a tournament or a part of tournament from its id
+     * Warning : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data
      */
-    #[Route("/tournament/{id}", "api_tournament_updateOne", methods: "PATCH")]
-    public function updateOne(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer): JsonResponse
+    #[Route("/tournament/{id}", "api_tournament_updateOne", methods: "POST")]
+    public function updateOne(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
+        if ($request->request->get("data")) {
+            $jsonReceived = $request->request->get("data");
+        } else {
+            $jsonReceived = $request->getContent();
+        }
+
+        if ($request->files->get("file")) {
+            $uploadedFile = $request->files->get("file");
+        }
+
+        if ($request->request->get("deleteFile")) {
+            $deleteFile = true;
+        } else {
+            $deleteFile = false;
+        }
+
         $tournament = $repository->find($id);
-        $jsonReceived = $request->getContent();
 
         $updatedTournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
@@ -155,9 +181,6 @@ class ApiTournamentController extends AbstractController
         if ($updatedTournament->getPaymentMethod()) {
             $tournament->setPaymentMethod($updatedTournament->getPaymentMethod());
         }
-        if ($updatedTournament->getRegulationUrl()) {
-            $tournament->setRegulationUrl($updatedTournament->getRegulationUrl());
-        }
         if ($updatedTournament->getComment()) {
             $tournament->setComment($updatedTournament->getComment());
         }
@@ -166,6 +189,37 @@ class ApiTournamentController extends AbstractController
             $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
         } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
             $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+        }
+
+        if (isset($uploadedFile)) {
+
+            // File settings
+            $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+
+            if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
+                unlink($tournament->getRegulationFileUrl());
+            }
+
+            try {
+                $uploadedFile->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $tournament->setRegulationFileName($newFileName);
+            $tournament->setRegulationFileUrl($destination . $newFileName);
+        }
+
+        if ($deleteFile) {
+            if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
+                unlink($tournament->getRegulationFileUrl());
+            }
+
+            $tournament->setRegulationFileName(null);
+            $tournament->setRegulationFileUrl(null);
         }
 
         $tournament->setUpdatedAt(new \DateTime());
@@ -186,8 +240,15 @@ class ApiTournamentController extends AbstractController
     #[Route("/tournament/{id}", "api_tournament_deleteOne", methods: "DELETE")]
     public function deleteOne(TournamentRepository $repository, int $id): JsonResponse
     {
-        $repository->remove($repository->find($id), true);
+        $tournament = $repository->find($id);
+        if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
+            unlink($tournament->getRegulationFileUrl());
+        }
+        $repository->remove($tournament, true);
 
-        return $this->json("The tournament with the id #$id has been correctly deleted!");
+        return $this->json([
+            "status" => 200,
+            "message" => "The tournament with the id #$id has been correctly deleted!"
+        ], 200);
     }
 }
