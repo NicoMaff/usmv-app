@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
@@ -104,9 +106,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: TournamentRegistration::class, orphanRemoval: true)]
+    private Collection $tournamentRegistrations;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->tournamentRegistrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -328,6 +334,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setState(string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TournamentRegistration>
+     */
+    public function getTournamentRegistrations(): Collection
+    {
+        return $this->tournamentRegistrations;
+    }
+
+    public function addTournamentRegistration(TournamentRegistration $tournamentRegistration): self
+    {
+        if (!$this->tournamentRegistrations->contains($tournamentRegistration)) {
+            $this->tournamentRegistrations->add($tournamentRegistration);
+            $tournamentRegistration->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournamentRegistration(TournamentRegistration $tournamentRegistration): self
+    {
+        if ($this->tournamentRegistrations->removeElement($tournamentRegistration)) {
+            // set the owning side to null (unless already changed)
+            if ($tournamentRegistration->getUserId() === $this) {
+                $tournamentRegistration->setUserId(null);
+            }
+        }
 
         return $this;
     }

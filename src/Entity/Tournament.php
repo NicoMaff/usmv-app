@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TournamentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -106,9 +108,13 @@ class Tournament
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $regulationFileUrl = null;
 
+    #[ORM\OneToMany(mappedBy: 'tournamentId', targetEntity: TournamentRegistration::class)]
+    private Collection $tournamentRegistrations;
+
     public function __construct()
     {
         return $this->createdAt = new \DateTimeImmutable();
+        $this->tournamentRegistrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -411,6 +417,36 @@ class Tournament
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TournamentRegistration>
+     */
+    public function getTournamentRegistrations(): Collection
+    {
+        return $this->tournamentRegistrations;
+    }
+
+    public function addTournamentRegistration(TournamentRegistration $tournamentRegistration): self
+    {
+        if (!$this->tournamentRegistrations->contains($tournamentRegistration)) {
+            $this->tournamentRegistrations->add($tournamentRegistration);
+            $tournamentRegistration->setTournamentId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournamentRegistration(TournamentRegistration $tournamentRegistration): self
+    {
+        if ($this->tournamentRegistrations->removeElement($tournamentRegistration)) {
+            // set the owning side to null (unless already changed)
+            if ($tournamentRegistration->getTournamentId() === $this) {
+                $tournamentRegistration->setTournamentId(null);
+            }
+        }
 
         return $this;
     }
