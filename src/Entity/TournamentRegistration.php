@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\TournamentRegistrationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TournamentRegistrationRepository::class)]
 class TournamentRegistration
@@ -11,80 +13,140 @@ class TournamentRegistration
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["registration:create"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $userId = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tournament $tournamentId = null;
+    private ?Tournament $tournament = null;
+
+    #[Groups(["registration:create"])]
+    private ?int $userId = null;
+
+    #[Groups(["registration:create"])]
+    private ?int $tournamentId = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $requestState = null;
+    #[Groups(["registration:create"])]
+    private ?string $requestState = "pending";
 
     #[ORM\Column]
-    private ?bool $hasParticipated = null;
+    #[Groups(["registration:create"])]
+    private ?bool $hasParticipated = false;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["registration:create"])]
     private ?bool $participationSingle = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["registration:create"])]
     private ?bool $participationDouble = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["registration:create"])]
     private ?bool $participationMixed = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $singleStageReached = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $doubleStageReached = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $mixedStageReached = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $doublePartnerName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $doublePartnerClub = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $mixedPartnerName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["registration:create"])]
     private ?string $mixedPartnerClub = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["registration:create"])]
+    private ?string $comment = null;
+
+    #[ORM\Column]
+    #[Groups(["registration:create"])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["registration:create"])]
+    private ?\DateTimeInterface $updatedAt = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        return $this;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTournament(): ?Tournament
+    {
+        return $this->tournament;
+    }
+
+    public function setTournament(?Tournament $tournament): self
+    {
+        $this->tournament = $tournament;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
 
-    public function setUserId(?User $userId): self
+    public function setUserId($userId): self
     {
         $this->userId = $userId;
-
         return $this;
     }
 
-    public function getTournamentId(): ?Tournament
+    public function getTournamentId(): ?int
     {
         return $this->tournamentId;
     }
 
-    public function setTournamentId(?Tournament $tournamentId): self
+    public function setTournamentId($tournamentId): self
     {
         $this->tournamentId = $tournamentId;
-
         return $this;
     }
+
 
     public function getRequestState(): ?string
     {
@@ -98,7 +160,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function isHasParticipated(): ?bool
+    public function HasParticipated(): ?bool
     {
         return $this->hasParticipated;
     }
@@ -226,6 +288,42 @@ class TournamentRegistration
     public function setMixedPartnerClub(?string $mixedPartnerClub): self
     {
         $this->mixedPartnerClub = $mixedPartnerClub;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

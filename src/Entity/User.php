@@ -106,7 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: TournamentRegistration::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TournamentRegistration::class, orphanRemoval: true)]
     private Collection $tournamentRegistrations;
 
     public function __construct()
@@ -350,7 +350,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->tournamentRegistrations->contains($tournamentRegistration)) {
             $this->tournamentRegistrations->add($tournamentRegistration);
-            $tournamentRegistration->setUserId($this);
+            $tournamentRegistration->setUser($this);
         }
 
         return $this;
@@ -360,8 +360,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->tournamentRegistrations->removeElement($tournamentRegistration)) {
             // set the owning side to null (unless already changed)
-            if ($tournamentRegistration->getUserId() === $this) {
-                $tournamentRegistration->setUserId(null);
+            if ($tournamentRegistration->getUser() === $this) {
+                $tournamentRegistration->setUser(null);
             }
         }
 

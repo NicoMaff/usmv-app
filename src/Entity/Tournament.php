@@ -108,8 +108,11 @@ class Tournament
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $regulationFileUrl = null;
 
-    #[ORM\OneToMany(mappedBy: 'tournamentId', targetEntity: TournamentRegistration::class)]
+    #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: TournamentRegistration::class)]
     private Collection $tournamentRegistrations;
+
+    #[ORM\Column]
+    private ?bool $isTeamCompetition = null;
 
     public function __construct()
     {
@@ -433,7 +436,7 @@ class Tournament
     {
         if (!$this->tournamentRegistrations->contains($tournamentRegistration)) {
             $this->tournamentRegistrations->add($tournamentRegistration);
-            $tournamentRegistration->setTournamentId($this);
+            $tournamentRegistration->setTournament($this);
         }
 
         return $this;
@@ -443,10 +446,22 @@ class Tournament
     {
         if ($this->tournamentRegistrations->removeElement($tournamentRegistration)) {
             // set the owning side to null (unless already changed)
-            if ($tournamentRegistration->getTournamentId() === $this) {
-                $tournamentRegistration->setTournamentId(null);
+            if ($tournamentRegistration->getTournament() === $this) {
+                $tournamentRegistration->setTournament(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isTeamCompetition(): ?bool
+    {
+        return $this->isTeamCompetition;
+    }
+
+    public function setIsTeamCompetition(bool $isTeamCompetition): self
+    {
+        $this->isTeamCompetition = $isTeamCompetition;
 
         return $this;
     }
