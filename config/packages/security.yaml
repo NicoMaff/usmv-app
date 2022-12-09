@@ -44,7 +44,7 @@ security:
   access_control:
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
     - { path: ^/api/user/account, roles: PUBLIC_ACCESS }
-    # - { path: ^/api, roles: IS_AUTHENTICATED_FULLY } // TO UNCOMMENT !!!!!
+    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY } # TO UNCOMMENT !!!!!
 
   role_hierarchy:
     ROLE_ADMIN: [ROLE_MEMBER, ROLE_ALLOWED_TO_SWITCH]
