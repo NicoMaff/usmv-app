@@ -155,7 +155,7 @@ class ApiTournamentRegistrationController extends AbstractController
 
     /**
      * CREATE
-     * An user unauthenticated can create a tournament registration.
+     * An USER UNAUTHENTICATED can create a tournament registration.
      * He must will fill his last-name, his first-name and his email.
      * The tournament may already exist or he can be created.
      * To create a tournament, the city and the startDate have to be filled out. The name can be filled out but it is not required.
@@ -232,13 +232,15 @@ class ApiTournamentRegistrationController extends AbstractController
 
     /**
      * READ
-     * A member can get details of his tournament registration that he is registered
+     * A MEMBER can get details of a tournament registration when he is registered to this tournament.
+     * The member needs to be authenticated to access one of his registrations.
      */
+    #[IsGranted("ROLE_MEMBER")]
     #[Route("/tournament-registration/{id}", "api_tournamentRegistration_readOneRegistration", methods: "GET")]
     public function readOneRegistration(UserRepository $userRepo, TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
         $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
-        $registration = $repository->find($id);
+        $registration = $repository->findOneBy($id);
 
         if ($user->getId() !== $registration->getUser()->getId()) {
             throw new Exception("You don't have permission to access this tournament registration.");
@@ -251,13 +253,15 @@ class ApiTournamentRegistrationController extends AbstractController
 
     /**
      * READ
-     * A member can get details of all his tournaments registrations that he is registered
+     * A MEMBER can get details of a tournament registration when he is registered to this tournament.
+     * The member needs to be authenticated to access one of his registrations.
      */
+    #[IsGranted("ROLE_MEMBER")]
     #[Route("/tournament-registrations", "api_tournamentRegistration_readAllRegistrations", methods: "GET")]
     public function readAllRegistrations(UserRepository $userRepo, TournamentRegistrationRepository $repository): JsonResponse
     {
         $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
-        $registrations = $repository->findAll();
+        $registrations = $repository->findBy(["user" => $this->getUser()]);
 
         $registrationsToReturn = [];
         foreach ($registrations as $registration) {
