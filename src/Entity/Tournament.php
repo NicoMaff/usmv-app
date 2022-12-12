@@ -7,117 +7,143 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: TournamentRepository::class)]
-#[Vich\Uploadable]
 class Tournament
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["tournament:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["tournament:read"])]
     private ?string $city = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\LessThan(propertyPath: "endDate")]
+    #[Groups(["tournament:read"])]
     private ?\DateTimeInterface $startDate = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(length: 100)]
     #[Assert\Length(min: 9, max: 9)]
+    #[Groups(["tournament:read"])]
     private ?string $season = null;
+
+    #[ORM\Column]
+    #[Groups(["tournament:read"])]
+    private ?bool $isTeamCompetition = false;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $standardPrice1 = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $standardPrice2 = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $standardPrice3 = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $elitePrice1 = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $elitePrice2 = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $elitePrice3 = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $priceSingle = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $priceDouble = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
+    #[Groups(["tournament:read"])]
     private ?int $priceMixed = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\LessThanOrEqual(propertyPath: "randomDraw")]
+    #[Groups(["tournament:read"])]
     private ?\DateTimeInterface $registrationClosingDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\LessThan(propertyPath: "startDate")]
+    #[Groups(["tournament:read"])]
     private ?\DateTimeInterface $randomDraw = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $emailContact = null;
 
     #[ORM\Column(length: 30, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $telContact = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $registrationMethod = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $paymentMethod = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $comment = null;
 
     #[ORM\Column]
+    #[Groups(["tournament:read"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $regulationFileName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tournament:read"])]
     private ?string $regulationFileUrl = null;
 
     #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: TournamentRegistration::class)]
     private Collection $tournamentRegistrations;
 
-    #[ORM\Column]
-    private ?bool $isTeamCompetition = null;
-
     public function __construct()
     {
-        return $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
         $this->tournamentRegistrations = new ArrayCollection();
+        return $this;
     }
 
     public function getId(): ?int
@@ -181,6 +207,18 @@ class Tournament
     public function setSeason(string $season): self
     {
         $this->season = $season;
+
+        return $this;
+    }
+
+    public function isTeamCompetition(): ?bool
+    {
+        return $this->isTeamCompetition;
+    }
+
+    public function setIsTeamCompetition(bool $isTeamCompetition): self
+    {
+        $this->isTeamCompetition = $isTeamCompetition;
 
         return $this;
     }
@@ -450,18 +488,6 @@ class Tournament
                 $tournamentRegistration->setTournament(null);
             }
         }
-
-        return $this;
-    }
-
-    public function isTeamCompetition(): ?bool
-    {
-        return $this->isTeamCompetition;
-    }
-
-    public function setIsTeamCompetition(bool $isTeamCompetition): self
-    {
-        $this->isTeamCompetition = $isTeamCompetition;
 
         return $this;
     }

@@ -20,15 +20,29 @@ class TournamentRegistration
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[Groups(["registration:create", "registration:read"])]
+    private ?int $userId = null;
+
+    private ?string $userLastName = null;
+
+    private ?string $userFirstName = null;
+
+    private ?string $userEmail = null;
+
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Tournament $tournament = null;
 
     #[Groups(["registration:create", "registration:read"])]
-    private ?int $userId = null;
-
-    #[Groups(["registration:create", "registration:read"])]
     private ?int $tournamentId = null;
+
+    private ?string $tournamentName = null;
+
+    private ?string $tournamentCity = null;
+
+    private ?\DateTimeInterface $tournamentStartDate = null;
+
+    private ?\DateTimeInterface $tournamentEndDate = null;
 
     #[ORM\Column(length: 100)]
     #[Groups(["registration:create", "registration:read"])]
@@ -113,6 +127,50 @@ class TournamentRegistration
         return $this;
     }
 
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId($userId): self
+    {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    public function getUserLastName(): string
+    {
+        return $this->userLastName;
+    }
+
+    public function setUserLastName($userLastName): self
+    {
+        $this->userLastName = $userLastName;
+        return $this;
+    }
+
+    public function getUserFirstName(): string
+    {
+        return $this->userFirstName;
+    }
+
+    public function setUserFirstName($userFirstName): self
+    {
+        $this->userFirstName = $userFirstName;
+        return $this;
+    }
+
+    public function getUserEmail(): string
+    {
+        return $this->userEmail;
+    }
+
+    public function setUserEmail($userEmail): self
+    {
+        $this->userEmail = $userEmail;
+        return $this;
+    }
+
     public function getTournament(): ?Tournament
     {
         return $this->tournament;
@@ -122,17 +180,6 @@ class TournamentRegistration
     {
         $this->tournament = $tournament;
 
-        return $this;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
-
-    public function setUserId($userId): self
-    {
-        $this->userId = $userId;
         return $this;
     }
 
@@ -147,6 +194,48 @@ class TournamentRegistration
         return $this;
     }
 
+    public function getTournamentName(): string
+    {
+        return $this->tournamentName;
+    }
+
+    public function setTournamentName($tournamentName): self
+    {
+        $this->tournamentName = $tournamentName;
+        return $this;
+    }
+
+    public function getTournamentCity(): string
+    {
+        return $this->tournamentCity;
+    }
+
+    public function setTournamentCity($tournamentCity): self
+    {
+        $this->tournamentCity = $tournamentCity;
+        return $this;
+    }
+
+    public function getTournamentStartDate(): ?\DateTimeInterface
+    {
+        return $this->tournamentStartDate;
+    }
+
+    public function setTournamentStartDate($tournamentStartDate): self
+    {
+        $this->tournamentStartDate = $tournamentStartDate;
+        return $this;
+    }
+    public function getTournamentEndDate(): ?\DateTimeInterface
+    {
+        return $this->tournamentEndDate;
+    }
+
+    public function setTournamentEndDate($tournamentEndDate): self
+    {
+        $this->tournamentEndDate = $tournamentEndDate;
+        return $this;
+    }
 
     public function getRequestState(): ?string
     {

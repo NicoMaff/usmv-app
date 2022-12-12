@@ -2,7 +2,9 @@
 
 namespace App\Controller\API;
 
+use App\Entity\Tournament;
 use App\Entity\TournamentRegistration;
+use App\Entity\User;
 use App\Repository\TournamentRegistrationRepository;
 use App\Repository\TournamentRepository;
 use App\Repository\UserRepository;
@@ -11,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -19,15 +22,56 @@ class ApiTournamentRegistrationController extends AbstractController
 {
     /**
      * CREATE
-     * An admin can make a tournament registration for a member
-     * The usedId property will be set by the admin 
+     * An admin can make a tournament registration for a member.
+     * The usedId property will be set by the admin.
+     * If the tournament is not saved in database, the admin can create a new tournament when he is creating a tournament registration
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament-registration", name: "api_tournamentRegistration_createMemberRegistration", methods: "POST")]
-    public function createMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer): JsonResponse
+    #[Route("/admin/tournament-registration", name: "api_tournamentRegistration_createMemberRegistration", methods: "POST")]
+    public function createMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher): JsonResponse
     {
         $jsonReceived = $request->getContent();
         $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+
+        if ($registration->getUserId() === null && $registration->getUserLastName() && $registration->getUserFirstName() && $registration->getUserEmail()) {
+            $user = new User();
+
+            $password = "";
+            for ($i = 0; $i < 6; $i++) {
+                $alpha = mt_rand(97, 122);
+                $alphaMaj = mt_rand(65, 90);
+                $char = mt_rand(1, 2) === 1 ? mt_rand(0, 9) : (mt_rand(1, 2) === 1 ? chr($alpha) : chr($alphaMaj));
+                $password .= $char;
+            }
+
+            $user
+                ->setLastName($registration->getUserLastName())
+                ->setFirstName($registration->getUserFirstName())
+                ->setEmail($registration->getUserEmail())
+                ->setPassword($hasher->hashPassword($user, $password));
+
+            $userRepo->add($user, true);
+            $registration->setUserId($user->getId());
+        }
+
+        if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
+            $tournament = new Tournament();
+            $tournament
+                ->setCity($registration->getTournamentCity())
+                ->setStartDate($registration->getTournamentStartDate());
+
+            if ($registration->getTournamentName() !== null) {
+                $tournament->setName($registration->getTournamentName());
+            }
+
+            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+            }
+            $tournamentRepo->add($tournament, true);
+            $registration->setTournamentId($tournament->getId());
+        }
 
         $registration->setUser($userRepo->find($registration->getUserId()));
         $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
@@ -43,6 +87,27 @@ class ApiTournamentRegistrationController extends AbstractController
      * The userId property is set from the member id only when he is authenticated
      * createRegistration
      */
+    #[Route("/tournament-registration", "api_tournamentRegistration_createRegistration", methods: "POST")]
+    public function createRegistration(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer): JsonResponse
+    {
+        $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
+        $jsonReceived = $request->getContent();
+        $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+
+        $registration->setUser($user->getId());
+        $registration->setTournament($registration->find($registration->getTournamentId()));
+
+        $tournamentRegistrationRepo->add($registration, true);
+
+        return $this->json($registration, 201, context: ["groups" => "registration:create"]);
+    }
+
+    /**
+     * CREATE
+     * An user unauthenticated can create a tournament registration.
+     * He must will fill his last-name, his first-name and his email.
+     */
+
 
     /**
      * readOneMemberRegistration

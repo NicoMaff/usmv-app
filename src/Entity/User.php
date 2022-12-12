@@ -13,10 +13,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -27,8 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
-    #[Assert\NotBlank()]
-    #[Assert\Email(message: "L'email utilisé n'est pas valide")]
+    #[Assert\NotBlank(message: "This email is already used")]
+    #[Assert\Email(message: "This is not a valid email")]
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
@@ -76,9 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $birthDate = null;
-
-    #[Vich\UploadableField(mapping: 'users', fileNameProperty: 'avatarUrl')]
-    private ?File $avatarFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
