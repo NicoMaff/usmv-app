@@ -138,7 +138,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getUserLastName(): string
+    public function getUserLastName(): ?string
     {
         return $this->userLastName;
     }
@@ -149,7 +149,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getUserFirstName(): string
+    public function getUserFirstName(): ?string
     {
         return $this->userFirstName;
     }
@@ -160,7 +160,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getUserEmail(): string
+    public function getUserEmail(): ?string
     {
         return $this->userEmail;
     }
@@ -194,7 +194,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getTournamentName(): string
+    public function getTournamentName(): ?string
     {
         return $this->tournamentName;
     }
@@ -205,7 +205,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getTournamentCity(): string
+    public function getTournamentCity(): ?string
     {
         return $this->tournamentCity;
     }

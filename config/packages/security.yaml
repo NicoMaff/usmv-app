@@ -44,6 +44,7 @@ security:
   access_control:
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
     - { path: ^/api/user/account, roles: PUBLIC_ACCESS }
+    - { path: ^/api/tournament-registration-unauthenticated, roles: PUBLIC_ACCESS }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY } # TO UNCOMMENT !!!!!
 
   role_hierarchy:

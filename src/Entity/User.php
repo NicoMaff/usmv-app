@@ -49,13 +49,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: "Les deux mots de passe saisis ne sont pas identiques !"
     )]
     #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
-    public ?string $confirmPassword = null;
+    private ?string $confirmPassword = null;
 
     #[Assert\Length(
         min: 6,
         minMessage: "Votre mot de passe doit comporter 6 caractères minimum",
     )]
-    public ?string $previousPassword = null;
+    private ?string $previousPassword = null;
 
     #[ORM\Column(length: 100)]
     #[Groups(["user:read", "user:create", "user:update"])]
@@ -188,6 +188,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword($confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
+        return $this;
+    }
+    public function getPreviousPassword(): ?string
+    {
+        return $this->previousPassword;
+    }
+
+    public function setPreviousPassword($previousPassword): self
+    {
+        $this->previousPassword = $previousPassword;
+        return $this;
     }
 
     public function getLastName(): ?string

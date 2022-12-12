@@ -2,6 +2,7 @@
 
 namespace App\Controller\API;
 
+use ApiPlatform\Validator\ValidatorInterface as ValidatorValidatorInterface;
 use App\Entity\Tournament;
 use App\Entity\TournamentRegistration;
 use App\Entity\User;
@@ -16,19 +17,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route("/api")]
 class ApiTournamentRegistrationController extends AbstractController
 {
     /**
      * CREATE
-     * An admin can make a tournament registration for a member.
-     * The usedId property will be set by the admin.
-     * If the tournament is not saved in database, the admin can create a new tournament when he is creating a tournament registration
+     * An ADMIN can make a tournament registration for a member.
+     * The member may already exist or he can be created. 
+     * To create a member, his lastName, firstName and his email have to be filled out. The password will be set automatically.
+     * The userId property will be set by the admin.
+     * The tournament may already exist or he can be created.
+     * To create a tournament, the city and the startDate have to be filled out. The name can be filled out but it is not required.
      */
     #[IsGranted("ROLE_ADMIN")]
     #[Route("/admin/tournament-registration", name: "api_tournamentRegistration_createMemberRegistration", methods: "POST")]
-    public function createMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher): JsonResponse
+    public function createMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator): JsonResponse
     {
         $jsonReceived = $request->getContent();
         $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
@@ -48,10 +53,19 @@ class ApiTournamentRegistrationController extends AbstractController
                 ->setLastName($registration->getUserLastName())
                 ->setFirstName($registration->getUserFirstName())
                 ->setEmail($registration->getUserEmail())
-                ->setPassword($hasher->hashPassword($user, $password));
+                ->setPassword($password)
+                ->setConfirmPassword($password);
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+            $user->setPassword($hasher->hashPassword($user, $password));
 
             $userRepo->add($user, true);
             $registration->setUserId($user->getId());
+        } else {
+            throw new Exception("At least one user's information is missing");
         }
 
         if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
@@ -60,7 +74,136 @@ class ApiTournamentRegistrationController extends AbstractController
                 ->setCity($registration->getTournamentCity())
                 ->setStartDate($registration->getTournamentStartDate());
 
-            if ($registration->getTournamentName() !== null) {
+            if ($registration->getTournamentName()) {
+                $tournament->setName($registration->getTournamentName());
+            }
+
+            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+            }
+
+            $errors = $validator->validate($tournament);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+
+            $tournamentRepo->add($tournament, true);
+            $registration->setTournamentId($tournament->getId());
+        } else {
+            throw new Exception("At least one tournament's information is missing");
+        }
+
+        $registration->setUser($userRepo->find($registration->getUserId()));
+        $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+
+        $tournamentRegistrationRepo->add($registration, true);
+
+        return $this->json($registration, 201, context: ["groups" => "registration:create"]);
+    }
+
+    /**
+     * CREATE
+     * A MEMBER can create a tournament registration.
+     * The userId property is set from the member id only when he is authenticated.
+     * The tournament may already exist or he can be created.
+     * To create a tournament, the city and the startDate have to be filled out. The name can be filled out but it is not required.
+     */
+    #[IsGranted("ROLE_MEMBER")]
+    #[Route("/tournament-registration", "api_tournamentRegistration_createRegistration", methods: "POST")]
+    public function createRegistration(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
+    {
+        $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
+        $jsonReceived = $request->getContent();
+        $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+
+        if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
+            $tournament = new Tournament();
+            $tournament
+                ->setCity($registration->getTournamentCity())
+                ->setStartDate($registration->getTournamentStartDate());
+
+            if ($registration->getTournamentName()) {
+                $tournament->setName($registration->getTournamentName());
+            }
+
+            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+            }
+
+            $errors = $validator->validate($tournament);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+
+            $tournamentRepo->add($tournament, true);
+            $registration->setTournamentId($tournament->getId());
+        } else {
+            throw new Exception("At least one tournament's information is missing");
+        }
+
+        $registration->setUser($user->getId());
+        $registration->setTournament($registration->find($registration->getTournamentId()));
+
+        $tournamentRegistrationRepo->add($registration, true);
+
+        return $this->json($registration, 201, context: ["groups" => "registration:create"]);
+    }
+
+    /**
+     * CREATE
+     * An user unauthenticated can create a tournament registration.
+     * He must will fill his last-name, his first-name and his email.
+     * The tournament may already exist or he can be created.
+     * To create a tournament, the city and the startDate have to be filled out. The name can be filled out but it is not required.
+     */
+    #[Route("/tournament-registration-unauthenticated", "api_tournamentRegistration_createRegistrationForUnauthenticated", methods: "POST")]
+    public function createRegistrationForUnauthenticated(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator): JsonResponse
+    {
+        $jsonReceived = $request->getContent();
+        $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+
+        if ($registration->getUserLastName() && $registration->getUserFirstName() && $registration->getUserEmail()) {
+            $user = new User();
+
+            $password = "";
+            for ($i = 0; $i < 6; $i++) {
+                $alpha = mt_rand(97, 122);
+                $alphaMaj = mt_rand(65, 90);
+                $char = mt_rand(1, 2) === 1 ? mt_rand(0, 9) : (mt_rand(1, 2) === 1 ? chr($alpha) : chr($alphaMaj));
+                $password .= $char;
+            }
+
+            $user
+                ->setLastName($registration->getUserLastName())
+                ->setFirstName($registration->getUserFirstName())
+                ->setEmail($registration->getUserEmail())
+                ->setPassword($password)
+                ->setConfirmPassword($password);
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+
+            $user->setPassword($hasher->hashPassword($user, $password));
+
+            $userRepo->add($user, true);
+            $registration->setUserId($user->getId());
+        } else {
+            throw new Exception("At least one user's information is missing");
+        }
+
+        if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
+            $tournament = new Tournament();
+            $tournament
+                ->setCity($registration->getTournamentCity())
+                ->setStartDate($registration->getTournamentStartDate());
+
+            if ($registration->getTournamentName()) {
                 $tournament->setName($registration->getTournamentName());
             }
 
@@ -80,33 +223,6 @@ class ApiTournamentRegistrationController extends AbstractController
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
-
-    /**
-     * CREATE
-     * A member can create a tournament registration
-     * The userId property is set from the member id only when he is authenticated
-     * createRegistration
-     */
-    #[Route("/tournament-registration", "api_tournamentRegistration_createRegistration", methods: "POST")]
-    public function createRegistration(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer): JsonResponse
-    {
-        $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
-        $jsonReceived = $request->getContent();
-        $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
-
-        $registration->setUser($user->getId());
-        $registration->setTournament($registration->find($registration->getTournamentId()));
-
-        $tournamentRegistrationRepo->add($registration, true);
-
-        return $this->json($registration, 201, context: ["groups" => "registration:create"]);
-    }
-
-    /**
-     * CREATE
-     * An user unauthenticated can create a tournament registration.
-     * He must will fill his last-name, his first-name and his email.
-     */
 
 
     /**
