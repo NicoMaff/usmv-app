@@ -249,7 +249,7 @@ class TournamentRegistration
         return $this;
     }
 
-    public function HasParticipated(): ?bool
+    public function isHasParticipated(): ?bool
     {
         return $this->hasParticipated;
     }

@@ -76,6 +76,9 @@ class ApiTournamentRegistrationController extends AbstractController
             if ($registration->getTournamentName()) {
                 $tournament->setName($registration->getTournamentName());
             }
+            if ($registration->getTournamentEndDate()) {
+                $tournament->setEndDate($registration->getTournamentEndDate());
+            }
 
             if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
                 $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
@@ -144,7 +147,7 @@ class ApiTournamentRegistrationController extends AbstractController
             throw new Exception("At least one tournament's information is missing");
         }
 
-        $registration->setUser($user->getId());
+        $registration->setUser($this->getUser());
         $registration->setTournament($registration->find($registration->getTournamentId()));
 
         $tournamentRegistrationRepo->add($registration, true);
@@ -307,5 +310,218 @@ class ApiTournamentRegistrationController extends AbstractController
             array_push($registrationsToReturn, $registration);
         }
         return $this->json($registrationsToReturn, 200, context: ["groups" => "registration:read"]);
+    }
+
+    /**
+     * UPDATE
+     * An ADMIN can modify some properties of one member's registration
+     * The user and tournament entities can be modified by creating a new instance.
+     * Every property can be modified independently.
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_updateMemberRegistration", methods: "PUT")]
+    public function updateMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator, int $id): JsonResponse
+    {
+        $registration = $tournamentRegistrationRepo->find($id);
+        $jsonReceived = $request->getContent();
+        $updatedRegistration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+
+        if ($updatedRegistration->getUserId()) {
+            $registration->setUserId($updatedRegistration->getUserId());
+        }
+
+        if ($updatedRegistration->getUserId() === null && $updatedRegistration->getUserLastName() && $updatedRegistration->getUserFirstName() && $updatedRegistration->getUserEmail()) {
+            $user = new User();
+
+            $password = "";
+            for ($i = 0; $i < 6; $i++) {
+                $alpha = mt_rand(97, 122);
+                $alphaMaj = mt_rand(65, 90);
+                $char = mt_rand(1, 2) === 1 ? mt_rand(0, 9) : (mt_rand(1, 2) === 1 ? chr($alpha) : chr($alphaMaj));
+                $password .= $char;
+            }
+
+            $user
+                ->setLastName($updatedRegistration->getUserLastName())
+                ->setFirstName($updatedRegistration->getUserFirstName())
+                ->setEmail($updatedRegistration->getUserEmail())
+                ->setPassword($password)
+                ->setConfirmPassword($password);
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+            $user->setPassword($hasher->hashPassword($user, $password));
+
+            $userRepo->add($user, true);
+            $registration->setUserId($user->getId());
+        }
+
+        if ($updatedRegistration->getTournamentId()) {
+            $registration->setTournamentId($updatedRegistration->getTournamentId());
+        }
+
+        if ($registration->getTournamentId() === null && $updatedRegistration->getTournamentCity() && $updatedRegistration->getTournamentStartDate()) {
+            $tournament = new Tournament();
+            $tournament
+                ->setCity($updatedRegistration->getTournamentCity())
+                ->setStartDate($updatedRegistration->getTournamentStartDate());
+
+            if ($updatedRegistration->getTournamentName()) {
+                $tournament->setName($updatedRegistration->getTournamentName());
+            }
+            if ($updatedRegistration->getTournamentEndDate()) {
+                $tournament->setEndDate($updatedRegistration->getTournamentEndDate());
+            }
+
+            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+            }
+
+            $errors = $validator->validate($tournament);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+
+            $tournamentRepo->add($tournament, true);
+            $registration->setTournamentId($tournament->getId());
+        }
+
+        if ($updatedRegistration->getRequestState()) {
+            $registration->setRequestState($updatedRegistration->getRequestState());
+        }
+        if ($updatedRegistration->isHasParticipated()) {
+            $registration->setHasParticipated($updatedRegistration->getHasParticipated());
+        }
+        if ($updatedRegistration->isParticipationSingle()) {
+            $registration->setParticipationSingle($updatedRegistration->isParticipationSingle());
+        }
+        if ($updatedRegistration->isParticipationDouble()) {
+            $registration->setParticipationDouble($updatedRegistration->isParticipationDouble());
+        }
+        if ($updatedRegistration->isParticipationMixed()) {
+            $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
+        }
+        if ($updatedRegistration->getSingleStageReached()) {
+            $registration->setSingleStageReached($updatedRegistration->getSingleStageReached());
+        }
+        if ($updatedRegistration->getDoubleStageReached()) {
+            $registration->setDoubleStageReached($updatedRegistration->getDoubleStageReached());
+        }
+        if ($updatedRegistration->getMixedStageReached()) {
+            $registration->setMixedStageReached($updatedRegistration->getMixedStageReached());
+        }
+        if ($updatedRegistration->getDoublePartnerName()) {
+            $registration->setDoublePartnerName($updatedRegistration->getDoublePartnerName());
+        }
+        if ($updatedRegistration->getDoublePartnerClub()) {
+            $registration->setDoublePartnerClub($updatedRegistration->getDoublePartnerClub());
+        }
+        if ($updatedRegistration->getMixedPartnerName()) {
+            $registration->setMixedPartnerName($updatedRegistration->getMixedPartnerName());
+        }
+        if ($updatedRegistration->getMixedPartnerClub()) {
+            $registration->setMixedPartnerClub($updatedRegistration->getMixedPartnerClub());
+        }
+        if ($updatedRegistration->getComment()) {
+            $registration->setComment($updatedRegistration->getComment());
+        }
+
+        $registration->setUser($userRepo->find($registration->getUser()->getId()));
+        $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+        $tournamentRegistrationRepo->add($registration, true);
+        return $this->json($registration, 201, context: ["groups" => "registration:create"]);
+    }
+
+    /**
+     * UPDATE
+     * A MEMBER can modify some properties of his registration.
+     * The user and tournament entities can be modified by creating a new instance.
+     * Every property can be modified independently.
+     */
+    #[IsGranted("ROLE_MEMBER")]
+    #[Route("/tournament-registration/{id}", "api_tournamentRegistration_updateRegistration", methods: "PUT")]
+    public function updateRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, ValidatorInterface $validator, int $id): JsonResponse
+    {
+        $registration = $tournamentRegistrationRepo->findOneBy(["user" => $this->getUser(), "id" => $id]);
+        $jsonReceived = $request->getContent();
+        $updatedRegistration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+
+        if ($registration === null) {
+            throw new Exception("The registration's id selected does not belong to this user.");
+        }
+
+        if ($updatedRegistration->getTournamentId()) {
+            $registration->setTournamentId($updatedRegistration->getTournamentId());
+        }
+
+        if ($registration->getTournamentId() === null && $updatedRegistration->getTournamentCity() && $updatedRegistration->getTournamentStartDate()) {
+            $tournament = new Tournament();
+            $tournament
+                ->setCity($updatedRegistration->getTournamentCity())
+                ->setStartDate($updatedRegistration->getTournamentStartDate());
+
+            if ($updatedRegistration->getTournamentName()) {
+                $tournament->setName($updatedRegistration->getTournamentName());
+            }
+            if ($updatedRegistration->getTournamentEndDate()) {
+                $tournament->setEndDate($updatedRegistration->getTournamentEndDate());
+            }
+
+            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+            }
+
+            $errors = $validator->validate($tournament);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+
+            $tournamentRepo->add($tournament, true);
+            $registration->setTournamentId($tournament->getId());
+        }
+
+        if ($updatedRegistration->isParticipationSingle()) {
+            $registration->setParticipationSingle($updatedRegistration->isParticipationSingle());
+        }
+        if ($updatedRegistration->isParticipationDouble()) {
+            $registration->setParticipationDouble($updatedRegistration->isParticipationDouble());
+        }
+        if ($updatedRegistration->isParticipationMixed()) {
+            $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
+        }
+        if ($updatedRegistration->getSingleStageReached()) {
+            $registration->setSingleStageReached($updatedRegistration->getSingleStageReached());
+        }
+        if ($updatedRegistration->getDoubleStageReached()) {
+            $registration->setDoubleStageReached($updatedRegistration->getDoubleStageReached());
+        }
+        if ($updatedRegistration->getMixedStageReached()) {
+            $registration->setMixedStageReached($updatedRegistration->getMixedStageReached());
+        }
+        if ($updatedRegistration->getDoublePartnerName()) {
+            $registration->setDoublePartnerName($updatedRegistration->getDoublePartnerName());
+        }
+        if ($updatedRegistration->getDoublePartnerClub()) {
+            $registration->setDoublePartnerClub($updatedRegistration->getDoublePartnerClub());
+        }
+        if ($updatedRegistration->getMixedPartnerName()) {
+            $registration->setMixedPartnerName($updatedRegistration->getMixedPartnerName());
+        }
+        if ($updatedRegistration->getMixedPartnerClub()) {
+            $registration->setMixedPartnerClub($updatedRegistration->getMixedPartnerClub());
+        }
+        if ($updatedRegistration->getComment()) {
+            $registration->setComment($updatedRegistration->getComment());
+        }
+
+        $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+        $tournamentRegistrationRepo->add($registration, true);
+        return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
 }
