@@ -237,7 +237,6 @@ class ApiTournamentRegistrationController extends AbstractController
     public function readOneMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
         $registration = $repository->find($id);
-        // dd($registration);
 
         if ($registration === null) {
             throw new Exception("This id does not correspond to none of the tournament registrations.");
@@ -301,6 +300,8 @@ class ApiTournamentRegistrationController extends AbstractController
     public function readAllRegistrations(TournamentRegistrationRepository $repository): JsonResponse
     {
         $registrations = $repository->findBy(["user" => $this->getUser()]);
+        // $registrations = $repository->findBy(["hasParticipated" => false]);
+        // dd($registrations, $this->getUser());
 
         $registrationsToReturn = [];
         foreach ($registrations as $registration) {
@@ -319,7 +320,7 @@ class ApiTournamentRegistrationController extends AbstractController
      * Every property can be modified independently.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_updateMemberRegistration", methods: "PUT")]
+    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_updateMemberRegistration", methods: "PATCH")]
     public function updateMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator, int $id): JsonResponse
     {
         $registration = $tournamentRegistrationRepo->find($id);
@@ -443,7 +444,7 @@ class ApiTournamentRegistrationController extends AbstractController
      * Every property can be modified independently.
      */
     #[IsGranted("ROLE_MEMBER")]
-    #[Route("/tournament-registration/{id}", "api_tournamentRegistration_updateRegistration", methods: "PUT")]
+    #[Route("/tournament-registration/{id}", "api_tournamentRegistration_updateRegistration", methods: "PATCH")]
     public function updateRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, ValidatorInterface $validator, int $id): JsonResponse
     {
         $registration = $tournamentRegistrationRepo->findOneBy(["user" => $this->getUser(), "id" => $id]);
@@ -523,5 +524,40 @@ class ApiTournamentRegistrationController extends AbstractController
         $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
         $tournamentRegistrationRepo->add($registration, true);
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
+    }
+
+    /**
+     * UPDATE (Delete for a member)
+     * A MEMBER can cancel a registration (instead of delete it).
+     */
+    #[IsGranted("ROLE_MEMBER")]
+    #[Route("/tournament-registration/cancel/{id}", "api_tournamentRegistration_cancelMemberRegistration", methods: "PATCH")]
+    public function cancelMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
+    {
+        $registration = $repository->findOneBy(["user" => $this->getUser(), "id" => $id]);
+
+        if ($registration === null) {
+            throw new Exception("The registration's id selected does not belong to this user.");
+        } else {
+            $registration->setRequestState("cancelled");
+            $repository->add($registration, true);
+            return $this->json($registration, 200, context: ["groups" => "registration:read"]);
+        }
+    }
+
+    /**
+     * DELETE
+     * An ADMIN can delete one tournament.
+     * To update the registration's state, the admin have to use the patch route
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/tournament-registration/{id}", "api_tournamentRegistration_deleteRegistration", methods: "DELETE")]
+    public function deleteRegistration(TournamentRegistrationRepository $repository, UserRepository $userRepo, int $id): JsonResponse
+    {
+        $repository->remove($repository->find($id), true);
+        return $this->json([
+            "status" => 200,
+            "message" => "The registration with the id #$id has been correctly deleted."
+        ], 200);
     }
 }
