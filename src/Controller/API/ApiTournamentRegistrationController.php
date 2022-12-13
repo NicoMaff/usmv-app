@@ -300,8 +300,6 @@ class ApiTournamentRegistrationController extends AbstractController
     public function readAllRegistrations(TournamentRegistrationRepository $repository): JsonResponse
     {
         $registrations = $repository->findBy(["user" => $this->getUser()]);
-        // $registrations = $repository->findBy(["hasParticipated" => false]);
-        // dd($registrations, $this->getUser());
 
         $registrationsToReturn = [];
         foreach ($registrations as $registration) {
