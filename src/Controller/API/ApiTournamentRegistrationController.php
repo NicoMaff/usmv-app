@@ -2,7 +2,6 @@
 
 namespace App\Controller\API;
 
-use ApiPlatform\Validator\ValidatorInterface as ValidatorValidatorInterface;
 use App\Entity\Tournament;
 use App\Entity\TournamentRegistration;
 use App\Entity\User;
@@ -226,9 +225,47 @@ class ApiTournamentRegistrationController extends AbstractController
 
 
     /**
-     * readOneMemberRegistration
-     * readAllMemberRegistrations
+     * READ
+     * An ADMIN can get details of one member registration from registration's id.
+     * The selection only concern the registration (and not the user). 
      */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_readOneMemberRegistration", methods: "GET")]
+    public function readOneMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
+    {
+        $registration = $repository->find($id);
+        // dd($registration);
+
+        if ($registration === null) {
+            throw new Exception("This id does not correspond to none of the tournament registrations.");
+        } else {
+            $registration
+                ->setUserId($registration->getUser()->getId())
+                ->setTournamentId($registration->getTournament()->getId());
+            return $this->json($registration, 200, context: ["groups" => "registration:read"]);
+        }
+    }
+
+    /**
+     * READ
+     * An ADMIN can get details of all member's registrations.
+     * The selection only concern the registration (and not the user). 
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/tournament-registrations", "api_tournamentRegistration_readOneMemberRegistration", methods: "GET")]
+    public function readAllMembersRegistrations(TournamentRegistrationRepository $repository): JsonResponse
+    {
+        $registrations = $repository->findAll();
+
+        $registrationsToReturn = [];
+        foreach ($registrations as $registration) {
+            $registration
+                ->setUserId($registration->getUser()->getId())
+                ->setTournamentId($registration->getTournament()->getId());
+            array_push($registrationsToReturn, $registration);
+        }
+        return $this->json($registrationsToReturn, 200, context: ["groups" => "registration:read"]);
+    }
 
     /**
      * READ
@@ -237,16 +274,16 @@ class ApiTournamentRegistrationController extends AbstractController
      */
     #[IsGranted("ROLE_MEMBER")]
     #[Route("/tournament-registration/{id}", "api_tournamentRegistration_readOneRegistration", methods: "GET")]
-    public function readOneRegistration(UserRepository $userRepo, TournamentRegistrationRepository $repository, int $id): JsonResponse
+    public function readOneRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
-        $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
-        $registration = $repository->findOneBy($id);
+        $registration = $repository->findOneBy(["user" => $this->getUser(), "id" => $id]);
 
-        if ($user->getId() !== $registration->getUser()->getId()) {
-            throw new Exception("You don't have permission to access this tournament registration.");
+        if ($registration === null) {
+            throw new Exception("The registration's id selected does not belong to this user.");
         } else {
-            $registration->setUserId($registration->getUser()->getId());
-            $registration->setTournamentId($registration->getTournament()->getId());
+            $registration
+                ->setUserId($registration->getUser()->getId())
+                ->setTournamentId($registration->getTournament()->getId());
             return $this->json($registration, 200, context: ["groups" => "registration:read"]);
         }
     }
@@ -258,20 +295,16 @@ class ApiTournamentRegistrationController extends AbstractController
      */
     #[IsGranted("ROLE_MEMBER")]
     #[Route("/tournament-registrations", "api_tournamentRegistration_readAllRegistrations", methods: "GET")]
-    public function readAllRegistrations(UserRepository $userRepo, TournamentRegistrationRepository $repository): JsonResponse
+    public function readAllRegistrations(TournamentRegistrationRepository $repository): JsonResponse
     {
-        $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
         $registrations = $repository->findBy(["user" => $this->getUser()]);
 
         $registrationsToReturn = [];
         foreach ($registrations as $registration) {
-            if ($user->getId() !== $registration->getUser()->getId()) {
-                throw new Exception("You don't have permission to access one or some tournament registrations.");
-            } else {
-                $registration->setUserId($registration->getUser()->getId());
-                $registration->setTournamentId($registration->getTournament()->getId());
-                array_push($registrationsToReturn, $registration);
-            }
+            $registration
+                ->setUserId($registration->getUser()->getId())
+                ->setTournamentId($registration->getTournament()->getId());
+            array_push($registrationsToReturn, $registration);
         }
         return $this->json($registrationsToReturn, 200, context: ["groups" => "registration:read"]);
     }
