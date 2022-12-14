@@ -491,52 +491,45 @@ class ApiUserController extends AbstractController
 
     /**
      * DELETE
-     * Remove one member
+     * The SUPERADMIN can remove a user (admin or member).
+     * An ADMIN can remove a member.
      */
-    #[Route("/user/member/{id}", "api_user_deleteOneMember", methods: "DELETE")]
-    // #[IsGranted("ROLE_ADMIN")]
-    public function deleteOneMember(UserRepository $repository, int $id): JsonResponse
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("admin/user/{id}", "api_user_deleteUser", methods: "DELETE")]
+    public function deleteUser(UserRepository $repository, int $id): JsonResponse
     {
-        $user = $repository->find($id);
+        $admin = $this->getUser();
+        $userToDelete = $repository->find($id);
 
-        if (in_array("ROLE_SUPERADMIN", $user->getRoles())) {
-            throw new Exception("Vous n'avez pas les droits pour supprimer le Grand CHEF 😝");
-        } else if (in_array("ROLE_ADMIN", $user->getRoles())) {
-            throw new Exception("Vous n'avez pas les droits pour supprimer un administrateur");
-        } else {
-            $repository->remove($user, true);
-            return $this->json([
-                "status" => 200,
-                "message" => "The member with the id #$id has been correctly deleted"
-            ], 200);
+        if (in_array("ROLE_SUPERADMIN", $userToDelete->getRoles())) {
+            throw new Exception("You have not the permission to delete this user.");
         }
-    }
-
-    /**
-     * DELETE
-     * Remove one user (admin or member)
-     */
-    #[Route("user/{id}", "api_user_deleteOneAdminOrMember", methods: "DELETE")]
-    // #[IsGranted("ROLE_SUPERADMIN")]
-    public function deleteOneAdminOrMember(UserRepository $repository, int $id): JsonResponse
-    {
-        $user = $repository->find($id);
-
-        if (in_array("ROLE_SUPERADMIN", $user->getRoles())) {
-            throw new Exception("Vous n'avez pas les droits pour supprimer le Grand CHEF 😝");
+        if (in_array("ROLE_SUPERADMIN", $admin->getRoles())) {
+            if ($userToDelete->getAvatarFileName() && file_exists($userToDelete->getAvatarFileUrl())) {
+                unlink($userToDelete->getAvatarFileUrl());
+            }
+            $repository->remove($userToDelete, true);
+            if (in_array("ROLE_ADMIN", $userToDelete->getRoles())) {
+                return $this->json([
+                    "status" => 200,
+                    "message" => "The admin with the id #$id has been correctly deleted."
+                ], 200);
+            } else {
+                return $this->json([
+                    "status" => 200,
+                    "message" => "The member with the id #$id has been correctly deleted."
+                ], 200);
+            }
+        } else if (in_array("ROLE_ADMIN", $admin->getRoles()) && in_array("ROLE_ADMIN", $userToDelete->getRoles())) {
+            throw new Exception("An admin can not delete an other admin.");
         } else {
-            $repository->remove($user, true);
-        }
-
-        if (in_array("ROLE_ADMIN", $user->getRoles())) {
+            if ($userToDelete->getAvatarFileName() && file_exists($userToDelete->getAvatarFileUrl())) {
+                unlink($userToDelete->getAvatarFileUrl());
+            }
+            $repository->remove($userToDelete, true);
             return $this->json([
                 "status" => 200,
-                "message" => "The admin with the id #$id has been correctly deleted"
-            ], 200);
-        } else {
-            return $this->json([
-                "status" => 200,
-                "message" => "The member with the id #$id has been correctly deleted"
+                "message" => "The member with the id #$id has been correctly deleted."
             ], 200);
         }
     }
