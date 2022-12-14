@@ -431,6 +431,7 @@ class ApiTournamentRegistrationController extends AbstractController
 
         $registration->setUser($userRepo->find($registration->getUser()->getId()));
         $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+        $registration->setUpdatedAt(new \DateTime());
         $tournamentRegistrationRepo->add($registration, true);
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
@@ -520,6 +521,7 @@ class ApiTournamentRegistrationController extends AbstractController
         }
 
         $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+        $registration->setUpdatedAt(new \DateTime());
         $tournamentRegistrationRepo->add($registration, true);
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
@@ -538,6 +540,7 @@ class ApiTournamentRegistrationController extends AbstractController
             throw new Exception("The registration's id selected does not belong to this user.");
         } else {
             $registration->setRequestState("cancelled");
+            $registration->setUpdatedAt(new \DateTime());
             $repository->add($registration, true);
             return $this->json($registration, 200, context: ["groups" => "registration:read"]);
         }

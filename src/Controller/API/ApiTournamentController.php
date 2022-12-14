@@ -38,11 +38,11 @@ class ApiTournamentController extends AbstractController
 
         $tournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
-        // if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
-        //     $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
-        // } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
-        //     $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
-        // }
+        if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+            $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+        } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+            $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+        }
 
         if ($tournament->getStartDate()->diff($tournament->getEndDate())->days >= 10) {
             throw new Exception("The interval between the start and the end of the tournament is too long");
@@ -52,7 +52,7 @@ class ApiTournamentController extends AbstractController
             // File settings
             $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
-            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations/";
+            $destination = $this->getParameter("kernel.project_dir") . "/src/data/tournamentsRegulations/";
             $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
 
             try {
@@ -196,7 +196,7 @@ class ApiTournamentController extends AbstractController
             // File settings
             $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
-            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations/";
+            $destination = $this->getParameter("kernel.project_dir") . "/src/data/tournamentsRegulations/";
             $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
 
             if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
