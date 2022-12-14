@@ -167,6 +167,7 @@ class ApiUserController extends AbstractController
         return $this->json($user, 201, [], ["groups" => "user:create"]);
     }
 
+
     /**
      * CREATE
      * A MEMBER can create his account.
@@ -224,24 +225,36 @@ class ApiUserController extends AbstractController
 
     /**
      * READ
-     * Get on user
+     * An ADMIN can get details of one member from his id.
      */
-    #[Route("user/{id}", name: "api_user_readOne", methods: "GET")]
     #[IsGranted("ROLE_ADMIN")]
-    public function readOne(UserRepository $repository, int $id): JsonResponse
+    #[Route("/admin/user/{id}", "api_user_readOneMemberDetails", methods: "GET")]
+    public function readOneMemberDetails(UserRepository $repository, int $id): JsonResponse
     {
-        return $this->json($repository->find($id), 200, [], ["groups" => "user:read"]);
+        return $this->json($repository->find($id), 200, context: ["groups" => "user:read"]);
     }
 
     /**
      * READ
-     * Get all users
+     * An ADMIN can get details of all users (admin + member).
      */
-    #[Route('users', 'api_user_readAll', methods: "GET")]
     #[IsGranted("ROLE_ADMIN")]
-    public function readAll(UserRepository $repository): JsonResponse
+    #[Route('users', 'api_user_readAllUsers', methods: "GET")]
+    public function readAllUsers(UserRepository $repository): JsonResponse
     {
-        return $this->json($repository->findAll(), 200, [], ["groups" => "user:read"]);
+        return $this->json($repository->findAll(), 200, context: ["groups" => "user:read"]);
+    }
+
+    /**
+     * READ
+     * A MEMBER can get details of his account.
+     */
+    #[IsGranted("ROLE_MEMBER")]
+    #[Route("user", name: "api_user_readMemberAccount", methods: "GET")]
+    public function readMemberAccount(UserRepository $repository): JsonResponse
+    {
+        $user = $repository->findOneBy(["email" => $this->getUser()->getUserIdentifier()]);
+        return $this->json($user, 200, context: ["groups" => "user:read"]);
     }
 
     /**
