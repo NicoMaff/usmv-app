@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\API;
 
 use App\Entity\Tournament;
 use App\Repository\TournamentRepository;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +22,7 @@ class ApiTournamentController extends AbstractController
      * CREATE
      * An Admin can create a new tournament
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route('/tournament', name: 'api_tournament_createOne', methods: "POST")]
     public function createOne(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
@@ -36,11 +38,11 @@ class ApiTournamentController extends AbstractController
 
         $tournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
-        if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
-            $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
-        } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
-            $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
-        }
+        // if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+        //     $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+        // } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+        //     $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+        // }
 
         if ($tournament->getStartDate()->diff($tournament->getEndDate())->days >= 10) {
             throw new Exception("The interval between the start and the end of the tournament is too long");
@@ -90,7 +92,7 @@ class ApiTournamentController extends AbstractController
     #[Route("/tournament/{id}", "api_tournament_readOne", methods: "GET")]
     public function readOne(TournamentRepository $repository, int $id): JsonResponse
     {
-        return $this->json($repository->find($id), 200);
+        return $this->json($repository->find($id), 200, context: ["groups" => "tournament:read"]);
     }
 
     /**
@@ -98,6 +100,7 @@ class ApiTournamentController extends AbstractController
      * An admin can update a tournament or a part of tournament from its id
      * Warning : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("/tournament/{id}", "api_tournament_updateOne", methods: "POST")]
     public function updateOne(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
@@ -234,6 +237,7 @@ class ApiTournamentController extends AbstractController
      * DELETE
      * An admin can delete a tournament from its id
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("/tournament/{id}", "api_tournament_deleteOne", methods: "DELETE")]
     public function deleteOne(TournamentRepository $repository, int $id): JsonResponse
     {

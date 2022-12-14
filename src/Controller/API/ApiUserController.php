@@ -22,7 +22,7 @@ class ApiUserController extends AbstractController
      * Create an account
      */
     #[Route("user/account", name: "api_user_createAccount", methods: "POST")]
-    // #[IsGranted("ROLE_MEMBER")]
+    #[IsGranted("ROLE_MEMBER")]
     public function createAccount(UserRepository $repository, UserPasswordHasherInterface $hasher, Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
         // dd($request);
@@ -57,7 +57,7 @@ class ApiUserController extends AbstractController
      * Create a new member
      */
     #[Route("user/member", name: "api_user_createMemberAccount", methods: "POST")]
-    // #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_ADMIN")]
     public function createMemberAccount(UserRepository $repository, UserPasswordHasherInterface $hasher, Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
         $jsonReceived = $request->getContent();

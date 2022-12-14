@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
@@ -11,10 +13,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -25,8 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
-    #[Assert\NotBlank()]
-    #[Assert\Email(message: "L'email utilisé n'est pas valide")]
+    #[Assert\NotBlank(message: "This email is already used")]
+    #[Assert\Email(message: "This is not a valid email")]
     private ?string $email = null;
 
     #[ORM\Column(length: 100)]
@@ -49,13 +49,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: "Les deux mots de passe saisis ne sont pas identiques !"
     )]
     #[Assert\NotBlank(message: "Ce champs ne peut être vide !")]
-    public ?string $confirmPassword = null;
+    private ?string $confirmPassword = null;
 
     #[Assert\Length(
         min: 6,
         minMessage: "Votre mot de passe doit comporter 6 caractères minimum",
     )]
-    public ?string $previousPassword = null;
+    private ?string $previousPassword = null;
 
     #[ORM\Column(length: 100)]
     #[Groups(["user:read", "user:create", "user:update"])]
@@ -74,9 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $birthDate = null;
-
-    #[Vich\UploadableField(mapping: 'users', fileNameProperty: 'avatarUrl')]
-    private ?File $avatarFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
@@ -104,9 +101,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TournamentRegistration::class, orphanRemoval: true)]
+    private Collection $tournamentRegistrations;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->tournamentRegistrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,6 +188,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword($confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
+        return $this;
+    }
+    public function getPreviousPassword(): ?string
+    {
+        return $this->previousPassword;
+    }
+
+    public function setPreviousPassword($previousPassword): self
+    {
+        $this->previousPassword = $previousPassword;
+        return $this;
     }
 
     public function getLastName(): ?string
@@ -328,6 +350,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setState(string $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TournamentRegistration>
+     */
+    public function getTournamentRegistrations(): Collection
+    {
+        return $this->tournamentRegistrations;
+    }
+
+    public function addTournamentRegistration(TournamentRegistration $tournamentRegistration): self
+    {
+        if (!$this->tournamentRegistrations->contains($tournamentRegistration)) {
+            $this->tournamentRegistrations->add($tournamentRegistration);
+            $tournamentRegistration->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournamentRegistration(TournamentRegistration $tournamentRegistration): self
+    {
+        if ($this->tournamentRegistrations->removeElement($tournamentRegistration)) {
+            // set the owning side to null (unless already changed)
+            if ($tournamentRegistration->getUser() === $this) {
+                $tournamentRegistration->setUser(null);
+            }
+        }
 
         return $this;
     }
