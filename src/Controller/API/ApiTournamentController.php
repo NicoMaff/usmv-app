@@ -24,7 +24,7 @@ class ApiTournamentController extends AbstractController
      */
     #[IsGranted("ROLE_ADMIN")]
     #[Route('/tournament', name: 'api_tournament_createOne', methods: "POST")]
-    public function createOne(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
+    public function createTournament(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {
             $jsonReceived = $request->request->get("data");
@@ -79,8 +79,8 @@ class ApiTournamentController extends AbstractController
      * READ
      * A member can access to all tournaments available
      */
-    #[Route("/tournaments", "api_tournaments_readAll", methods: "GET")]
-    public function readAll(TournamentRepository $repository): JsonResponse
+    #[Route("/tournaments", "api_tournaments_readAllTournaments", methods: "GET")]
+    public function readAllTournaments(TournamentRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200);
     }
@@ -89,8 +89,8 @@ class ApiTournamentController extends AbstractController
      * READ
      * A member can access to one tournament from its id
      */
-    #[Route("/tournament/{id}", "api_tournament_readOne", methods: "GET")]
-    public function readOne(TournamentRepository $repository, int $id): JsonResponse
+    #[Route("/tournament/{id}", "api_tournament_readTournament", methods: "GET")]
+    public function readTournament(TournamentRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, context: ["groups" => "tournament:read"]);
     }
@@ -103,8 +103,8 @@ class ApiTournamentController extends AbstractController
      * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_updateOne", methods: ["PATCH", "POST"])]
-    public function updateOne(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
+    #[Route("/tournament/{id}", "api_tournament_updateTournament", methods: ["PATCH", "POST"])]
+    public function updateTournament(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {
             $jsonReceived = $request->request->get("data");
@@ -123,7 +123,6 @@ class ApiTournamentController extends AbstractController
         }
 
         $tournament = $repository->find($id);
-
         $updatedTournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
         if ($updatedTournament->getName()) {
@@ -215,10 +214,12 @@ class ApiTournamentController extends AbstractController
             $tournament->setRegulationFileUrl($destination . $newFileName);
         }
 
-        if ($deleteFile && $tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
-            unlink($tournament->getRegulationFileUrl());
-            $tournament->setRegulationFileName(null);
-            $tournament->setRegulationFileUrl(null);
+        if ($deleteFile) {
+            if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
+                unlink($tournament->getRegulationFileUrl());
+                $tournament->setRegulationFileName(null);
+                $tournament->setRegulationFileUrl(null);
+            }
         }
 
         $tournament->setUpdatedAt(new \DateTime());
@@ -237,8 +238,8 @@ class ApiTournamentController extends AbstractController
      * An admin can delete a tournament from its id
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_deleteOne", methods: "DELETE")]
-    public function deleteOne(TournamentRepository $repository, int $id): JsonResponse
+    #[Route("/tournament/{id}", "api_tournament_deleteTournament", methods: "DELETE")]
+    public function deleteTournament(TournamentRepository $repository, int $id): JsonResponse
     {
         $tournament = $repository->find($id);
         if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
