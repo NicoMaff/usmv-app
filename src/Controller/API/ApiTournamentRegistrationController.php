@@ -552,8 +552,8 @@ class ApiTournamentRegistrationController extends AbstractController
      * To update the registration's state, the admin have to use the patch route
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament-registration/{id}", "api_tournamentRegistration_deleteRegistration", methods: "DELETE")]
-    public function deleteRegistration(TournamentRegistrationRepository $repository, UserRepository $userRepo, int $id): JsonResponse
+    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_deleteRegistration", methods: "DELETE")]
+    public function deleteRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
         $repository->remove($repository->find($id), true);
         return $this->json([
