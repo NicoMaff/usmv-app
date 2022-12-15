@@ -20,10 +20,11 @@ class ApiTournamentController extends AbstractController
 {
     /**
      * CREATE
-     * An Admin can create a new tournament
+     * An Admin can create a new tournament.
+     * Only one file can be stored by tournament.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route('/tournament', name: 'api_tournament_createOne', methods: "POST")]
+    #[Route('/admin/tournament', name: 'api_tournament_createTournament', methods: "POST")]
     public function createTournament(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {
@@ -71,28 +72,27 @@ class ApiTournamentController extends AbstractController
         }
 
         $repository->add($tournament, true);
-
         return $this->json($tournament, 201);
     }
 
     /**
      * READ
-     * A member can access to all tournaments available
-     */
-    #[Route("/tournaments", "api_tournaments_readAllTournaments", methods: "GET")]
-    public function readAllTournaments(TournamentRepository $repository): JsonResponse
-    {
-        return $this->json($repository->findAll(), 200);
-    }
-
-    /**
-     * READ
-     * A member can access to one tournament from its id
+     * An user can access to one tournament from its id.
      */
     #[Route("/tournament/{id}", "api_tournament_readTournament", methods: "GET")]
     public function readTournament(TournamentRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, context: ["groups" => "tournament:read"]);
+    }
+
+    /**
+     * READ
+     * An user can access to all tournaments available.
+     */
+    #[Route("/tournaments", "api_tournaments_readAllTournaments", methods: "GET")]
+    public function readAllTournaments(TournamentRepository $repository): JsonResponse
+    {
+        return $this->json($repository->findAll(), 200);
     }
 
     /**
@@ -103,7 +103,7 @@ class ApiTournamentController extends AbstractController
      * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_updateTournament", methods: ["PATCH", "POST"])]
+    #[Route("/admin/tournament/{id}", "api_tournament_updateTournament", methods: ["PATCH", "POST"])]
     public function updateTournament(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {
@@ -235,10 +235,11 @@ class ApiTournamentController extends AbstractController
 
     /**
      * DELETE
-     * An admin can delete a tournament from its id
+     * An admin can delete a tournament from its id.
+     * If the tournament have a stored file, it will be remove at the same time than the tournament instance.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_deleteTournament", methods: "DELETE")]
+    #[Route("/admin/tournament/{id}", "api_tournament_deleteTournament", methods: "DELETE")]
     public function deleteTournament(TournamentRepository $repository, int $id): JsonResponse
     {
         $tournament = $repository->find($id);
