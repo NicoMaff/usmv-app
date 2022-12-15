@@ -45,7 +45,7 @@ class EventRepository extends ServiceEntityRepository
             ->where('e.startDate > :yesterday')
             ->setParameter("yesterday", (new \DateTime())->modify("-1 day"))
             // by default, DateTime is set at 00:00:00, it now sets at yesterday to include "today"
-            ->andWhere("e.isVisible = true")
+            ->andWhere("e.visible = true")
             ->orderBy("e.startDate", "ASC")
             ->getQuery()
             ->getResult();
@@ -56,7 +56,7 @@ class EventRepository extends ServiceEntityRepository
         return $this->createQueryBuilder("e")
             ->where("e.startDate > :date")
             ->setParameter("date", (new \DateTime())->modify("-401 days"))
-            ->andWhere("e.isVisible = true")
+            ->andWhere("e.visible = true")
             ->orderBy("e.startDate", "DESC")
             ->getQuery()
             ->getResult();
