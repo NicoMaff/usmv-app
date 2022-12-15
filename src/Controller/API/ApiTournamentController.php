@@ -20,11 +20,12 @@ class ApiTournamentController extends AbstractController
 {
     /**
      * CREATE
-     * An Admin can create a new tournament
+     * An Admin can create a new tournament.
+     * Only one file can be stored by tournament.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route('/tournament', name: 'api_tournament_createOne', methods: "POST")]
-    public function createOne(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
+    #[Route('/admin/tournament', name: 'api_tournament_createTournament', methods: "POST")]
+    public function createTournament(Request $request, TournamentRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {
             $jsonReceived = $request->request->get("data");
@@ -38,11 +39,11 @@ class ApiTournamentController extends AbstractController
 
         $tournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
-        // if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
-        //     $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
-        // } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
-        //     $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
-        // }
+        if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+            $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+        } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+            $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+        }
 
         if ($tournament->getStartDate()->diff($tournament->getEndDate())->days >= 10) {
             throw new Exception("The interval between the start and the end of the tournament is too long");
@@ -52,7 +53,7 @@ class ApiTournamentController extends AbstractController
             // File settings
             $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
-            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations/";
+            $destination = $this->getParameter("kernel.project_dir") . "/src/data/tournamentsRegulations/";
             $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
 
             try {
@@ -71,38 +72,39 @@ class ApiTournamentController extends AbstractController
         }
 
         $repository->add($tournament, true);
-
         return $this->json($tournament, 201);
     }
 
     /**
      * READ
-     * A member can access to all tournaments available
+     * An user can access to one tournament from its id.
      */
-    #[Route("/tournaments", "api_tournaments_readAll", methods: "GET")]
-    public function readAll(TournamentRepository $repository): JsonResponse
-    {
-        return $this->json($repository->findAll(), 200);
-    }
-
-    /**
-     * READ
-     * A member can access to one tournament from its id
-     */
-    #[Route("/tournament/{id}", "api_tournament_readOne", methods: "GET")]
-    public function readOne(TournamentRepository $repository, int $id): JsonResponse
+    #[Route("/tournament/{id}", "api_tournament_readTournament", methods: "GET")]
+    public function readTournament(TournamentRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, context: ["groups" => "tournament:read"]);
     }
 
     /**
+     * READ
+     * An user can access to all tournaments available.
+     */
+    #[Route("/tournaments", "api_tournaments_readAllTournaments", methods: "GET")]
+    public function readAllTournaments(TournamentRepository $repository): JsonResponse
+    {
+        return $this->json($repository->findAll(), 200);
+    }
+
+    /**
      * UPDATE
      * An admin can update a tournament or a part of tournament from its id
-     * Warning : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
+     * Only one file is stored by tournament.
+     * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_updateOne", methods: "POST")]
-    public function updateOne(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
+    #[Route("/admin/tournament/{id}", "api_tournament_updateTournament", methods: ["PATCH", "POST"])]
+    public function updateTournament(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {
             $jsonReceived = $request->request->get("data");
@@ -121,7 +123,6 @@ class ApiTournamentController extends AbstractController
         }
 
         $tournament = $repository->find($id);
-
         $updatedTournament = $serializer->deserialize($jsonReceived, Tournament::class, "json");
 
         if ($updatedTournament->getName()) {
@@ -196,7 +197,7 @@ class ApiTournamentController extends AbstractController
             // File settings
             $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
-            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/tournamentsRegulations/";
+            $destination = $this->getParameter("kernel.project_dir") . "/src/data/tournamentsRegulations/";
             $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
 
             if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
@@ -216,10 +217,9 @@ class ApiTournamentController extends AbstractController
         if ($deleteFile) {
             if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
                 unlink($tournament->getRegulationFileUrl());
+                $tournament->setRegulationFileName(null);
+                $tournament->setRegulationFileUrl(null);
             }
-
-            $tournament->setRegulationFileName(null);
-            $tournament->setRegulationFileUrl(null);
         }
 
         $tournament->setUpdatedAt(new \DateTime());
@@ -235,11 +235,12 @@ class ApiTournamentController extends AbstractController
 
     /**
      * DELETE
-     * An admin can delete a tournament from its id
+     * An admin can delete a tournament from its id.
+     * If the tournament have a stored file, it will be remove at the same time than the tournament instance.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_deleteOne", methods: "DELETE")]
-    public function deleteOne(TournamentRepository $repository, int $id): JsonResponse
+    #[Route("/admin/tournament/{id}", "api_tournament_deleteTournament", methods: "DELETE")]
+    public function deleteTournament(TournamentRepository $repository, int $id): JsonResponse
     {
         $tournament = $repository->find($id);
         if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {

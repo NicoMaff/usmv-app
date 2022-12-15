@@ -313,7 +313,7 @@ class ApiTournamentRegistrationController extends AbstractController
 
     /**
      * UPDATE
-     * An ADMIN can modify some properties of one member's registration
+     * An ADMIN can modify some properties of one member's registration.
      * The user and tournament entities can be modified by creating a new instance.
      * Every property can be modified independently.
      */
@@ -431,6 +431,7 @@ class ApiTournamentRegistrationController extends AbstractController
 
         $registration->setUser($userRepo->find($registration->getUser()->getId()));
         $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+        $registration->setUpdatedAt(new \DateTime());
         $tournamentRegistrationRepo->add($registration, true);
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
@@ -520,6 +521,7 @@ class ApiTournamentRegistrationController extends AbstractController
         }
 
         $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
+        $registration->setUpdatedAt(new \DateTime());
         $tournamentRegistrationRepo->add($registration, true);
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
@@ -538,6 +540,7 @@ class ApiTournamentRegistrationController extends AbstractController
             throw new Exception("The registration's id selected does not belong to this user.");
         } else {
             $registration->setRequestState("cancelled");
+            $registration->setUpdatedAt(new \DateTime());
             $repository->add($registration, true);
             return $this->json($registration, 200, context: ["groups" => "registration:read"]);
         }
@@ -549,8 +552,8 @@ class ApiTournamentRegistrationController extends AbstractController
      * To update the registration's state, the admin have to use the patch route
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament-registration/{id}", "api_tournamentRegistration_deleteRegistration", methods: "DELETE")]
-    public function deleteRegistration(TournamentRegistrationRepository $repository, UserRepository $userRepo, int $id): JsonResponse
+    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_deleteRegistration", methods: "DELETE")]
+    public function deleteRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
         $repository->remove($repository->find($id), true);
         return $this->json([

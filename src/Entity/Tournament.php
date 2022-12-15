@@ -116,6 +116,14 @@ class Tournament
     #[Groups(["tournament:read"])]
     private ?string $paymentMethod = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tournament:read"])]
+    private ?string $regulationFileName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tournament:read"])]
+    private ?string $regulationFileUrl = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(["tournament:read"])]
     private ?string $comment = null;
@@ -127,14 +135,6 @@ class Tournament
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(["tournament:read"])]
     private ?\DateTimeInterface $updatedAt = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tournament:read"])]
-    private ?string $regulationFileName = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tournament:read"])]
-    private ?string $regulationFileUrl = null;
 
     #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: TournamentRegistration::class)]
     private Collection $tournamentRegistrations;

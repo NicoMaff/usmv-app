@@ -4,31 +4,122 @@ namespace App\Controller\API;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route("api/")]
-// #[IsGranted("ROLE_ADMIN")]
+#[IsGranted("ROLE_ADMIN")]
+#[Route("/api/admin")]
 class ApiArticleController extends AbstractController
 {
     /**
      * CREATE
-     * Create a new article
+     * An ADMIN can create a new article.
+     * If no file is uploaded, a default image for the thirdAddFile will be added to the article.
      */
-    #[Route("article", name: "api_article_createOne", methods: "POST")]
-    public function createOne(Request $request, ArticleRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
+    #[Route("/article", name: "api_article_createArticle", methods: "POST")]
+    public function createArticle(Request $request, ArticleRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
-        $jsonReceived = $request->getContent();
+        // Request using multipart/form-data
+        if ($request->request->get("data")) {
+            $jsonReceived = $request->request->get("data");
+        } else {
+            // Request using raw Body
+            $jsonReceived = $request->getContent();
+        }
+
+        // Request using multipart/form-data
+        if ($request->files->get("mainFile")) {
+            $uploadedFile = $request->files->get("mainFile");
+        }
+        if ($request->files->get("firstAddFile")) {
+            $uploadedFile1 = $request->files->get("firstAddFile");
+        }
+        if ($request->files->get("secondAddFile")) {
+            $uploadedFile2 = $request->files->get("secondAddFile");
+        }
+        if ($request->files->get("thirdAddFile")) {
+            $uploadedFile3 = $request->files->get("thirdAddFile");
+        }
 
         $article = $serializer->deserialize($jsonReceived, Article::class, "json");
-        if ($article->getUrlImageMain() === null) {
-            $article->setUrlImageMain("assets/img/news-by-default.jpg");
+
+        if (isset($uploadedFile)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+
+            try {
+                $uploadedFile->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setMainImageName($newFileName);
+            $article->setMainImageUrl($destination . $newFileName);
+        } else {
+            $article->setMainImageName("article-default-image.png");
+            $article->setMainImageUrl($this->getParameter("kernel.project_dir") . "/public/assets/img/articles/article-default-image.jpeg");
+        }
+
+        if (isset($uploadedFile1)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile1->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile1->guessExtension();
+
+            try {
+                $uploadedFile1->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setFirstAdditionalImageName($newFileName);
+            $article->setFirstAdditionalImageUrl($destination . $newFileName);
+        }
+
+        if (isset($uploadedFile2)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile2->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile2->guessExtension();
+
+            try {
+                $uploadedFile2->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setSecondAdditionalImageName($newFileName);
+            $article->setSecondAdditionalImageUrl($destination . $newFileName);
+        }
+
+        if (isset($uploadedFile3)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile3->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile3->guessExtension();
+
+            try {
+                $uploadedFile3->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setThirdAdditionalImageName($newFileName);
+            $article->setThirdAdditionalImageUrl($destination . $newFileName);
         }
 
         $errors = $validator->validate($article);
@@ -37,41 +128,81 @@ class ApiArticleController extends AbstractController
         }
 
         $repository->add($article, true);
-
-        return $this->json($article, 201, ["groups" => "article:read"]);
+        return $this->json($article, 201, context: ["groups" => "article:read"]);
     }
 
     /**
      * READ
-     * Get all articles
+     * An ADMIN can get an article from its ID.
      */
-    #[Route("articles", name: "api_article_readAll", methods: "GET")]
-    public function readAll(ArticleRepository $repository): JsonResponse
+    #[Route("/article/{id}", name: "api_article_readArticle", methods: "GET")]
+    public function readArticle(ArticleRepository $repository, int $id): JsonResponse
     {
-        return $this->json($repository->findAll(), 200, ["groups" => "article:read"]);
+        return $this->json($repository->find($id), 200, context: ["groups" => "article:read"]);
     }
 
     /**
      * READ
-     * Get ONE article from its ID
+     * An ADMIN can get all articles' details.
      */
-    #[Route("article/{id}", name: "api_article_readOne", methods: "GET")]
-    public function readOne(ArticleRepository $repository, int $id): JsonResponse
+    #[Route("/articles", name: "api_article_readAllArticles", methods: "GET")]
+    public function readAllArticles(ArticleRepository $repository): JsonResponse
     {
-        return $this->json($repository->find($id), 200, [], ["groups" => "article:read"]);
+        return $this->json($repository->findAll(), 200, context: ["groups" => "article:read"]);
     }
-
 
     /**
      * UPDATE
-     * Update one article from its ID
+     * An admin can update an article from its ID.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
+     * Only one file by property can be stored.
+     * If a new image is uploaded, it will replace the older.
      */
-    #[Route("article/{id}", name: "api_article_update", methods: "PATCH")]
-    public function update(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id): JsonResponse
+    #[Route("/article/{id}", name: "api_article_update", methods: ["PATCH", "POST"])]
+    public function update(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id, SluggerInterface $slugger): JsonResponse
     {
-        $jsonReceived = $request->getContent();
-        $updatedArticle = $serializer->deserialize($jsonReceived, Article::class, "json");
+        // Request using multipart/form-data
+        if ($request->request->get("data")) {
+            $jsonReceived = $request->request->get("data");
+        } else {
+            // Request using raw Body
+            $jsonReceived = $request->getContent();
+        }
+
+        // Request using multipart/form-data
+        if ($request->files->get("mainFile")) {
+            $uploadedFile = $request->files->get("mainFile");
+        }
+        if ($request->files->get("firstAddFile")) {
+            $uploadedFile1 = $request->files->get("firstAddFile");
+        }
+        if ($request->files->get("secondAddFile")) {
+            $uploadedFile2 = $request->files->get("secondAddFile");
+        }
+        if ($request->files->get("thirdAddFile")) {
+            $uploadedFile3 = $request->files->get("thirdAddFile");
+        }
+
+        if ($request->request->get("deleteFirstAddFile")) {
+            $deleteFirstAddFile = true;
+        } else {
+            $deleteFirstAddFile = false;
+        }
+        if ($request->request->get("deleteSecondAddFile")) {
+            $deleteSecondAddFile = true;
+        } else {
+            $deleteSecondAddFile = false;
+        }
+        if ($request->request->get("deleteThirdAddFile")) {
+            $deleteThirdAddFile = true;
+        } else {
+            $deleteThirdAddFile = false;
+        }
+
         $article = $repository->find($id);
+        $updatedArticle = $serializer->deserialize($jsonReceived, Article::class, "json");
+
+        // dd($article, $deleteFirstAddFile, $deleteSecondAddFile, $deleteThirdAddFile);
 
         if ($updatedArticle->getTitle()) {
             $article->setTitle($updatedArticle->getTitle());
@@ -79,19 +210,121 @@ class ApiArticleController extends AbstractController
         if ($updatedArticle->getContent()) {
             $article->setContent($updatedArticle->getContent());
         }
-        if ($updatedArticle->getUrlImageMain()) {
-            $article->setUrlImageMain($updatedArticle->getUrlImageMain());
-        } else {
-            $article->setUrlImageMain("assets/img/news-by-default.jpg");
+        if ($updatedArticle->isVisible()) {
+            $article->setVisible($updatedArticle->isVisible());
         }
-        if ($updatedArticle->getUrlImageAdditional1()) {
-            $article->setUrlImageAdditional1($updatedArticle->getUrlImageAdditional1());
+
+        if (isset($uploadedFile)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+
+            if ($article->getMainImageName() && file_exists($article->getMainImageUrl())) {
+                unlink($article->getMainImageUrl());
+            }
+
+            try {
+                $uploadedFile->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setMainImageName($newFileName);
+            $article->setMainImageUrl($destination . $newFileName);
         }
-        if ($updatedArticle->getUrlImageAdditional2()) {
-            $article->setUrlImageAdditional2($updatedArticle->getUrlImageAdditional2());
+
+        if (isset($uploadedFile1)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile1->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile1->guessExtension();
+
+            if ($article->getFirstAdditionalImageName() && file_exists($article->getFirstAdditionalImageUrl())) {
+                unlink($article->getFirstAdditionalImageUrl());
+            }
+
+            try {
+                $uploadedFile1->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setFirstAdditionalImageName($newFileName);
+            $article->setFirstAdditionalImageUrl($destination . $newFileName);
         }
-        if ($updatedArticle->getUrlImageAdditional3()) {
-            $article->setUrlImageAdditional3($updatedArticle->getUrlImageAdditional3());
+
+        if (isset($uploadedFile2)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile2->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile2->guessExtension();
+
+            if ($article->getSecondAdditionalImageName() && file_exists($article->getSecondAdditionalImageUrl())) {
+                unlink($article->getSecondAdditionalImageUrl());
+            }
+
+            try {
+                $uploadedFile2->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setSecondAdditionalImageName($newFileName);
+            $article->setSecondAdditionalImageUrl($destination . $newFileName);
+        }
+
+        if (isset($uploadedFile3)) {
+            // File settings
+            $originalFileName = pathinfo($uploadedFile3->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFileName = $slugger->slug($originalFileName);
+            $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile3->guessExtension();
+
+            if ($article->getThirdAdditionalImageName() && file_exists($article->getThirdAdditionalImageUrl())) {
+                unlink($article->getThirdAdditionalImageUrl());
+            }
+
+            try {
+                $uploadedFile3->move($destination, $newFileName);
+            } catch (FileException $e) {
+                echo $e->getMessage();
+            }
+
+            $article->setThirdAdditionalImageName($newFileName);
+            $article->setThirdAdditionalImageUrl($destination . $newFileName);
+        }
+
+        if ($deleteFirstAddFile) {
+            if ($article->getFirstAdditionalImageName() && file_exists($article->getFirstAdditionalImageUrl())) {
+                unlink($article->getFirstAdditionalImageUrl());
+                $article->setFirstAdditionalImageName(null);
+                $article->setFirstAdditionalImageUrl(null);
+            } else {
+                throw new Exception("There is no file to delete.");
+            }
+        }
+
+        if ($deleteSecondAddFile) {
+            if ($article->getSecondAdditionalImageName() && file_exists($article->getSecondAdditionalImageUrl())) {
+                unlink($article->getSecondAdditionalImageUrl());
+                $article->setSecondAdditionalImageName(null);
+                $article->setSecondAdditionalImageUrl(null);
+            } else {
+                throw new Exception("There is no file to delete.");
+            }
+        }
+        if ($deleteThirdAddFile) {
+            if ($article->getThirdAdditionalImageName() && file_exists($article->getThirdAdditionalImageUrl())) {
+                unlink($article->getThirdAdditionalImageUrl());
+                $article->setThirdAdditionalImageName(null);
+                $article->setThirdAdditionalImageUrl(null);
+            } else {
+                throw new Exception("There is no file to delete.");
+            }
         }
 
         $article->setUpdatedAt(new \DateTimeImmutable());
@@ -102,20 +335,34 @@ class ApiArticleController extends AbstractController
         }
 
         $repository->add($article, true);
-        return $this->json($article, 201, ["groups" => "article:read",]);
+        return $this->json($article, 201, context: ["groups" => "article:read"]);
     }
 
     /**
      * DELETE
-     * Delete on article from its ID
+     * An ADMIN can delete an article from its ID.
+     * If an article is deleted, all of its files will be removed from the server.
      */
-    #[Route("article/{id}", name: "api_article_delete", methods: "DELETE")]
-    public function delete(ArticleRepository $repository, int $id): JsonResponse
+    #[Route("/article/{id}", name: "api_article_deleteArticle", methods: "DELETE")]
+    public function deleteArticle(ArticleRepository $repository, int $id): JsonResponse
     {
-        $repository->remove($repository->find($id), true);
+        $article = $repository->find($id);
+        if ($article->getMainImageName() && file_exists($article->getMainImageUrl())) {
+            unlink($article->getMainImageUrl());
+        }
+        if ($article->getFirstAdditionalImageName() && file_exists($article->getFirstAdditionalImageUrl())) {
+            unlink($article->getFirstAdditionalImageUrl());
+        }
+        if ($article->getSecondAdditionalImageName() && file_exists($article->getSecondAdditionalImageUrl())) {
+            unlink($article->getSecondAdditionalImageUrl());
+        }
+        if ($article->getThirdAdditionalImageName() && file_exists($article->getThirdAdditionalImageUrl())) {
+            unlink($article->getThirdAdditionalImageUrl());
+        }
+        $repository->remove($article, true);
         return $this->json([
-            "status" => 201,
-            "message" => "The article with the id #$id has been deleted !"
-        ], 201);
+            "status" => 200,
+            "message" => "The article with the id #$id has been correctly deleted."
+        ], 200);
     }
 }
