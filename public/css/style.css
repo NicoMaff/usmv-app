@@ -39,7 +39,7 @@ main {
   flex-grow: 2;
   margin: 7rem 1rem 5rem;
   max-width: 1500px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 @media (min-width: 600px) {
   main {

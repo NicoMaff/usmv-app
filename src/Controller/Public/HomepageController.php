@@ -2,6 +2,7 @@
 
 namespace App\Controller\Public;
 
+use App\Entity\Event;
 use App\Form\ContactType;
 use Symfony\Component\Mime\Email;
 use App\Repository\EventRepository;
@@ -22,12 +23,18 @@ class HomepageController extends AbstractController
     {
         $articles = $articleRepo->findLast10();
 
-        $eventsReceived = $eventRepo->findAllFromToday(); // to get all events from today (to day is included)
-        $eventsSelected = [];
-        for ($i = 0; $i <= 4; $i++) {
-            array_push($eventsSelected, $eventsReceived[$i]);
+        if ($eventRepo->findAllFromToday()) {
+            $eventsReceived = $eventRepo->findAllFromToday(); // to get all events from today (today is included)
+
+
+            $eventsSelected = [];
+            for ($i = 0; $i <= 4; $i++) {
+                array_push($eventsSelected, $eventsReceived[$i]);
+            }
+            $events = array_reverse($eventsSelected); // to put newest events first
+        } else {
+            $events = [];
         }
-        $events = array_reverse($eventsSelected); // to put newest events first
 
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);

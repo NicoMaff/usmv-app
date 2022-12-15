@@ -20,18 +20,18 @@
         {% endif %}
       </div>
       <div class="img-container">
-        <img src="{{article.urlImageMain}}" alt="illustration de {{article.title}}">
+        <img src="{{article.mainImageUrl}}" alt="illustration de {{article.title}}">
       </div>
       <p>{{article.content}}</p>
       <div class="additional-img">
-        {% if article.urlImageAdditional1 != null %}
-          <img src="{{article.urlImageAdditional1}}" alt="image secondaire de l'article {{article.title}}">
+        {% if article.firstAdditionalImageUrl != null %}
+          <img src="{{article.firstAdditionalImageUrl}}" alt="image secondaire de l'article {{article.title}}">
         {% endif %}
-        {% if article.urlImageAdditional2 != null %}
-          <img src="{{article.urlImageAdditional2}}" alt="image secondaire de l'article {{article.title}}">
+        {% if article.secondAdditionalImageUrl != null %}
+          <img src="{{article.secondAdditionalImageUrl}}" alt="image secondaire de l'article {{article.title}}">
         {% endif %}
-        {% if article.urlImageAdditional3 != null %}
-          <img src="{{article.urlImageAdditional3}}" alt="image secondaire de l'article {{article.title}}">
+        {% if article.thirdAdditionalImageUrl != null %}
+          <img src="{{article.thirdAdditionalImageUrl}}" alt="image secondaire de l'article {{article.title}}">
         {% endif %}
       </div>
       <div class="btn-container">
