@@ -290,6 +290,8 @@ class ApiUserController extends AbstractController
     /**
      * UPDATE
      * An admin can update member's account details.
+     * Only one file is stored by user.
+     * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
     #[Route("/admin/user/{id}", name: "api_user_updateMemberDetails", methods: "PATCH")]
@@ -413,6 +415,8 @@ class ApiUserController extends AbstractController
     /**
      * UPDATE
      * A MEMBER can update his account's details.
+     * Only one file is stored by member.
+     * If a new file is uploaded, it will replace the older.
      */
     #[Route("user", name: "api_user_updateAccountDetails", methods: "PATCH")]
     #[IsGranted("ROLE_MEMBER")]

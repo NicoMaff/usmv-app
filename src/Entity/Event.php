@@ -40,10 +40,13 @@ class Event
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $urlImage = null;
+    private ?string $imageName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageUrl = null;
 
     #[ORM\Column]
-    private ?bool $isVisible = null;
+    private ?bool $visible = true;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -98,14 +101,25 @@ class Event
         return $this;
     }
 
-    public function getUrlImage(): ?string
+    public function getImageName(): ?string
     {
-        return $this->urlImage;
+        return $this->imageName;
     }
 
-    public function setUrlImage(?string $urlImage): self
+    public function setImageName(?string $imageName): self
     {
-        $this->urlImage = $urlImage;
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(?string $imageUrl): self
+    {
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }
@@ -134,14 +148,14 @@ class Event
         return $this;
     }
 
-    public function isIsVisible(): ?bool
+    public function isVisible(): ?bool
     {
-        return $this->isVisible;
+        return $this->visible;
     }
 
-    public function setIsVisible(bool $isVisible): self
+    public function setVisible(bool $visible): self
     {
-        $this->isVisible = $isVisible;
+        $this->visible = $visible;
 
         return $this;
     }

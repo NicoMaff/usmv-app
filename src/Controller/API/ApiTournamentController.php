@@ -98,7 +98,9 @@ class ApiTournamentController extends AbstractController
     /**
      * UPDATE
      * An admin can update a tournament or a part of tournament from its id
-     * Warning : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data
+     * Warning : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data.
+     * Only one file is stored by tournament.
+     * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
     #[Route("/tournament/{id}", "api_tournament_updateOne", methods: "POST")]
