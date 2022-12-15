@@ -215,11 +215,8 @@ class ApiTournamentController extends AbstractController
             $tournament->setRegulationFileUrl($destination . $newFileName);
         }
 
-        if ($deleteFile) {
-            if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
-                unlink($tournament->getRegulationFileUrl());
-            }
-
+        if ($deleteFile && $tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
+            unlink($tournament->getRegulationFileUrl());
             $tournament->setRegulationFileName(null);
             $tournament->setRegulationFileUrl(null);
         }

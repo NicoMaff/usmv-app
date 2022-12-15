@@ -6,7 +6,6 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
-use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,26 +36,43 @@ class Article
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups("article:read", "article:write", "article:update")]
-    private ?string $url_image_main = null;
+    private ?string $mainImageName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups("article:read", "article:write", "article:update")]
-    private ?string $url_image_additional_1 = null;
+    private ?string $mainImageUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups("article:read", "article:write", "article:update")]
-    private ?string $url_image_additional_2 = null;
+    private ?string $firstAdditionalImageName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups("article:read", "article:write", "article:update")]
-    private ?string $url_image_additional_3 = null;
+    private ?string $firstAdditionalImageUrl = null;
 
-    #[Timestampable(on: "create")]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
+    private ?string $secondAdditionalImageName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
+    private ?string $secondAdditionalImageUrl = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
+    private ?string $thirdAdditionalImageName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
+    private ?string $thirdAdditionalImageUrl = null;
+
+    #[ORM\Column]
+    private ?bool $visible = true;
+
     #[ORM\Column]
     #[Groups("article:read", "article:write")]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Timestampable(on: "update")]
     #[ORM\Column(nullable: true)]
     #[Groups("article:read", "article:write")]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -95,51 +111,110 @@ class Article
         return $this;
     }
 
-    public function getUrlImageMain(): ?string
+    public function getMainImageName(): ?string
     {
-        return $this->url_image_main;
+        return $this->mainImageName;
     }
 
-    public function setUrlImageMain(?string $url_image_main): self
+    public function setMainImageName(?string $mainImageName): self
     {
-        $this->url_image_main = $url_image_main;
+        $this->mainImageName = $mainImageName;
 
         return $this;
     }
 
-    public function getUrlImageAdditional1(): ?string
+    public function getMainImageUrl(): ?string
     {
-        return $this->url_image_additional_1;
+        return $this->mainImageUrl;
     }
 
-    public function setUrlImageAdditional1(?string $url_image_additional_1): self
+    public function setMainImageUrl(?string $mainImageUrl): self
     {
-        $this->url_image_additional_1 = $url_image_additional_1;
+        $this->mainImageUrl = $mainImageUrl;
 
         return $this;
     }
 
-    public function getUrlImageAdditional2(): ?string
+    public function getFirstAdditionalImageName(): ?string
     {
-        return $this->url_image_additional_2;
+        return $this->firstAdditionalImageName;
     }
 
-    public function setUrlImageAdditional2(?string $url_image_additional_2): self
+    public function setFirstAdditionalImageName(?string $firstAdditionalImageName): self
     {
-        $this->url_image_additional_2 = $url_image_additional_2;
+        $this->firstAdditionalImageName = $firstAdditionalImageName;
 
         return $this;
     }
 
-    public function getUrlImageAdditional3(): ?string
+    public function getFirstAdditionalImageUrl(): ?string
     {
-        return $this->url_image_additional_3;
+        return $this->firstAdditionalImageUrl;
     }
 
-    public function setUrlImageAdditional3(?string $url_image_additional_3): self
+    public function setFirstAdditionalImageUrl(?string $firstAdditionalImageUrl): self
     {
-        $this->url_image_additional_3 = $url_image_additional_3;
+        $this->firstAdditionalImageUrl = $firstAdditionalImageUrl;
 
+        return $this;
+    }
+
+    public function getSecondAdditionalImageName(): ?string
+    {
+        return $this->secondAdditionalImageName;
+    }
+
+    public function setSecondAdditionalImageName(?string $secondAdditionalImageName): self
+    {
+        $this->secondAdditionalImageName = $secondAdditionalImageName;
+
+        return $this;
+    }
+
+    public function getSecondAdditionalImageUrl(): ?string
+    {
+        return $this->secondAdditionalImageUrl;
+    }
+
+    public function setSecondAdditionalImageUrl(?string $secondAdditionalImageUrl): self
+    {
+        $this->secondAdditionalImageUrl = $secondAdditionalImageUrl;
+
+        return $this;
+    }
+
+    public function getThirdAdditionalImageName(): ?string
+    {
+        return $this->thirdAdditionalImageName;
+    }
+
+    public function setThirdAdditionalImageName(?string $thirdAdditionalImageName): self
+    {
+        $this->thirdAdditionalImageName = $thirdAdditionalImageName;
+
+        return $this;
+    }
+
+    public function getThirdAdditionalImageUrl(): ?string
+    {
+        return $this->thirdAdditionalImageUrl;
+    }
+
+    public function setThirdAdditionalImageUrl(?string $thirdAdditionalImageUrl): self
+    {
+        $this->thirdAdditionalImageUrl = $thirdAdditionalImageUrl;
+
+        return $this;
+    }
+
+    public function isVisible(): ?bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible($visible): self
+    {
+        $this->visible = $visible;
         return $this;
     }
 

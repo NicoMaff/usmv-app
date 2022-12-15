@@ -93,7 +93,7 @@ class ApiEventController extends AbstractController
 
     /**
      * UPDATE
-     * Update one event details from its id.
+     * An admin can update one event details from its id.
      * Only one image is stored by event.
      * If a new image is uploaded, it will replace the older.
      */
