@@ -59,7 +59,7 @@ class ApiEventController extends AbstractController
             $event->setImageUrl($destination . $newFileName);
         } else {
             $event->setImageName("event-default-image.png");
-            $event->setImageUrl($this->getParameter("kernel.project_dir") . "/public/assets/img/events/event-default-image.png");
+            $event->setImageUrl($this->getParameter("kernel.project_dir") . "/public/assets/img/events/event-default-image.jpeg");
         }
 
         $errors = $validator->validate($event);

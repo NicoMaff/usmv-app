@@ -16,7 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[IsGranted("ROLE_ADMIN")]
-#[Route("api/admin")]
+#[Route("/api/admin")]
 class ApiArticleController extends AbstractController
 {
     /**
@@ -24,7 +24,7 @@ class ApiArticleController extends AbstractController
      * An ADMIN can create a new article.
      * If no file is uploaded, a default image for the thirdAddFile will be added to the article.
      */
-    #[Route("article", name: "api_article_createArticle", methods: "POST")]
+    #[Route("/article", name: "api_article_createArticle", methods: "POST")]
     public function createArticle(Request $request, ArticleRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
         // Request using multipart/form-data
@@ -49,7 +49,7 @@ class ApiArticleController extends AbstractController
             $uploadedFile3 = $request->files->get("thirdAddFile");
         }
 
-        $article = $serializer->deserialize($jsonReceived, Event::class, "json");
+        $article = $serializer->deserialize($jsonReceived, Article::class, "json");
 
         if (isset($uploadedFile)) {
             // File settings
@@ -68,7 +68,7 @@ class ApiArticleController extends AbstractController
             $article->setMainImageUrl($destination . $newFileName);
         } else {
             $article->setMainImageName("article-default-image.png");
-            $article->setMainImageUrl($this->getParameter("kernel.project_dir") . "/public/assets/img/articles/article-default-image.png");
+            $article->setMainImageUrl($this->getParameter("kernel.project_dir") . "/public/assets/img/articles/article-default-image.jpeg");
         }
 
         if (isset($uploadedFile1)) {
@@ -76,7 +76,7 @@ class ApiArticleController extends AbstractController
             $originalFileName = pathinfo($uploadedFile1->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
             $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
-            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile1->guessExtension();
 
             try {
                 $uploadedFile1->move($destination, $newFileName);
@@ -93,7 +93,7 @@ class ApiArticleController extends AbstractController
             $originalFileName = pathinfo($uploadedFile2->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
             $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
-            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile2->guessExtension();
 
             try {
                 $uploadedFile2->move($destination, $newFileName);
@@ -110,7 +110,7 @@ class ApiArticleController extends AbstractController
             $originalFileName = pathinfo($uploadedFile3->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
             $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
-            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile3->guessExtension();
 
             try {
                 $uploadedFile3->move($destination, $newFileName);
@@ -135,7 +135,7 @@ class ApiArticleController extends AbstractController
      * READ
      * An ADMIN can get an article from its ID.
      */
-    #[Route("article/{id}", name: "api_article_readArticle", methods: "GET")]
+    #[Route("/article/{id}", name: "api_article_readArticle", methods: "GET")]
     public function readArticle(ArticleRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, context: ["groups" => "article:read"]);
@@ -145,7 +145,7 @@ class ApiArticleController extends AbstractController
      * READ
      * An ADMIN can get all articles' details.
      */
-    #[Route("articles", name: "api_article_readAllArticles", methods: "GET")]
+    #[Route("/articles", name: "api_article_readAllArticles", methods: "GET")]
     public function readAllArticles(ArticleRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, context: ["groups" => "article:read"]);
@@ -154,13 +154,13 @@ class ApiArticleController extends AbstractController
     /**
      * UPDATE
      * An admin can update an article from its ID.
+     * WARNING : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data.
      * Only one file by property can be stored.
      * If a new image is uploaded, it will replace the older.
      */
-    #[Route("article/{id}", name: "api_article_update", methods: "PATCH")]
+    #[Route("/article/{id}", name: "api_article_update", methods: "POST")]
     public function update(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id, SluggerInterface $slugger): JsonResponse
     {
-
         // Request using multipart/form-data
         if ($request->request->get("data")) {
             $jsonReceived = $request->request->get("data");
@@ -202,6 +202,8 @@ class ApiArticleController extends AbstractController
         $article = $repository->find($id);
         $updatedArticle = $serializer->deserialize($jsonReceived, Article::class, "json");
 
+        // dd($article, $deleteFirstAddFile, $deleteSecondAddFile, $deleteThirdAddFile);
+
         if ($updatedArticle->getTitle()) {
             $article->setTitle($updatedArticle->getTitle());
         }
@@ -238,7 +240,7 @@ class ApiArticleController extends AbstractController
             $originalFileName = pathinfo($uploadedFile1->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
             $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
-            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile1->guessExtension();
 
             if ($article->getFirstAdditionalImageName() && file_exists($article->getFirstAdditionalImageUrl())) {
                 unlink($article->getFirstAdditionalImageUrl());
@@ -259,7 +261,7 @@ class ApiArticleController extends AbstractController
             $originalFileName = pathinfo($uploadedFile2->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
             $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
-            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile2->guessExtension();
 
             if ($article->getSecondAdditionalImageName() && file_exists($article->getSecondAdditionalImageUrl())) {
                 unlink($article->getSecondAdditionalImageUrl());
@@ -280,7 +282,7 @@ class ApiArticleController extends AbstractController
             $originalFileName = pathinfo($uploadedFile3->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFileName = $slugger->slug($originalFileName);
             $destination = $this->getParameter("kernel.project_dir") . "/public/assets/img/articles/";
-            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+            $newFileName = $safeFileName . "-" . uniqid() . "." . $uploadedFile3->guessExtension();
 
             if ($article->getThirdAdditionalImageName() && file_exists($article->getThirdAdditionalImageUrl())) {
                 unlink($article->getThirdAdditionalImageUrl());
@@ -296,26 +298,33 @@ class ApiArticleController extends AbstractController
             $article->setThirdAdditionalImageUrl($destination . $newFileName);
         }
 
-        if ($deleteFirstAddFile && $article->getFirstAdditionalImageName() && file_exists($article->getFirstAdditionalImageUrl())) {
-            unlink($article->getFirstAdditionalImageUrl());
-            $article->setFirstAdditionalImageName(null);
-            $article->setFirstAdditionalImageUrl(null);
-        } else {
-            throw new Exception("There is no file to delete.");
+        if ($deleteFirstAddFile) {
+            if ($article->getFirstAdditionalImageName() && file_exists($article->getFirstAdditionalImageUrl())) {
+                unlink($article->getFirstAdditionalImageUrl());
+                $article->setFirstAdditionalImageName(null);
+                $article->setFirstAdditionalImageUrl(null);
+            } else {
+                throw new Exception("There is no file to delete.");
+            }
         }
-        if ($deleteSecondAddFile && $article->getSecondAdditionalImageName() && file_exists($article->getSecondAdditionalImageUrl())) {
-            unlink($article->getSecondAdditionalImageUrl());
-            $article->setSecondAdditionalImageName(null);
-            $article->setSecondAdditionalImageUrl(null);
-        } else {
-            throw new Exception("There is no file to delete.");
+
+        if ($deleteSecondAddFile) {
+            if ($article->getSecondAdditionalImageName() && file_exists($article->getSecondAdditionalImageUrl())) {
+                unlink($article->getSecondAdditionalImageUrl());
+                $article->setSecondAdditionalImageName(null);
+                $article->setSecondAdditionalImageUrl(null);
+            } else {
+                throw new Exception("There is no file to delete.");
+            }
         }
-        if ($deleteThirdAddFile && $article->getThirdAdditionalImageName() && file_exists($article->getThirdAdditionalImageUrl())) {
-            unlink($article->getThirdAdditionalImageUrl());
-            $article->setThirdAdditionalImageName(null);
-            $article->setThirdAdditionalImageUrl(null);
-        } else {
-            throw new Exception("There is no file to delete.");
+        if ($deleteThirdAddFile) {
+            if ($article->getThirdAdditionalImageName() && file_exists($article->getThirdAdditionalImageUrl())) {
+                unlink($article->getThirdAdditionalImageUrl());
+                $article->setThirdAdditionalImageName(null);
+                $article->setThirdAdditionalImageUrl(null);
+            } else {
+                throw new Exception("There is no file to delete.");
+            }
         }
 
         $article->setUpdatedAt(new \DateTimeImmutable());
@@ -334,7 +343,7 @@ class ApiArticleController extends AbstractController
      * An ADMIN can delete an article from its ID.
      * If an article is deleted, all of its files will be removed from the server.
      */
-    #[Route("article/{id}", name: "api_article_deleteArticle", methods: "DELETE")]
+    #[Route("/article/{id}", name: "api_article_deleteArticle", methods: "DELETE")]
     public function deleteArticle(ArticleRepository $repository, int $id): JsonResponse
     {
         $article = $repository->find($id);
