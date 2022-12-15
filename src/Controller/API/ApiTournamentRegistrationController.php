@@ -313,7 +313,7 @@ class ApiTournamentRegistrationController extends AbstractController
 
     /**
      * UPDATE
-     * An ADMIN can modify some properties of one member's registration
+     * An ADMIN can modify some properties of one member's registration.
      * The user and tournament entities can be modified by creating a new instance.
      * Every property can be modified independently.
      */

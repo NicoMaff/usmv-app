@@ -98,12 +98,12 @@ class ApiTournamentController extends AbstractController
     /**
      * UPDATE
      * An admin can update a tournament or a part of tournament from its id
-     * Warning : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
      * Only one file is stored by tournament.
      * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/tournament/{id}", "api_tournament_updateOne", methods: "POST")]
+    #[Route("/tournament/{id}", "api_tournament_updateOne", methods: ["PATCH", "POST"])]
     public function updateOne(TournamentRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
         if ($request->request->get("data")) {

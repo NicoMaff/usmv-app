@@ -94,10 +94,11 @@ class ApiEventController extends AbstractController
     /**
      * UPDATE
      * An admin can update one event details from its id.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
      * Only one image is stored by event.
      * If a new image is uploaded, it will replace the older.
      */
-    #[Route("event/{id}", "api_event_updateOne", methods: "PATCH")]
+    #[Route("event/{id}", "api_event_updateOne", methods: ["PATCH", "POST"])]
     public function updateOne(EventRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
         // Request using multipart/form-data

@@ -154,11 +154,11 @@ class ApiArticleController extends AbstractController
     /**
      * UPDATE
      * An admin can update an article from its ID.
-     * WARNING : This method represent a PATCH route even if it is set on POST. This is a restriction of using multipart/form-data.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
      * Only one file by property can be stored.
      * If a new image is uploaded, it will replace the older.
      */
-    #[Route("/article/{id}", name: "api_article_update", methods: "POST")]
+    #[Route("/article/{id}", name: "api_article_update", methods: ["PATCH", "POST"])]
     public function update(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id, SluggerInterface $slugger): JsonResponse
     {
         // Request using multipart/form-data

@@ -290,11 +290,12 @@ class ApiUserController extends AbstractController
     /**
      * UPDATE
      * An admin can update member's account details.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
      * Only one file is stored by user.
      * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/admin/user/{id}", name: "api_user_updateMemberDetails", methods: "PATCH")]
+    #[Route("/admin/user/{id}", name: "api_user_updateMemberDetails", methods: ["POST", "PATCH"])]
     public function updateMemberDetails(UserRepository $repository, SerializerInterface $serializer, Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
@@ -415,10 +416,11 @@ class ApiUserController extends AbstractController
     /**
      * UPDATE
      * A MEMBER can update his account's details.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
      * Only one file is stored by member.
      * If a new file is uploaded, it will replace the older.
      */
-    #[Route("user", name: "api_user_updateAccountDetails", methods: "PATCH")]
+    #[Route("user", name: "api_user_updateAccountDetails", methods: ["POST", "PATCH"])]
     #[IsGranted("ROLE_MEMBER")]
     public function updateAccountDetails(UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
