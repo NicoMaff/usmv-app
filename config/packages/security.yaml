@@ -10,6 +10,10 @@ security:
       entity:
         class: App\Entity\User
         property: email
+    app_user_provider_id:
+      entity:
+        class: App\Entity\User
+        property: id
 
   firewalls:
     dev:
@@ -20,14 +24,23 @@ security:
       pattern: ^/api/login
       stateless: true
       json_login:
-        username_path: email
-        check_path: /api/login
+        provider: app_user_provider
+        username_path: email #set the property name in JSON payload
+        check_path: api_jwt_login
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
     api:
       pattern: ^/api
       stateless: true
+      entry_point: jwt
+      provider: app_user_provider
       jwt: ~
+      refresh_jwt:
+        provider: app_user_provider_id
+        check_path: /api/token/refresh
+        # check_path: api_jwt_refresh ## Don't know why it doesn't work :(
+      logout:
+        path: api_jwt_invalidateToken
 
     main:
       lazy: true
@@ -42,9 +55,14 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/api/login, roles: PUBLIC_ACCESS }
-    - { path: ^/api/user/account, roles: PUBLIC_ACCESS }
-    - { path: ^/api/tournament-registration-unauthenticated, roles: PUBLIC_ACCESS }
+    - {
+        path: ^/api/(login|token/refresh|user/account|tournament-registration-unauthenticated),
+        roles: PUBLIC_ACCESS,
+      }
+    # - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    # - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
+    # - { path: ^/api/user/account, roles: PUBLIC_ACCESS }
+    # - { path: ^/api/tournament-registration-unauthenticated, roles: PUBLIC_ACCESS }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
   role_hierarchy:

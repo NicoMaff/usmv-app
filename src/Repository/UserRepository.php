@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -65,4 +66,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+
+    // add implements UserLoaderInterface
+    // /**
+    //  * This method allow to identify an user either by his email or his id.
+    //  */
+    // public function loadUserByIdentifier(string $emailOrId): ?User
+    // {
+    //     $entityManager = $this->getEntityManager();
+
+    //     return $entityManager->createQuery(
+    //         'SELECT u
+    //         FROM APP\ENTITY\USER u
+    //         WHERE u.email = :query 
+    //         OR u.id = :query'
+    //     )
+    //         ->setParameter("query", $emailOrId)
+    //         ->getOneOrNullResult();
+    // }
 }

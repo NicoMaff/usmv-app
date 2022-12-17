@@ -136,7 +136,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        // return (string) $this->email;
+
+        /**
+         * Allow to store the user's id instead email in database for refresh_token instances
+         */
+        return (string) $this->id;
     }
 
     /**

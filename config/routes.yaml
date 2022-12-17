@@ -2,5 +2,11 @@ controllers:
   resource: ../src/Controller/
   type: attribute
 
-api_login_check:
+api_jwt_login:
   path: /api/login
+
+api_jwt_refresh:
+  path: /api/token/refresh
+
+api_jwt_invalidateToken:
+  path: /api/token/refresh/invalidate
