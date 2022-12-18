@@ -92,15 +92,16 @@ class ResetPasswordController extends AbstractController
     #[Route('/reset/{token}', name: 'api_reset_password')]
     public function reset(Request $request, UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, TranslatorInterface $translator, string $token = null): Response
     {
-        if ($token) {
-            // We store the token in session and remove it from the URL, to avoid the URL being
-            // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
-            $this->storeTokenInSession($token);
+        // if ($token) {
+        //     // We store the token in session and remove it from the URL, to avoid the URL being
+        //     // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
+        //     // $savedToken = $token;
+        //     $this->storeTokenInSession($token);
+        //     dd();
+        //     return $this->redirectToRoute('api_reset_password');
+        // }
 
-            return $this->redirectToRoute('api_reset_password');
-        }
-
-        $token = $this->getTokenFromSession();
+        // $token = $this->getTokenFromSession();
         if (null === $token) {
             throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
         }
