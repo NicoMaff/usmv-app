@@ -72,7 +72,7 @@ class ApiTournamentController extends AbstractController
         }
 
         $repository->add($tournament, true);
-        return $this->json($tournament, 201);
+        return $this->json($tournament, 201, context: ["groups" => "tournament:read"]);
     }
 
     /**
@@ -92,7 +92,7 @@ class ApiTournamentController extends AbstractController
     #[Route("/tournaments", "api_tournaments_readAllTournaments", methods: "GET")]
     public function readAllTournaments(TournamentRepository $repository): JsonResponse
     {
-        return $this->json($repository->findAll(), 200);
+        return $this->json($repository->findAll(), 200, context: ["groups" => "tournament:read"]);
     }
 
     /**
