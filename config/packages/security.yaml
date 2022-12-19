@@ -59,7 +59,7 @@ security:
         path: ^/api/(login|token/refresh|user/account|tournament-registration-unauthenticated),
         roles: PUBLIC_ACCESS,
       }
-    - { path: ^/api/reset-password, roles: PUBLIC_ACCESS }
+    - { path: ^/api/reset_password, roles: PUBLIC_ACCESS }
     # - { path: ^/api/login, roles: PUBLIC_ACCESS }
     # - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
     # - { path: ^/api/user/account, roles: PUBLIC_ACCESS }
