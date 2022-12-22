@@ -252,7 +252,7 @@ class ApiUserController extends AbstractController
     #[Route("user", name: "api_user_readMemberAccount", methods: "GET")]
     public function readMemberAccount(UserRepository $repository): JsonResponse
     {
-        $user = $repository->findOneBy(["email" => $this->getUser()->getUserIdentifier()]);
+        $user = $repository->findOneBy(["id" => $this->getUser()->getUserIdentifier()]);
         return $this->json($user, 200, context: ["groups" => "user:read"]);
     }
 

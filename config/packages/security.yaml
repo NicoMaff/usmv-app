@@ -29,6 +29,16 @@ security:
         check_path: api_jwt_login
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+    # refresh_token:
+    #   pattern: ^/api/token/refresh
+    #   stateless: true
+    #   refresh_jwt:
+    #     provider: app_user_provider_id
+    #     check_path: /api/token/refresh
+    #   logout:
+    #     path: api_jwt_invalidateToken
+
     api:
       pattern: ^/api
       stateless: true
@@ -38,19 +48,19 @@ security:
       refresh_jwt:
         provider: app_user_provider_id
         check_path: /api/token/refresh
-        # check_path: api_jwt_refresh ## Don't know why it doesn't work :(
+      # check_path: api_jwt_refresh ## Don't know why it doesn't work :(
       logout:
         path: api_jwt_invalidateToken
 
-    main:
-      lazy: true
-      provider: app_user_provider
-      form_login:
-        login_path: app_security_login
-        check_path: app_security_login
-      logout:
-        path: app_security_logout
-        target: app_security_login
+    # main:
+    #   lazy: true
+    #   provider: app_user_provider
+    #   form_login:
+    #     login_path: app_security_login
+    #     check_path: app_security_login
+    #   logout:
+    #     path: app_security_logout
+    #     target: app_security_login
 
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
