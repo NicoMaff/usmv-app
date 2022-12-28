@@ -5,3 +5,13 @@ gesdinet_jwt_refresh_token:
   token_parameter_name: refreshToken
   return_expiration: true
   return_expiration_parameter_name: refreshTokenExpiration
+
+  # cookie:
+  #   enabled: true
+  #   remove_token_from_body: true
+  #   # Cookie parameters
+  #   http_only: true
+  #   same_site: none
+  #   secure: true
+  #   path: /api/
+  # domain: null

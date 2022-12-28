@@ -55,7 +55,7 @@ class ApiResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address("no-reply@villeparisisbadminton77.fr', 'No Reply - USMV App"))
+            ->from(new Address("no-reply@villeparisisbadminton77.fr", "No Reply - USMV App"))
             ->to($user->getEmail())
             ->subject("Réinitialisation de mon mot de passe")
             ->htmlTemplate("reset_password/email.html.twig")
@@ -97,7 +97,7 @@ class ApiResetPasswordController extends AbstractController
         if ($reset->getPassword() === $reset->getConfirmPassword()) {
             $this->resetPasswordHelper->removeResetRequest($reset->getResetToken());
             $user->setPassword($hasher->hashPassword($user, $reset->getPassword()));
-            $repository->add($user);
+            $repository->add($user, true);
             return $this->json($user, 201, context: ["groups" => "user:read"]);
         } else {
             return $this->json([
