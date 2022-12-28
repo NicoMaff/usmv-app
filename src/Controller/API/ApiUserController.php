@@ -173,7 +173,6 @@ class ApiUserController extends AbstractController
      * During creation, the member can add an avatarFile. For that, the multipart/form-data method is required.
      */
     #[Route("user/account", name: "api_user_createAccount", methods: "POST")]
-    #[IsGranted("ROLE_MEMBER")]
     public function createAccount(UserRepository $repository, UserPasswordHasherInterface $hasher, Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
