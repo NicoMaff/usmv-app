@@ -1,44 +1,21 @@
 <?php
 
-namespace App\Command;
+namespace App\Controller;
 
 use App\Entity\FFBadStat;
-use App\Repository\FFBadStatRepository;
 use App\Repository\UserRepository;
-use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
-#[AsCommand(
-    name: 'app:ffbad:extract',
-    description: 'Make a data extraction from the FFBaD API',
-)]
-class FFBadExtractCommand extends Command
+class FFBadController extends AbstractController
 {
-    public function __construct(
-        private FFBadStatRepository $ffbadStatRepository,
-        private UserRepository $userRepository
-    ) {
-        $this->ffbadStatRepository = $ffbadStatRepository;
-        $this->userRepository = $userRepository;
-        parent::__construct();
-    }
-
-    protected function configure(): void
+    #[Route('/ffbad', name: 'app_ffbad_index')]
+    public function index(UserRepository $userRepository): Response
     {
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $io = new SymfonyStyle($input, $output);
-
         $data = json_decode(file_get_contents("https://api.ffbad.org/club/?TokenClub=30908181&Mode=smart"));
-
+        // dd($data[0]);
         foreach ($data as $d) {
             $stat = new FFBadStat();
             $arrayDate = explode("-", $d->DATE);
@@ -92,18 +69,18 @@ class FFBadExtractCommand extends Command
                 $stat->setIsDataPlayerPublic(false);
             }
 
-            $user = $this->userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
-
+            // $user = $userRepository->findBy(["lastName" => "MEMBER", "firstName" => "Member"]);
+            $user = $userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
             if ($user) {
                 $stat->setUser($user[0]);
             }
 
-            $this->ffbadStatRepository->add($stat, true);
-            // dd($stat);
+            dd($stat, $user);
         }
+        dd();
 
-        $io->success("The extraction has succeeded! ");
-
-        return Command::SUCCESS;
+        return $this->render('ff_bad/index.html.twig', [
+            "stats" => $data
+        ]);
     }
 }

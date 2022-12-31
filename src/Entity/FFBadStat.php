@@ -15,7 +15,7 @@ class FFBadStat
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'FFBadStats')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\Column]
@@ -41,6 +41,9 @@ class FFBadStat
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $lastName = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $birthLastName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $firstName = null;
@@ -72,6 +75,9 @@ class FFBadStat
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $clubAcronym = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $clubId = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $clubName = null;
 
@@ -80,6 +86,9 @@ class FFBadStat
 
     #[ORM\Column(nullable: true)]
     private ?bool $isPlayerTransferred = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isDataPlayerPublic = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isPlayerActive = null;
@@ -244,6 +253,18 @@ class FFBadStat
         return $this;
     }
 
+    public function getBirthLastName(): ?string
+    {
+        return $this->birthLastName;
+    }
+
+    public function setBirthLastName(?string $birthLastName): self
+    {
+        $this->birthLastName = $birthLastName;
+
+        return $this;
+    }
+
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -364,6 +385,18 @@ class FFBadStat
         return $this;
     }
 
+    public function getClubId(): ?string
+    {
+        return $this->clubId;
+    }
+
+    public function setClubId(?string $clubId): self
+    {
+        $this->clubId = $clubId;
+
+        return $this;
+    }
+
     public function getClubName(): ?string
     {
         return $this->clubName;
@@ -388,7 +421,7 @@ class FFBadStat
         return $this;
     }
 
-    public function isIsPlayerTransferred(): ?bool
+    public function isPlayerTransferred(): ?bool
     {
         return $this->isPlayerTransferred;
     }
@@ -400,7 +433,19 @@ class FFBadStat
         return $this;
     }
 
-    public function isIsPlayerActive(): ?bool
+    public function isDataPlayerPublic(): ?bool
+    {
+        return $this->isDataPlayerPublic;
+    }
+
+    public function setIsDataPlayerPublic(?bool $isDataPlayerPublic): self
+    {
+        $this->isDataPlayerPublic = $isDataPlayerPublic;
+
+        return $this;
+    }
+
+    public function isPlayerActive(): ?bool
     {
         return $this->isPlayerActive;
     }
