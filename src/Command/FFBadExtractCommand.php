@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\Entity\FFBadStat;
 use App\Repository\FFBadStatRepository;
-use App\Repository\UserRepository;
+use DateTime;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Serializer\SerializerInterface;
 
 #[AsCommand(
     name: 'app:ffbad:extract',
@@ -22,10 +21,8 @@ class FFBadExtractCommand extends Command
 {
     public function __construct(
         private FFBadStatRepository $ffbadStatRepository,
-        private UserRepository $userRepository
     ) {
         $this->ffbadStatRepository = $ffbadStatRepository;
-        $this->userRepository = $userRepository;
         parent::__construct();
     }
 
@@ -92,14 +89,18 @@ class FFBadExtractCommand extends Command
                 $stat->setIsDataPlayerPublic(false);
             }
 
-            $user = $this->userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
+            $datetime = new DateTime($d->DATE);
+            $stat
+                ->setWeekNumber($datetime->format("W"))
+                ->setYear($arrayDate[0]);
 
-            if ($user) {
-                $stat->setUser($user[0]);
+            if (in_array($arrayDate[1], ["09", "10", "11", "12"])) {
+                $stat->setSeason($arrayDate[0] . "/" . (string) (((int) $arrayDate[0]) + 1));
+            } else if (in_array($arrayDate[1], ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                $stat->setSeason((string) (((int) $arrayDate[0]) - 1) .  "/" . $arrayDate[0]);
             }
 
             $this->ffbadStatRepository->add($stat, true);
-            // dd($stat);
         }
 
         $io->success("The extraction has succeeded! ");
