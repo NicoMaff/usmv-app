@@ -7,8 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation\Timestampable;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -93,12 +91,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?string $state = "inactive";
 
-    #[Timestampable(on: "create")]
     #[ORM\Column]
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Timestampable(on: "update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(["user:read", "user:create", "user:update"])]
     private ?\DateTimeInterface $updatedAt = null;
@@ -106,10 +102,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: TournamentRegistration::class, orphanRemoval: true)]
     private Collection $tournamentRegistrations;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: FFBadStat::class)]
+    private Collection $FFBadStats;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->tournamentRegistrations = new ArrayCollection();
+        $this->FFBadStats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -361,6 +361,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($tournamentRegistration->getUser() === $this) {
                 $tournamentRegistration->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FfbadStat>
+     */
+    public function getFFBadStats(): Collection
+    {
+        return $this->FFBadStats;
+    }
+
+    public function addFFBadStat(FfbadStat $fFBadStat): self
+    {
+        if (!$this->FFBadStats->contains($fFBadStat)) {
+            $this->FFBadStats->add($fFBadStat);
+            $fFBadStat->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFFBadStat(FfbadStat $fFBadStat): self
+    {
+        if ($this->FFBadStats->removeElement($fFBadStat)) {
+            // set the owning side to null (unless already changed)
+            if ($fFBadStat->getUser() === $this) {
+                $fFBadStat->setUser(null);
             }
         }
 
