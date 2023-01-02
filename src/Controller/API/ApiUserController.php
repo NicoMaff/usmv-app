@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route("api/")]
 class ApiUserController extends AbstractController
@@ -89,6 +88,7 @@ class ApiUserController extends AbstractController
             $repository->add($user, true);
         }
 
+        // the FFBadStat property is automatically set by a SQL trigger when an user is created
         return $this->json($user, 201, [], ["groups" => "user:create"]);
     }
 
@@ -164,6 +164,7 @@ class ApiUserController extends AbstractController
             $repository->add($user, true);
         }
 
+        // the FFBadStat property is automatically set by a SQL trigger when an user is created
         return $this->json($user, 201, [], ["groups" => "user:create"]);
     }
 
@@ -218,6 +219,7 @@ class ApiUserController extends AbstractController
             $repository->add($user, true);
         }
 
+        // the FFBadStat property is automatically set by a SQL trigger when an user is created
         return $this->json($user, 201, [], ["groups" => "user:create"]);
     }
 
@@ -237,7 +239,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can get details of all users (admin + member).
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route('users', 'api_user_readAllUsers', methods: "GET")]
+    #[Route('users', 'api_user_readAllsrc/Controller/API/ApiUserController.phpUsers', methods: "GET")]
     public function readAllUsers(UserRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, context: ["groups" => "user:read"]);
@@ -490,7 +492,7 @@ class ApiUserController extends AbstractController
         }
 
         $repository->add($user, true);
-        return $this->json($user, 201, []);
+        return $this->json($user, 201, context: ["groups" => "user:update"]);
     }
 
     /**

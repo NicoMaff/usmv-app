@@ -103,12 +103,14 @@ class FFBadExtractCommand extends Command
                 $stat->setSeason((string) (((int) $arrayDate[0]) - 1) .  "/" . $arrayDate[0]);
             }
 
-            // $user = $this->userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
-            // if ($user) {
-            //     $stat->setUser($user[0]);
-            // }
+            $user = $this->userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
+            if ($user) {
+                $stat->setUser($user[0]);
+            }
+
 
             $this->ffbadStatRepository->add($stat, true);
+            dd($user[0]);
         }
 
         $io->success("The extraction has succeeded! ");

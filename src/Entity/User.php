@@ -100,9 +100,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: TournamentRegistration::class, orphanRemoval: true)]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private Collection $tournamentRegistrations;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: FFBadStat::class)]
+    #[Groups(["user:read", "user:create", "user:update"])]
     private Collection $FFBadStats;
 
     public function __construct()

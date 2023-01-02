@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FFBadStatRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: FFBadStatRepository::class)]
 class FFBadStat
@@ -12,6 +12,7 @@ class FFBadStat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'FFBadStats')]
@@ -19,120 +20,159 @@ class FFBadStat
     private ?User $user = null;
 
     #[ORM\Column]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?\DateTimeImmutable $extractionDate = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $rankingsDate = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $weekNumber = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $year = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $season = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $apiId = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $license = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $birthLastName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $birthDate = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $country = null;
 
     #[ORM\Column(length: 6, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $countryISO = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $categoryGlobal = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $categoryShort = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $categoryLong = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $clubReference = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $clubAcronym = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $clubId = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $clubName = null;
 
     #[ORM\Column(length: 5, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $clubDepartment = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?bool $isPlayerTransferred = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?bool $isDataPlayerPublic = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?bool $isPlayerActive = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $feather = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $singleCPPH = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $singleRankNumber = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $singleFrenchRankNumber = null;
 
     #[ORM\Column(length: 5, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $singleRankName = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $doubleCPPH = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $doubleRankNumber = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $doubleFrenchRankNumber = null;
 
     #[ORM\Column(length: 5, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $doubleRankName = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $mixedCPPH = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $mixedRankNumber = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $mixedFrenchRankNumber = null;
 
     #[ORM\Column(length: 5, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $mixedRankName = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["user:create", "user:read", "user:update"])]
     private ?string $CPPHSum = null;
 
     public function __construct()
