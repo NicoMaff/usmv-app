@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\FFBadStat;
 use App\Repository\FFBadStatRepository;
+use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -21,8 +22,10 @@ class FFBadExtractCommand extends Command
 {
     public function __construct(
         private FFBadStatRepository $ffbadStatRepository,
+        private UserRepository $userRepository
     ) {
         $this->ffbadStatRepository = $ffbadStatRepository;
+        $this->userRepository = $userRepository;
         parent::__construct();
     }
 
@@ -98,6 +101,11 @@ class FFBadExtractCommand extends Command
                 $stat->setSeason($arrayDate[0] . "/" . (string) (((int) $arrayDate[0]) + 1));
             } else if (in_array($arrayDate[1], ["01", "02", "03", "04", "05", "06", "07", "08"])) {
                 $stat->setSeason((string) (((int) $arrayDate[0]) - 1) .  "/" . $arrayDate[0]);
+            }
+
+            $user = $this->userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
+            if ($user) {
+                $stat->setUser($user[0]);
             }
 
             $this->ffbadStatRepository->add($stat, true);
