@@ -15,8 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[IsGranted("ROLE_ADMIN")]
-#[Route("/api/admin")]
+#[Route("/api")]
 class ApiArticleController extends AbstractController
 {
     /**
@@ -24,6 +23,7 @@ class ApiArticleController extends AbstractController
      * An ADMIN can create a new article.
      * If no file is uploaded, a default image for the thirdAddFile will be added to the article.
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("/article", name: "api_article_createArticle", methods: "POST")]
     public function createArticle(Request $request, ArticleRepository $repository, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
@@ -158,6 +158,7 @@ class ApiArticleController extends AbstractController
      * Only one file by property can be stored.
      * If a new image is uploaded, it will replace the older.
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("/article/{id}", name: "api_article_update", methods: ["PATCH", "POST"])]
     public function update(ArticleRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, int $id, SluggerInterface $slugger): JsonResponse
     {
@@ -343,6 +344,7 @@ class ApiArticleController extends AbstractController
      * An ADMIN can delete an article from its ID.
      * If an article is deleted, all of its files will be removed from the server.
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("/article/{id}", name: "api_article_deleteArticle", methods: "DELETE")]
     public function deleteArticle(ArticleRepository $repository, int $id): JsonResponse
     {

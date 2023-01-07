@@ -137,6 +137,7 @@ class Tournament
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: TournamentRegistration::class)]
+    #[Groups(["tournament:read"])]
     private Collection $tournamentRegistrations;
 
     public function __construct()

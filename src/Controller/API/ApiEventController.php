@@ -14,8 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[IsGranted("ROLE_ADMIN")]
-#[Route("api/admin/")]
+#[Route("api/")]
 class ApiEventController extends AbstractController
 {
     /**
@@ -23,6 +22,7 @@ class ApiEventController extends AbstractController
      * An ADMIN can create a new event.
      * If no image is uploaded, a default image will be added to the event.
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("event", "api_event_createEvent", methods: "POST")]
     public function createEvent(EventRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
@@ -40,6 +40,7 @@ class ApiEventController extends AbstractController
         }
 
         $event = $serializer->deserialize($jsonReceived, Event::class, "json");
+
 
 
         if (isset($uploadedFile)) {
@@ -98,6 +99,7 @@ class ApiEventController extends AbstractController
      * Only one image is stored by event.
      * If a new image is uploaded, it will replace the older.
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("event/{id}", "api_event_updateOne", methods: ["PATCH", "POST"])]
     public function updateOne(EventRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
@@ -165,6 +167,7 @@ class ApiEventController extends AbstractController
      * An ADMIN can delete an event from its id.
      * If an event is deleted, its image will be also removed from the server.
      */
+    #[IsGranted("ROLE_ADMIN")]
     #[Route("event/{id}", "api_event_deleteEvent", methods: "DELETE")]
     public function deleteEvent(EventRepository $repository, int $id): JsonResponse
     {
