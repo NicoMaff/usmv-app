@@ -2,7 +2,6 @@
 
 namespace App\Controller\Public;
 
-use App\Entity\Event;
 use App\Form\ContactType;
 use Symfony\Component\Mime\Email;
 use App\Repository\EventRepository;
@@ -21,7 +20,9 @@ class HomepageController extends AbstractController
     #[Route('/', name: 'app_homepage_index')]
     public function index(Request $request, ArticleRepository $articleRepo, EventRepository $eventRepo, ContactRepository $contactRepo, MailerInterface $mailer): Response
     {
-        $articles = $articleRepo->findLast10();
+        if ($articleRepo->findLast10()) {
+            $articles = $articleRepo->findLast10();
+        }
 
         if ($eventRepo->findAllFromToday()) {
             $eventsReceived = $eventRepo->findAllFromToday(); // to get all events from today (today is included)
