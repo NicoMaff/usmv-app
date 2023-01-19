@@ -31,6 +31,7 @@ class TournamentRegistration
 
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("registration:read")]
     private ?Tournament $tournament = null;
 
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]

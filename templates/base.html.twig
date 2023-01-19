@@ -30,10 +30,10 @@
             <nav class="nav-mobile">
                 <div class="nav-container">
                     <div class="line"></div>
-                    <div class="profile-icons">
-                        <a href="#"><i class="fa-solid fa-user"></i></a>
+                    {# <div class="profile-icons"> #}
+                        {# <a href="#"><i class="fa-solid fa-user"></i></a> #}
                         {# <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a> #}
-                    </div>
+                    {# </div> #}
                     <ul class="menu">
                         <li><a href="{{ path("app_homepage_index") }}">Accueil</a></li>
                         <li class="tab">Le club
@@ -126,10 +126,10 @@
                     <li class="desktop-responsive"><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
                     <li class="desktop-responsive"><a href="#">Liens</a></li>
                 </ul>
-                <div class="profile-icons">
-                    <a href="#"><i class="fa-solid fa-user"></i></a>
+                {# <div class="profile-icons"> #}
+                    {# <a href="#"><i class="fa-solid fa-user"></i></a> #}
                     {# <a href="#"><i class="fa-solid fa-right-from-bracket"></i></a> #}
-                </div>
+                {# </div> #}
             
             </nav>
         </header>
@@ -142,7 +142,8 @@
                 <li>Plan du site</li>
                 <li>Mentions légales</li>
                 <li>Écrire au webmaster</li>
-            </ul>
+                <li><a href="{{ path("app_security_login") }}">Se connecter à l'espace admin</a></li>
+            </ul> 
             <div class="networks-icon">
                 <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
