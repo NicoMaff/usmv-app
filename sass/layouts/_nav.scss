@@ -188,13 +188,26 @@
 
 .nav-desktop {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1vmin;
+  position: relative;
   min-width: 98%;
 
   @media (min-width: 1300px) {
     padding: 0 0.6rem;
+  }
+
+  .nav-logo {
+    display: none;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include from(1200) {
+      display: block;
+    }
   }
 
   li,
