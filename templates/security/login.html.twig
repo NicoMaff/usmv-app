@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Se connecter{% endblock %}
 
 {% block main %}
 <main class="login">
@@ -39,7 +39,7 @@
         <a href="">Mot de passe oublié ?</a>
         <div class="line"></div>
         <a href="">Pas encore de comtpe ? Se créer un compte</a>
-        
+
         <input type="hidden" name="_csrf_token"
             value="{{ csrf_token('authenticate') }}"
         >

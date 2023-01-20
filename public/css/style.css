@@ -73,7 +73,7 @@ h1 {
 
 h2 {
   font-family: "Montserrat-reg", sans-serif;
-  font-size: clamp(1.2rem, 5vmin, 1.8rem);
+  font-size: clamp(1.2rem, 3.5vmin, 1.8rem);
   font-weight: 580;
   margin-bottom: clamp(1rem, 5vmin, 1.2rem);
 }
@@ -2919,6 +2919,46 @@ main.partners .become-partner .text {
 .login .form .line {
   border: 1px solid #dfe3ec;
   border-radius: 50px;
+}
+
+.admin-home h2 {
+  font-weight: 500;
+  margin-top: clamp(3rem, 8vmin, 5rem);
+}
+.admin-home ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+}
+@media (min-width: 600px) {
+  .admin-home ul {
+    flex-direction: row;
+    min-width: clamp(35rem, 90vw, 45rem);
+    margin-top: 3rem;
+  }
+}
+.admin-home li {
+  margin: 1rem 0;
+  background: #dfe3ec;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+@media (pointer: fine) {
+  .admin-home li:hover {
+    background: #354b77;
+  }
+  .admin-home li:hover a {
+    color: #f5f8ff;
+    font-weight: 500;
+  }
+}
+.admin-home a {
+  display: inline-block;
+  min-width: 10rem;
+  padding: 1.2rem 0.6rem;
 }
 
 /*# sourceMappingURL=style.css.map */
