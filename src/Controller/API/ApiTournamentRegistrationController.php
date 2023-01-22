@@ -23,7 +23,7 @@ class ApiTournamentRegistrationController extends AbstractController
 {
     /**
      * CREATE
-     * An ADMIN can make a tournament registration for a member.
+     * An ADMIN can create a tournament registration for a member.
      * The member may already exist or he can be created. 
      * To create a member, his lastName, firstName and his email have to be filled out. The password will be set automatically.
      * The userId property will be set by the admin.
@@ -37,7 +37,42 @@ class ApiTournamentRegistrationController extends AbstractController
         $jsonReceived = $request->getContent();
         $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
 
-        if ($registration->getUserId() === null && $registration->getUserLastName() && $registration->getUserFirstName() && $registration->getUserEmail()) {
+        /** Set the user
+         * Research by email because this property is unique in database */
+        $userSearch = [
+            "email" => $registration->getUserEmail(),
+            "lastName" => $registration->getUserLastName(),
+            "firstName" => $registration->getUserFirstName()
+        ];
+        if ($userRepo->findOneBy($userSearch)) {
+            $registration->setUser($userRepo->findOneBy($userSearch));
+            $registration->setUserEmail(null);
+            $registration->setUserLastName(null);
+            $registration->setUserFirstName(null);
+        }
+
+        /** Set the tournament
+         * Research by the tournament's name because it's the only explicit property to identify a tournament  */
+        $tournamentSearch = [
+            "city" => $registration->getTournamentCity(),
+            "startDate" => new \DateTime($registration->getTournamentStartDate())
+        ];
+        if ($tournamentRepo->findOneBy($tournamentSearch)) {
+            $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
+            $registration->setTournamentName(null);
+            $registration->setTournamentCity(null);
+            $registration->setTournamentStartDate(null);
+            $registration->setTournamentEndDate(null);
+        }
+
+        /** Create User if data don't correspond to an instance in bdd */
+        if (
+            $registration->getHaveToCreateUser()
+            && $registration->getUser() === null
+            && $registration->getUserLastName()
+            && $registration->getUserFirstName()
+            && $registration->getUserEmail()
+        ) {
             $user = new User();
 
             $password = "";
@@ -62,12 +97,22 @@ class ApiTournamentRegistrationController extends AbstractController
             $user->setPassword($hasher->hashPassword($user, $password));
 
             $userRepo->add($user, true);
-            $registration->setUserId($user->getId());
+
+            $registration->setUser($user);
+            $registration->setUserEmail(null);
+            $registration->setUserLastName(null);
+            $registration->setUserFirstName(null);
         } else {
             throw new Exception("At least one user's information is missing");
         }
 
-        if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
+        /** Create Tournament if data don't correspond to an instance in bdd */
+        if (
+            $registration->getHaveToCreateTournament()
+            && $registration->getTournament() === null
+            && $registration->getTournamentCity()
+            && $registration->getTournamentStartDate()
+        ) {
             $tournament = new Tournament();
             $tournament
                 ->setCity($registration->getTournamentCity())
@@ -92,13 +137,14 @@ class ApiTournamentRegistrationController extends AbstractController
             }
 
             $tournamentRepo->add($tournament, true);
-            $registration->setTournamentId($tournament->getId());
+            $registration->setTournament($tournament);
+            $registration->setTournamentName(null);
+            $registration->setTournamentCity(null);
+            $registration->setTournamentStartDate(null);
+            $registration->setTournamentEndDate(null);
         } else {
             throw new Exception("At least one tournament's information is missing");
         }
-
-        $registration->setUser($userRepo->find($registration->getUserId()));
-        $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
 
         $tournamentRegistrationRepo->add($registration, true);
 
@@ -108,47 +154,33 @@ class ApiTournamentRegistrationController extends AbstractController
     /**
      * CREATE
      * A MEMBER can create a tournament registration.
-     * The userId property is set from the member id only when he is authenticated.
-     * The tournament may already exist or he can be created.
-     * To create a tournament, the city and the startDate have to be filled out. The name can be filled out but it is not required.
+     * The user is set from the authentication session.
+     * The tournament may already exist. It will be selected if the city and the start date exist and exactly correspond to the saved tournament.
+     * Otherwise, the tournament property will be set on null.
      */
     #[IsGranted("ROLE_MEMBER")]
     #[Route("/tournament-registration", "api_tournamentRegistration_createRegistration", methods: "POST")]
-    public function createRegistration(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
+    public function createRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer): JsonResponse
     {
-        $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
+        // $user = $userRepo->findBy(["email" => $this->getUser()->getUserIdentifier()])[0];
         $jsonReceived = $request->getContent();
         $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
 
-        if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
-            $tournament = new Tournament();
-            $tournament
-                ->setCity($registration->getTournamentCity())
-                ->setStartDate($registration->getTournamentStartDate());
-
-            if ($registration->getTournamentName()) {
-                $tournament->setName($registration->getTournamentName());
-            }
-
-            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
-                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
-            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
-                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
-            }
-
-            $errors = $validator->validate($tournament);
-            if (count($errors) > 0) {
-                return $this->json($errors, 400);
-            }
-
-            $tournamentRepo->add($tournament, true);
-            $registration->setTournamentId($tournament->getId());
-        } else {
-            throw new Exception("At least one tournament's information is missing");
+        /** Set the tournament
+         * Research by the tournament's name because it's the only explicit property to identify a tournament  */
+        $tournamentSearch = [
+            "city" => $registration->getTournamentCity(),
+            "startDate" => new \DateTime($registration->getTournamentStartDate())
+        ];
+        if ($tournamentRepo->findOneBy([$tournamentSearch])) {
+            $registration->setTournament([$tournamentSearch]);
+            $registration->setTournamentName(null);
+            $registration->setTournamentCity(null);
+            $registration->setTournamentStartDate(null);
+            $registration->setTournamentEndDate(null);
         }
 
         $registration->setUser($this->getUser());
-        $registration->setTournament($registration->find($registration->getTournamentId()));
 
         $tournamentRegistrationRepo->add($registration, true);
 
@@ -159,67 +191,43 @@ class ApiTournamentRegistrationController extends AbstractController
      * CREATE
      * An USER UNAUTHENTICATED can create a tournament registration.
      * He must will fill his last-name, his first-name and his email.
-     * The tournament may already exist or he can be created.
-     * To create a tournament, the city and the startDate have to be filled out. The name can be filled out but it is not required.
+     * If these three properties exist and correspond to a saved user, the user property will be set.
+     * The tournament may already exist. It will be selected if the city and the start date exist and exactly correspond to the saved tournament.
+     * Otherwise, the tournament property will be set on null.
      */
     #[Route("/tournament-registration-unauthenticated", "api_tournamentRegistration_createRegistrationForUnauthenticated", methods: "POST")]
-    public function createRegistrationForUnauthenticated(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator): JsonResponse
+    public function createRegistrationForUnauthenticated(Request $request, UserRepository $userRepo, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer): JsonResponse
     {
         $jsonReceived = $request->getContent();
         $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
 
-        if ($registration->getUserLastName() && $registration->getUserFirstName() && $registration->getUserEmail()) {
-            $user = new User();
-
-            $password = "";
-            for ($i = 0; $i < 6; $i++) {
-                $alpha = mt_rand(97, 122);
-                $alphaMaj = mt_rand(65, 90);
-                $char = mt_rand(1, 2) === 1 ? mt_rand(0, 9) : (mt_rand(1, 2) === 1 ? chr($alpha) : chr($alphaMaj));
-                $password .= $char;
-            }
-
-            $user
-                ->setLastName($registration->getUserLastName())
-                ->setFirstName($registration->getUserFirstName())
-                ->setEmail($registration->getUserEmail())
-                ->setPassword($password)
-                ->setConfirmPassword($password);
-
-            $errors = $validator->validate($user);
-            if (count($errors) > 0) {
-                return $this->json($errors, 400);
-            }
-
-            $user->setPassword($hasher->hashPassword($user, $password));
-
-            $userRepo->add($user, true);
-            $registration->setUserId($user->getId());
-        } else {
-            throw new Exception("At least one user's information is missing");
+        /** Set the user
+         * Research by email because this property is unique in database */
+        $userSearch = [
+            "email" => $registration->getUserEmail(),
+            "lastName" => $registration->getUserLastName(),
+            "firstName" => $registration->getUserFirstName()
+        ];
+        if ($userRepo->findOneBy($userSearch)) {
+            $registration->setUser($userRepo->findOneBy($userSearch));
+            $registration->setUserEmail(null);
+            $registration->setUserLastName(null);
+            $registration->setUserFirstName(null);
         }
 
-        if ($registration->getTournamentId() === null && $registration->getTournamentCity() && $registration->getTournamentStartDate()) {
-            $tournament = new Tournament();
-            $tournament
-                ->setCity($registration->getTournamentCity())
-                ->setStartDate($registration->getTournamentStartDate());
-
-            if ($registration->getTournamentName()) {
-                $tournament->setName($registration->getTournamentName());
-            }
-
-            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
-                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
-            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
-                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
-            }
-            $tournamentRepo->add($tournament, true);
-            $registration->setTournamentId($tournament->getId());
+        /** Set the tournament
+         * Research by the tournament's name because it's the only explicit property to identify a tournament  */
+        $tournamentSearch = [
+            "city" => $registration->getTournamentCity(),
+            "startDate" => new \DateTime($registration->getTournamentStartDate())
+        ];
+        if ($tournamentRepo->findOneBy([$tournamentSearch])) {
+            $registration->setTournament([$tournamentSearch]);
+            $registration->setTournamentName(null);
+            $registration->setTournamentCity(null);
+            $registration->setTournamentStartDate(null);
+            $registration->setTournamentEndDate(null);
         }
-
-        $registration->setUser($userRepo->find($registration->getUserId()));
-        $registration->setTournament($tournamentRepo->find($registration->getTournamentId()));
 
         $tournamentRegistrationRepo->add($registration, true);
 

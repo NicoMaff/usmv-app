@@ -110,7 +110,6 @@ class FFBadExtractCommand extends Command
 
 
             $this->ffbadStatRepository->add($stat, true);
-            dd($user[0]);
         }
 
         $io->success("The extraction has succeeded! ");

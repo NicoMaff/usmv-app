@@ -17,33 +17,48 @@ class TournamentRegistration
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups("registration:create", "registration:read")]
     private ?User $user = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?int $userId = null;
-
     private ?string $userLastName = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?string $userFirstName = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?string $userEmail = null;
 
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
+    private ?bool $haveToCreateUser = false;
+
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups("registration:read")]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups("registration:create", "registration:read")]
     private ?Tournament $tournament = null;
 
+    #[ORM\Column(nullable: true)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?int $tournamentId = null;
-
     private ?string $tournamentName = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?string $tournamentCity = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?\DateTimeInterface $tournamentStartDate = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?\DateTimeInterface $tournamentEndDate = null;
+
+    #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
+    private ?bool $haveToCreateTournament = false;
 
     #[ORM\Column(length: 100)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
@@ -53,17 +68,17 @@ class TournamentRegistration
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?bool $hasParticipated = false;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: false)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $participationSingle = null;
+    private ?bool $participationSingle = false;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: false)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $participationDouble = null;
+    private ?bool $participationDouble = false;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: false)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $participationMixed = null;
+    private ?bool $participationMixed = false;
 
     #[ORM\Column(length: 20, nullable: true)]
     #[Groups(["registration:create", "registration:read", "user:create", "user:read", "user:update", "tournament:read"])]
@@ -128,17 +143,6 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
-
-    public function setUserId($userId): self
-    {
-        $this->userId = $userId;
-        return $this;
-    }
-
     public function getUserLastName(): ?string
     {
         return $this->userLastName;
@@ -172,6 +176,17 @@ class TournamentRegistration
         return $this;
     }
 
+    public function getHaveToCreateUser(): ?bool
+    {
+        return  $this->haveToCreateUser;
+    }
+
+    public function setHaveToCreateUser($haveToCreateUser): self
+    {
+        $this->haveToCreateUser = $haveToCreateUser;
+        return $this;
+    }
+
     public function getTournament(): ?Tournament
     {
         return $this->tournament;
@@ -181,17 +196,6 @@ class TournamentRegistration
     {
         $this->tournament = $tournament;
 
-        return $this;
-    }
-
-    public function getTournamentId(): ?int
-    {
-        return $this->tournamentId;
-    }
-
-    public function setTournamentId($tournamentId): self
-    {
-        $this->tournamentId = $tournamentId;
         return $this;
     }
 
@@ -235,6 +239,17 @@ class TournamentRegistration
     public function setTournamentEndDate($tournamentEndDate): self
     {
         $this->tournamentEndDate = $tournamentEndDate;
+        return $this;
+    }
+
+    public function getHaveToCreateTournament(): ?bool
+    {
+        return  $this->haveToCreateTournament;
+    }
+
+    public function setHaveToCreateTournament($haveToCreateTournament): self
+    {
+        $this->haveToCreateTournament = $haveToCreateTournament;
         return $this;
     }
 
