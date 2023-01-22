@@ -425,7 +425,7 @@ class ApiTournamentRegistrationController extends AbstractController
      */
     #[IsGranted("ROLE_MEMBER")]
     #[Route("/tournament-registration/{id}", "api_tournamentRegistration_updateRegistration", methods: "PATCH")]
-    public function updateRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, ValidatorInterface $validator, int $id): JsonResponse
+    public function updateRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, SerializerInterface $serializer, int $id): JsonResponse
     {
         $registration = $tournamentRegistrationRepo->findOneBy(["user" => $this->getUser(), "id" => $id]);
         $jsonReceived = $request->getContent();
@@ -478,6 +478,7 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setComment($updatedRegistration->getComment());
         }
 
+        $registration->setRequestState("pending");
         $registration->setUpdatedAt(new \DateTime());
         $tournamentRegistrationRepo->add($registration, true);
         return $this->json($registration, 201, context: ["groups" => "registration:update"]);
