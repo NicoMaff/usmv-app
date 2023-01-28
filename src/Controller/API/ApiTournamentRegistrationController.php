@@ -106,8 +106,8 @@ class ApiTournamentRegistrationController extends AbstractController
         $tournamentSearch = [
             "name" => $registration->getTournamentName(),
             "city" => $registration->getTournamentCity(),
-            "startDate" => new \DateTime($registration->getTournamentStartDate()),
-            "endDate" => new \DateTime($registration->getTournamentEndDate())
+            "startDate" => $registration->getTournamentStartDate(),
+            "endDate" => $registration->getTournamentEndDate()
         ];
         if ($tournamentRepo->findOneBy($tournamentSearch)) {
             $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
@@ -193,8 +193,8 @@ class ApiTournamentRegistrationController extends AbstractController
         $tournamentSearch = [
             "name" => $registration->getTournamentName(),
             "city" => $registration->getTournamentCity(),
-            "startDate" => new \DateTime($registration->getTournamentStartDate()),
-            "endDate" => new \DateTime($registration->getTournamentEndDate())
+            "startDate" => $registration->getTournamentStartDate(),
+            "endDate" => $registration->getTournamentEndDate()
         ];
         if ($tournamentRepo->findOneBy($tournamentSearch)) {
             $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
@@ -247,8 +247,8 @@ class ApiTournamentRegistrationController extends AbstractController
         $tournamentSearch = [
             "name" => $registration->getTournamentName(),
             "city" => $registration->getTournamentCity(),
-            "startDate" => new \DateTime($registration->getTournamentStartDate()),
-            "endDate" => new \DateTime($registration->getTournamentEndDate())
+            "startDate" => $registration->getTournamentStartDate(),
+            "endDate" => $registration->getTournamentEndDate()
         ];
         if ($tournamentRepo->findOneBy($tournamentSearch)) {
             $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
@@ -387,8 +387,8 @@ class ApiTournamentRegistrationController extends AbstractController
         $tournamentSearch = [
             "name" => $updatedRegistration->getTournamentName(),
             "city" => $updatedRegistration->getTournamentCity(),
-            "startDate" => new \DateTime($updatedRegistration->getTournamentStartDate()),
-            "endDate" => new \DateTime($updatedRegistration->getTournamentEndDate())
+            "startDate" => $updatedRegistration->getTournamentStartDate(),
+            "endDate" => $updatedRegistration->getTournamentEndDate()
         ];
         if ($tournamentRepo->findOneBy($tournamentSearch)) {
             $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
@@ -503,8 +503,8 @@ class ApiTournamentRegistrationController extends AbstractController
         $tournamentSearch = [
             "name" => $updatedRegistration->getTournamentName(),
             "city" => $updatedRegistration->getTournamentCity(),
-            "startDate" => new \DateTime($updatedRegistration->getTournamentStartDate()),
-            "endDate" => new \DateTime($updatedRegistration->getTournamentEndDate())
+            "startDate" => $updatedRegistration->getTournamentStartDate(),
+            "endDate" => $updatedRegistration->getTournamentEndDate()
         ];
         if ($tournamentRepo->findOneBy($tournamentSearch)) {
             $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
