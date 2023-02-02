@@ -8,10 +8,10 @@ gesdinet_jwt_refresh_token:
 
   # cookie:
   #   enabled: true
-  #   remove_token_from_body: true
+  #   remove_token_from_body: false
   #   # Cookie parameters
   #   http_only: true
   #   same_site: none
   #   secure: true
   #   path: /api/
-  # domain: null
+  #   domain: null

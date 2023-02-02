@@ -8,8 +8,12 @@ where (
     and new.first_name = ffbad_stat.first_name
   );
 end;
+-- 
+-- 
 Select *
 from usmv_app.ffbad_stat;
+-- 
+-- 
 Select *
 from ffbad_data.ffbad_stat;
 insert into usmv_app.ffbad_stat (

@@ -1,0 +1,46 @@
+.admin-home {
+  h2 {
+    font-weight: 500;
+    margin-top: clamp(3rem, 8vmin, 5rem);
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: auto;
+
+    @include ptt {
+      flex-direction: row;
+      min-width: clamp(35rem, 90vw, 45rem);
+      margin-top: 3rem;
+    }
+  }
+
+  li {
+    // min-width: 10rem;
+    margin: 1rem 0;
+    // padding: 1.2rem;
+    background: $bg-3;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2rem;
+
+    @include fine {
+      &:hover {
+        background: $bg-1;
+
+        a {
+          color: $content-light;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  a {
+    display: inline-block;
+    min-width: 10rem;
+    padding: 1.2rem 0.6rem;
+  }
+}

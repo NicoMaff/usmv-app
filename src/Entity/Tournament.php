@@ -16,33 +16,33 @@ class Tournament
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $city = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\LessThan(propertyPath: "endDate")]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(length: 100)]
     #[Assert\Length(min: 9, max: 9)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $season = null;
 
     #[ORM\Column]
-    #[Groups(["tournament:read"])]
+    #[Groups(["tournament:read", "registration:create", "registration:update"])]
     private ?bool $isTeamCompetition = false;
 
     #[ORM\Column(nullable: true)]
@@ -92,12 +92,12 @@ class Tournament
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\LessThanOrEqual(propertyPath: "randomDraw")]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?\DateTimeInterface $registrationClosingDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\LessThan(propertyPath: "startDate")]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?\DateTimeInterface $randomDraw = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -109,31 +109,31 @@ class Tournament
     private ?string $telContact = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(["tournament:read"])]
+    #[Groups(["tournament:read", "registration:create", "registration:update"])]
     private ?string $registrationMethod = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(["tournament:read"])]
+    #[Groups(["tournament:read", "registration:create", "registration:update"])]
     private ?string $paymentMethod = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $regulationFileName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $regulationFileUrl = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["tournament:read", "registration:read"])]
+    #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $comment = null;
 
     #[ORM\Column]
-    #[Groups(["tournament:read"])]
+    #[Groups(["tournament:read", "registration:create", "registration:update"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(["tournament:read"])]
+    #[Groups(["tournament:read", "registration:create", "registration:update"])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'tournament', targetEntity: TournamentRegistration::class)]

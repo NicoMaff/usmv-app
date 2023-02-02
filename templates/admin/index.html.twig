@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Bienvenue {{ app.user.firstName }}{% endblock %}
+
+{% block main %}
+
+{# <pre>
+    {{ dump(app.user) }}
+</pre> #}
+
+<main class="admin-home">
+<h1>Bienvenue {{ app.user.firstName }}</h1>
+<h2>Que souhaitez-vous gérer ?</h2>
+<ul>
+    <li><a href="{{ path("app_admin_home_articles") }}">Articles</a></li>
+    <li><a href="">Événements</a></li>
+    <li><a href="">Contacts</a></li>
+</ul>
+</main>
+{% endblock %}
