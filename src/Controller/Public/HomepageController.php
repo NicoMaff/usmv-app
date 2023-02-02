@@ -26,13 +26,13 @@ class HomepageController extends AbstractController
 
         if ($eventRepo->findAllFromToday()) {
             $eventsReceived = $eventRepo->findAllFromToday(); // to get all events from today (today is included)
-
-
             $eventsSelected = [];
-            for ($i = 0; $i <= 4; $i++) {
+
+            for ($i = 0; $i < 5 && $i < count($eventsReceived); $i++) {
                 array_push($eventsSelected, $eventsReceived[$i]);
             }
-            $events = array_reverse($eventsSelected); // to put newest events first
+            // $events = array_reverse($eventsSelected); // to put newest events first
+            $events = ($eventsSelected); // to put newest events first
         } else {
             $events = [];
         }
@@ -45,7 +45,9 @@ class HomepageController extends AbstractController
             $contactRepo->add($contact, true);
 
             $email = (new Email())
-                ->from(Address::create($contact->getFirstName() . " " . $contact->getLastName() . " <" . $contact->getEmail() . ">"))
+                ->sender("no-reply@villeparisisbadminton77.fr")
+                // ->from($contact->getFirstName() . " " . $contact->getLastName() . " <" . $contact->getRecipient() . ">")
+                // ->from(Address::create($contact->getFirstName() . " " . $contact->getLastName() . " <" . $contact->getEmail() . ">"))
                 ->to($contact->getRecipient())
                 ->replyTo($contact->getEmail())
                 ->subject("[Site USMV Badminton] - Formulaire de contact")
