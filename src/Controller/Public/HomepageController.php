@@ -22,17 +22,12 @@ class HomepageController extends AbstractController
     {
         if ($articleRepo->findLast10()) {
             $articles = $articleRepo->findLast10();
+        } else {
+            $articles = [];
         }
 
         if ($eventRepo->findAllFromToday()) {
-            $eventsReceived = $eventRepo->findAllFromToday(); // to get all events from today (today is included)
-            $eventsSelected = [];
-
-            for ($i = 0; $i < 5 && $i < count($eventsReceived); $i++) {
-                array_push($eventsSelected, $eventsReceived[$i]);
-            }
-            // $events = array_reverse($eventsSelected); // to put newest events first
-            $events = ($eventsSelected); // to put newest events first
+            $events = $eventRepo->findAllFromToday();
         } else {
             $events = [];
         }
