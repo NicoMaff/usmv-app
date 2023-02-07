@@ -47,6 +47,7 @@ class EventRepository extends ServiceEntityRepository
             // by default, DateTime is set at 00:00:00, it now sets at yesterday to include "today"
             ->andWhere("e.visible = true")
             ->orderBy("e.startDate", "ASC")
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }

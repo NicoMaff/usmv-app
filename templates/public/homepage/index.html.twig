@@ -129,20 +129,20 @@
 {% endblock %}
 
 {% block js %}
-    <script src="/js/homepage.js"></script>
+    <script src="{{ asset("js/homepage.js") }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>
       var swiper = new Swiper(".mySwiper", {
         effect: "cards",
         grabCursor: true,
-        loop: true,
+        loop: false,
         autoplay: {
-          delay: 2000,
+            delay: 2000,
             disableOnInteraction: false,
         },
         pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
+            el: ".swiper-pagination",
+            clickable: true,
         },
       });
     </script>

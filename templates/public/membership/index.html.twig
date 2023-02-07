@@ -30,7 +30,7 @@
 
         <div class="procedure">
             <h2><span>"Engagez-vous,</span><span>rengagez-vous !"</span></h2>
-            <img src="/assets/img/adhesion.png" alt="représentation d'une affiche dont le but est de recruter des membres">
+            <img src="{{ asset("assets/img/adhesion.png") }}" alt="représentation d'une affiche dont le but est de recruter des membres">
 
             <div class="infos">
                 <p>
@@ -76,7 +76,7 @@
                                     * saisir votre numéro de licence et cliquez sur “Pas de mot de passe” pour recevoir un email vous invitant à en créer un (vérifier vos courriers indésirables)
                                 </span>
                                 <div class="links">
-                                    <img src="/assets/img/qr-code-adhesion.png" alt="QR Code redirigeant vers le site fédéral d'adhésion au club de Villeparisis Badminton">
+                                    <img src="{{ asset("assets/img/qr-code-adhesion.png") }}" alt="QR Code redirigeant vers le site fédéral d'adhésion au club de Villeparisis Badminton">
                                     <a href="https://adherer.myffbad.fr/usmv77" class="btn btn-level1">adherer.myffbad.fr/usmv77</a>
                                 </div>
                                 <span>
@@ -217,5 +217,5 @@
 {% endblock %}
 
 {% block js %}
-    <script src="/js/membership.js"></script>
+    <script src="{{ asset("js/membership.js") }}"></script>
 {% endblock %}
