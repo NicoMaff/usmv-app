@@ -270,7 +270,7 @@ class ApiTournamentRegistrationController extends AbstractController
      * The selection only concern the registration (and not the user). 
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_readOneMemberRegistration", methods: "GET")]
+    #[Route("/admin/tournament-registration/{id}", "api_tournamentRegistration_readOneMemberRegistration", methods: ["GET"])]
     public function readOneMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, context: ["groups" => "registration:read"]);
@@ -282,7 +282,7 @@ class ApiTournamentRegistrationController extends AbstractController
      * The selection only concern the registration (and not the user). 
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/admin/tournament-registrations", "api_tournamentRegistration_readOneMemberRegistration", methods: "GET")]
+    #[Route("/admin/tournament-registrations", "api_tournamentRegistration_readAllMemberRegistrations", methods: "GET")]
     public function readAllMembersRegistrations(TournamentRegistrationRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, context: ["groups" => "registration:read"]);
@@ -434,16 +434,16 @@ class ApiTournamentRegistrationController extends AbstractController
         if ($updatedRegistration->getRequestState()) {
             $registration->setRequestState($updatedRegistration->getRequestState());
         }
-        if ($updatedRegistration->isHasParticipated()) {
+        if ($updatedRegistration->isHasParticipated() !== NULL) {
             $registration->setHasParticipated($updatedRegistration->getHasParticipated());
         }
-        if ($updatedRegistration->isParticipationSingle()) {
+        if ($updatedRegistration->isParticipationSingle() !== NULL) {
             $registration->setParticipationSingle($updatedRegistration->isParticipationSingle());
         }
-        if ($updatedRegistration->isParticipationDouble()) {
+        if ($updatedRegistration->isParticipationDouble() !== NULL) {
             $registration->setParticipationDouble($updatedRegistration->isParticipationDouble());
         }
-        if ($updatedRegistration->isParticipationMixed()) {
+        if ($updatedRegistration->isParticipationMixed() !== NULL) {
             $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
         }
         if ($updatedRegistration->getSingleStageReached()) {
@@ -514,14 +514,13 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournamentEndDate(null);
         }
 
-
-        if ($updatedRegistration->isParticipationSingle()) {
+        if ($updatedRegistration->isParticipationSingle() !== NULL) {
             $registration->setParticipationSingle($updatedRegistration->isParticipationSingle());
         }
-        if ($updatedRegistration->isParticipationDouble()) {
+        if ($updatedRegistration->isParticipationDouble() !== NULL) {
             $registration->setParticipationDouble($updatedRegistration->isParticipationDouble());
         }
-        if ($updatedRegistration->isParticipationMixed()) {
+        if ($updatedRegistration->isParticipationMixed() !== NULL) {
             $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
         }
         if ($updatedRegistration->getSingleStageReached()) {

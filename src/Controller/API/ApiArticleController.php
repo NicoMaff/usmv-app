@@ -122,6 +122,11 @@ class ApiArticleController extends AbstractController
             $article->setThirdAdditionalImageUrl($destination . $newFileName);
         }
 
+        /** Set article visibility on true by default */
+        if ($article->isVisible() === NULL) {
+            $article->setVisible(true);
+        }
+
         $errors = $validator->validate($article);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
@@ -211,7 +216,7 @@ class ApiArticleController extends AbstractController
         if ($updatedArticle->getContent()) {
             $article->setContent($updatedArticle->getContent());
         }
-        if ($updatedArticle->isVisible()) {
+        if ($updatedArticle->isVisible() !== NULL) {
             $article->setVisible($updatedArticle->isVisible());
         }
 

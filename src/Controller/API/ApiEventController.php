@@ -63,6 +63,11 @@ class ApiEventController extends AbstractController
             $event->setImageUrl($this->getParameter("kernel.project_dir") . "/public/assets/img/events/event-default-image.jpeg");
         }
 
+        /** Set event visibility on true by default */
+        if ($event->isVisible() === NULL) {
+            $event->setVisible(true);
+        }
+
         $errors = $validator->validate($event);
         if (count($errors) > 0) {
             return $this->json($errors, 400);
@@ -128,7 +133,7 @@ class ApiEventController extends AbstractController
         if ($updatedEvent->getContent()) {
             $event->setContent($updatedEvent->getContent());
         }
-        if ($updatedEvent->isVisible()) {
+        if ($updatedEvent->isVisible() !== NULL) {
             $event->setVisible($updatedEvent->isVisible());
         }
         if (isset($uploadedFile)) {

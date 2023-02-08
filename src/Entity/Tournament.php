@@ -41,9 +41,9 @@ class Tournament
     #[Groups(["tournament:read", "registration:read", "registration:create", "registration:update"])]
     private ?string $season = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     #[Groups(["tournament:read", "registration:create", "registration:update"])]
-    private ?bool $isTeamCompetition = false;
+    private ?bool $isTeamCompetition = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]

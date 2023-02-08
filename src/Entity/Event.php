@@ -45,8 +45,8 @@ class Event
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageUrl = null;
 
-    #[ORM\Column]
-    private ?bool $visible = true;
+    #[ORM\Column(nullable: true)]
+    private ?bool $visible = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;

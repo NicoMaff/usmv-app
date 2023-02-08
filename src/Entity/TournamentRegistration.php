@@ -70,21 +70,21 @@ class TournamentRegistration
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?string $requestState = "pending";
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $hasParticipated = false;
+    private ?bool $hasParticipated = null;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column(nullable: true)]
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $participationSingle = false;
+    private ?bool $participationSingle = null;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column(nullable: true)]
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $participationDouble = false;
+    private ?bool $participationDouble = null;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column(nullable: true)]
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $participationMixed = false;
+    private ?bool $participationMixed = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]

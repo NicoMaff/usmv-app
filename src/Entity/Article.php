@@ -66,8 +66,8 @@ class Article
     #[Groups("article:read", "article:write", "article:update")]
     private ?string $thirdAdditionalImageUrl = null;
 
-    #[ORM\Column]
-    private ?bool $visible = true;
+    #[ORM\Column(nullable: true)]
+    private ?bool $visible = null;
 
     #[ORM\Column]
     #[Groups("article:read", "article:write")]

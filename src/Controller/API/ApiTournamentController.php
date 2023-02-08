@@ -5,6 +5,7 @@ namespace App\Controller\API;
 use App\Entity\Tournament;
 use App\Repository\TournamentRepository;
 use Exception;
+use phpDocumentor\Reflection\Types\Null_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -47,6 +48,10 @@ class ApiTournamentController extends AbstractController
 
         if ($tournament->getStartDate()->diff($tournament->getEndDate())->days >= 10) {
             throw new Exception("The interval between the start and the end of the tournament is too long");
+        }
+
+        if ($tournament->isTeamCompetition() === NULL) {
+            $tournament->setIsTeamCompetition(false);
         }
 
         if (isset($uploadedFile)) {
@@ -138,6 +143,9 @@ class ApiTournamentController extends AbstractController
             }
             if ($updatedTournament->getEndDate()) {
                 $tournament->setEndDate($updatedTournament->getEndDate());
+            }
+            if ($updatedTournament->isTeamCompetition() !== NULL) {
+                $tournament->setIsTeamCompetition($updatedTournament->isTeamCompetition());
             }
             if ($updatedTournament->getStandardPrice1()) {
                 $tournament->setStandardPrice1($updatedTournament->getStandardPrice1());
