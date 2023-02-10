@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\API;
 
 use App\Entity\FFBadStat;
+use App\Repository\FFBadStatRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class FFBadController extends AbstractController
 {
-    #[Route('/ffbad', name: 'app_ffbad_index')]
-    public function index(UserRepository $userRepository): Response
+    #[Route('/api/ffbad', name: 'api_ffbad_index', methods: ["POST"])]
+    public function index(UserRepository $userRepository, FFBadStatRepository $ffbadStatRepository): JsonResponse
     {
         $data = json_decode(file_get_contents("https://api.ffbad.org/club/?TokenClub=30908181&Mode=smart"));
-        // dd($data[0]);
+
         foreach ($data as $d) {
             $stat = new FFBadStat();
             $arrayDate = explode("-", $d->DATE);
@@ -69,18 +69,14 @@ class FFBadController extends AbstractController
                 $stat->setIsDataPlayerPublic(false);
             }
 
-            // $user = $userRepository->findBy(["lastName" => "MEMBER", "firstName" => "Member"]);
             $user = $userRepository->findBy(["lastName" => $stat->getLastName(), "firstName" => $stat->getFirstName()]);
             if ($user) {
                 $stat->setUser($user[0]);
             }
 
-            dd($stat, $user);
+            $ffbadStatRepository->add($stat, true);
         }
-        dd();
 
-        return $this->render('ff_bad/index.html.twig', [
-            "stats" => $data
-        ]);
+        return $this->json("The extraction has succeeded!", 201);
     }
 }
