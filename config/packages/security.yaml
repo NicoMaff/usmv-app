@@ -68,9 +68,13 @@ security:
     - {
         path: ^/api/(login|token/refresh|user/account|tournament-registration-unauthenticated),
         roles: PUBLIC_ACCESS,
-        require_channel: "https",
+        # requires_channel: "https",
       }
-    - { path: ^/api/ffbad, ip: "%env()%", require_channel: https }
+    - {
+        path: ^/api/ffbad,
+        ip: "%env(SERVER_IP)%",
+        # requires_channel: https
+      }
     - { path: ^/api/reset_password, roles: PUBLIC_ACCESS }
     # - { path: ^/api/login, roles: PUBLIC_ACCESS }
     # - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
