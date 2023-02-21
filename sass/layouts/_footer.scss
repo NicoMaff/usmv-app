@@ -3,15 +3,17 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  gap: 0.6rem;
   background: $bg-1;
   color: $content-light;
-  min-height: 24rem;
+  // min-height: 24rem;
   min-width: 100vw;
   padding: 2rem 0;
   border-radius: 20px 20px 0 0;
 
   @media (min-width: 600px) {
-    min-height: 14rem;
+    // min-height: 14rem;
+    gap: 1.2rem;
   }
 
   ul {
@@ -19,13 +21,21 @@ footer {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    min-height: 12rem;
+    // min-height: 12rem;
 
     li {
       padding: 0.6rem 1rem;
       font-weight: 500;
       font-size: 0.9rem;
       text-align: center;
+
+      @include ptt {
+        font-size: 1.1rem;
+      }
+    }
+
+    a {
+      color: $content-light;
     }
 
     @media (min-width: 600px) {
@@ -45,9 +55,14 @@ footer {
     a {
       padding: 0.6rem;
       // display: block;
-    }
-    i {
       font-size: 2.5rem;
+
+      &:last-of-type {
+        font-size: 2.1rem;
+      }
+    }
+
+    i {
       color: $content-light;
     }
   }

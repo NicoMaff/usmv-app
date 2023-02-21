@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        <meta name="description" content="L'Union Sportive Municipale de Villeparisis (USMV) Badminton est un cub renommé de la Seine-et-Marne. Elle participe au développement du badminton à travers son école 2 étoiles.">
         <title>{% block title %}USMV Badminton{% endblock %}</title>
         <link rel="stylesheet" href=" {{ asset("css/style.css") }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -64,12 +65,12 @@
                                 <li><a href="{{ path("app_competitions_infos") }}">Créneaux / Infos pratiques</a></li>
                                 <li><a href="{{ path("app_competitions_trainings") }}">Entraînements</a></li>
                                 <li><a href="{{ path("app_competitions_badtour") }}">Tournois "BadTour"</a></li>
-                                <li><a href="{{ path("app_competitions_interclubs") }}">InterClubs / Équipes</a></li>
+                                <li style="display:none;"><a href="{{ path("app_competitions_interclubs") }}">InterClubs / Équipes</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ path("app_leisures_index") }}">Loisirs</a></li>
                         <li><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
-                        <li><a href="#">Liens</a></li>
+                        <li style="display:none;"><a href="#">Liens</a></li>
                     </ul>
                 </div>
             </nav>
@@ -105,19 +106,19 @@
                             <li><a href="{{ path("app_competitions_infos") }}">Créneaux / Infos pratiques</a></li>
                             <li><a href="{{ path("app_competitions_trainings") }}">Entraînements</a></li>
                             <li><a href="{{ path("app_competitions_badtour") }}">Tournois "BadTour"</a></li>
-                            <li><a href="{{ path("app_competitions_interclubs") }}">InterClubs / Équipes</a></li>
+                            <li style="display:none;"><a href="{{ path("app_competitions_interclubs") }}">InterClubs / Équipes</a></li>
                         </ul>
                     </li>
                     <li class="tablet-responsive"><i class="fa-solid fa-ellipsis"></i>
                         <ul class="other-links">
                             <li><a href="{{ path("app_leisures_index") }}">Loisirs</a></li>
                             <li><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
-                            <li><a href="#">Liens</a></li>
+                            <li style="display:none;"><a href="#">Liens</a></li>
                         </ul>
                     </li>
                     <li class="desktop-responsive"><a href="{{ path("app_leisures_index") }}">Loisirs</a></li>
                     <li class="desktop-responsive"><a href="{{ path("app_partners_index") }}">Partenaires</a></li>
-                    <li class="desktop-responsive"><a href="#">Liens</a></li>
+                    <li style="display:none;" class="desktop-responsive"><a href="#">Liens</a></li>
                 </ul>
             </nav>
         </header>
@@ -126,15 +127,16 @@
         
         <footer>
             <ul>
-                <li>Nous contacter</li>
+                {# <li>Nous contacter</li>
                 <li>Plan du site</li>
-                <li>Mentions légales</li>
-                <li>Écrire au webmaster</li>
-                <li><a href="{{ path("app_security_login") }}">Se connecter à l'espace admin</a></li>
+                <li>Mentions légales</li> #}
+                <li><a href="mailto:competitions@villeparisisbadminton77.fr">Écrire au webmaster</a></li>
+                {# <li><a href="{{ path("app_security_login") }}">Se connecter à l'espace admin</a></li> #}
             </ul> 
             <div class="networks-icon">
-                <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/usmvilleparisisbadminton/"><i class="fa-brands fa-square-facebook"></i></a>
+                <a href="https://www.instagram.com/usmvilleparisis_badminton/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@usmv.badminton_77?_d=secCgYIASAHKAESPgo8cZ9DEA874IF6%2FKAI2p%2FIRLzqJMvBwUecOsTwXhcu%2FSpPr0ajsG6UJC0n%2BtAylXm2yDhIn%2BZnfDM9yCknGgA%3D&object_id=7168564033372652549&page_open_method=scan_code&schema_type=4&sec_uid=MS4wLjABAAAAgqbNFjuZu_V5wmshGK1YgBMCS6hbOzSkI7Tqsr2eGPEOopSsHaPFRxY_YBu3A-DA&share_app_id=1233&share_author_id=7168564033372652549&share_uid=7168564033372652549&tt_from=scan_code&utm_campaign=client_scan_code&utm_medium=1&utm_source=scan_code&_r=1"><i class="fa-brands fa-tiktok"></i></a>
             </div>
             <p>Copyright © 2022 USMV Badminton</p>
         </footer>

@@ -62,9 +62,10 @@ const backButtons = document.querySelectorAll(".sub-menu-header i");
 const tabs = document.querySelectorAll(".tab");
 
 tabs.forEach((tab) => {
-  tab.addEventListener("click", (e) =>
-    e.target.children[0].classList.add("move-in")
-  );
+  tab.addEventListener("click", (e) => {
+    if (!e.target.children[0]) return;
+    e.target.children[0].classList.add("move-in");
+  });
 });
 
 backButtons.forEach((button) => {

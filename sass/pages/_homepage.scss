@@ -58,8 +58,8 @@
       a {
         display: flex;
         flex-direction: column;
-        justify-content: end;
-        align-items: end;
+        justify-content: flex-end;
+        align-items: flex-end;
         position: relative;
         height: 100%;
         // height: clamp(13rem, 42vmin, 25rem);
@@ -67,7 +67,7 @@
 
       &-title {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         align-items: center;
         width: 100%;
         position: absolute;
@@ -100,7 +100,7 @@
 
     .btn-container {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
     }
   }
@@ -200,7 +200,7 @@
 
     .btn-container {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
     }
   }
@@ -286,7 +286,7 @@
     .btn-container {
       width: 100%;
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
       // margin-top: 0.6rem;
     }

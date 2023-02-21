@@ -103,7 +103,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    row-gap: 20px;
+    row-gap: 2.7rem;
     column-gap: clamp(10px, 8vmin, 40px);
     // position: relative;
     overflow: hidden;
@@ -112,11 +112,13 @@
   .sub-menu {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    // justify-content: space-around;
+    justify-content: center;
     align-items: center;
     // gap: clamp(20px, 5vmin, 40px);
+    gap: 2.3rem;
     min-width: 100%;
-    min-height: 70%;
+    min-height: 85%;
     padding-bottom: 2.5rem;
     position: absolute;
     bottom: 0;
