@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FFBadController extends AbstractController
+class ApiFFBadController extends AbstractController
 {
     #[Route('/api/ffbad', name: 'api_ffbad_index', methods: ["POST"])]
     public function index(UserRepository $userRepository, FFBadStatRepository $ffbadStatRepository): JsonResponse
