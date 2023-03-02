@@ -13,7 +13,7 @@ class TournamentRegistration
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
@@ -21,22 +21,22 @@ class TournamentRegistration
     #[Groups(["registration:create", "registration:read", "registration:update"])]
     private ?User $user = null;
 
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?int $userId = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $userLastName = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $userFirstName = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $userEmail = null;
 
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?bool $haveToCreateUser = false;
 
     #[ORM\ManyToOne(inversedBy: 'tournamentRegistrations')]
@@ -44,77 +44,74 @@ class TournamentRegistration
     #[Groups(["registration:create", "registration:read", "registration:update"])]
     private ?Tournament $tournament = null;
 
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?int $tournamentId = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $tournamentName = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $tournamentCity = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?\DateTimeInterface $tournamentStartDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?\DateTimeInterface $tournamentEndDate = null;
 
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?bool $haveToCreateTournament = false;
 
     #[ORM\Column(length: 100)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $requestState = "pending";
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?bool $hasParticipated = null;
-
-    #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?bool $participationSingle = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?bool $participationDouble = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?bool $participationMixed = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $doublePartnerName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $doublePartnerClub = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $mixedPartnerName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $mixedPartnerClub = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?string $comment = null;
 
     #[ORM\Column]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\OneToOne(mappedBy: 'TournamentRegistration', cascade: ['persist', 'remove'])]
+    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read"])]
     private ?Result $result = null;
 
     public function __construct()
@@ -281,18 +278,6 @@ class TournamentRegistration
     public function setRequestState(string $requestState): self
     {
         $this->requestState = $requestState;
-
-        return $this;
-    }
-
-    public function isHasParticipated(): ?bool
-    {
-        return $this->hasParticipated;
-    }
-
-    public function setHasParticipated(bool $hasParticipated): self
-    {
-        $this->hasParticipated = $hasParticipated;
 
         return $this;
     }

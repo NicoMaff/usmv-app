@@ -42,6 +42,20 @@ class ApiResultController extends AbstractController
      * An ADMIN can read a result of one member tournament
      */
 
+    /**
+     * GET
+     * A MEMBER can read one of his results
+     */
+
+    /**
+     * GET
+     * A MEMBER can read all of his results
+     */
+    #[Route("/results", name: "api_results_readAllResults", methods: ["GET"])]
+    public function readAllResults(ResultRepository $repository): JsonResponse
+    {
+        return $this->json($repository->findAll(), 200, context: ["groups" => "result:read"]);
+    }
 
 
     /**
@@ -57,6 +71,6 @@ class ApiResultController extends AbstractController
         } else {
             $result->setAreResultsValidated(!$result->getAreResultsValidated());
         }
-        return $this->json($result, 201, context: ["groups" => "registration:update"]);
+        return $this->json($result, 201, context: ["groups" => "result:update"]);
     }
 }
