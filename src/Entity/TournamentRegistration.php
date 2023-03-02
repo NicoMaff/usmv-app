@@ -86,18 +86,6 @@ class TournamentRegistration
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?bool $participationMixed = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?string $singleStageReached = null;
-
-    #[ORM\Column(length: 20, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?string $doubleStageReached = null;
-
-    #[ORM\Column(length: 20, nullable: true)]
-    #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
-    private ?string $mixedStageReached = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?string $doublePartnerName = null;
@@ -126,9 +114,13 @@ class TournamentRegistration
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read"])]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\OneToOne(mappedBy: 'TournamentRegistration', cascade: ['persist', 'remove'])]
+    private ?Result $result = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->result = new Result();
         return $this;
     }
 
@@ -341,42 +333,6 @@ class TournamentRegistration
         return $this;
     }
 
-    public function getSingleStageReached(): ?string
-    {
-        return $this->singleStageReached;
-    }
-
-    public function setSingleStageReached(?string $singleStageReached): self
-    {
-        $this->singleStageReached = $singleStageReached;
-
-        return $this;
-    }
-
-    public function getDoubleStageReached(): ?string
-    {
-        return $this->doubleStageReached;
-    }
-
-    public function setDoubleStageReached(?string $doubleStageReached): self
-    {
-        $this->doubleStageReached = $doubleStageReached;
-
-        return $this;
-    }
-
-    public function getMixedStageReached(): ?string
-    {
-        return $this->mixedStageReached;
-    }
-
-    public function setMixedStageReached(?string $mixedStageReached): self
-    {
-        $this->mixedStageReached = $mixedStageReached;
-
-        return $this;
-    }
-
     public function getDoublePartnerName(): ?string
     {
         return $this->doublePartnerName;
@@ -457,6 +413,28 @@ class TournamentRegistration
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getResult(): ?Result
+    {
+        return $this->result;
+    }
+
+    public function setResult(?Result $result): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($result === null && $this->result !== null) {
+            $this->result->setTournamentRegistration(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($result !== null && $result->getTournamentRegistration() !== $this) {
+            $result->setTournamentRegistration($this);
+        }
+
+        $this->result = $result;
 
         return $this;
     }
