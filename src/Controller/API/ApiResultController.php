@@ -5,6 +5,7 @@ namespace App\Controller\API;
 use App\Entity\Result;
 use App\Repository\ResultRepository;
 use App\Repository\TournamentRegistrationRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +72,40 @@ class ApiResultController extends AbstractController
         } else {
             $result->setAreResultsValidated(!$result->getAreResultsValidated());
         }
+        return $this->json($result, 201, context: ["groups" => "result:update"]);
+    }
+
+    /**
+     * PATCH
+     * A MEMBER can update one of his results
+     */
+    #[Route("/result/{id}", name: "api_result_updateOneResult", methods: ["PATCH"])]
+    public function updateOneResult(ResultRepository $repository, int $id, Request $request, SerializerInterface $serializer): JsonResponse
+    {
+        // $result = $repository->findOneBy(["user" => $this->getUser(), "id" => $id]);
+        $result = $repository->find($id);
+        $jsonReceived = $request->getContent();
+        $updatedResult = $serializer->deserialize($jsonReceived, Result::class, "json");
+
+        if ($result === null) {
+            throw new Exception("The result's id selected does not belong to this user.");
+        }
+
+        if ($result->getSingleStageReached() !== $updatedResult->getSingleStageReached()) $result->setSingleStageReached($updatedResult->getSingleStageReached());
+        if ($result->getDoubleStageReached() !== $updatedResult->getDoubleStageReached()) $result->setDoubleStageReached($updatedResult->getDoubleStageReached());
+        if ($result->getMixedStageReached() !== $updatedResult->getMixedStageReached()) $result->setMixedStageReached($updatedResult->getMixedStageReached());
+        if ($result->getComment() !== $updatedResult->getComment()) $result->setComment($updatedResult->getComment());
+
+        if (
+            $result->getSingleStageReached() !== $updatedResult->getSingleStageReached() ||
+            $result->getDoubleStageReached() !== $updatedResult->getDoubleStageReached() ||
+            $result->getMixedStageReached() !== $updatedResult->getMixedStageReached()
+        ) {
+            $result->setAreResultsValidated(false);
+        }
+        // dd($result);
+        $result->setUpdatedAt(new \DateTime());
+        $repository->add($result, true);
         return $this->json($result, 201, context: ["groups" => "result:update"]);
     }
 }
