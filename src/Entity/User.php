@@ -107,11 +107,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user:read", "user:create", "user:update"])]
     private Collection $FFBadStats;
 
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Result::class)]
+    private Collection $results;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->tournamentRegistrations = new ArrayCollection();
         $this->FFBadStats = new ArrayCollection();
+        $this->results = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -393,6 +397,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($fFBadStat->getUser() === $this) {
                 $fFBadStat->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Result>
+     */
+    public function getResults(): Collection
+    {
+        return $this->results;
+    }
+
+    public function addResult(Result $result): self
+    {
+        if (!$this->results->contains($result)) {
+            $this->results->add($result);
+            $result->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResult(Result $result): self
+    {
+        if ($this->results->removeElement($result)) {
+            // set the owning side to null (unless already changed)
+            if ($result->getUser() === $this) {
+                $result->setUser(null);
             }
         }
 

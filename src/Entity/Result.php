@@ -48,6 +48,9 @@ class Result
     #[Groups(["registration:create", "registration:read", "registration:update", "user:create", "user:read", "user:update", "tournament:read", "result:read", "result:update"])]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'results')]
+    private ?User $User = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -150,6 +153,18 @@ class Result
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }
