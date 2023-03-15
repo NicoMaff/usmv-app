@@ -422,7 +422,7 @@ class ApiUserController extends AbstractController
      */
     #[Route("user", name: "api_user_updateAccountDetails", methods: ["POST", "PATCH"])]
     #[IsGranted("ROLE_MEMBER")]
-    public function updateAccountDetails(UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, Request $request, int $id, ValidatorInterface $validator): JsonResponse
+    public function updateAccountDetails(UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, Request $request, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
         if ($request->request->get("data")) {
@@ -437,15 +437,17 @@ class ApiUserController extends AbstractController
             $uploadedFile = $request->files->get("file");
         }
 
-        $user = $repository->findOneBy(["email" => $this->getUser()->getUserIdentifier()]);
+        $user = $repository->find($this->getUser()->getUserIdentifier());
+
         $newUserInfos = $serializer->deserialize($jsonReceived, User::class, "json");
 
-        if ($newUserInfos->getEmail()) {
+        if ($newUserInfos->getEmail() !== NULL) {
             $user->setEmail($newUserInfos->getEmail());
         }
-        if ($newUserInfos->getPassword()) {
+
+        if ($newUserInfos->getPassword() !== NULL) {
             if ($newUserInfos->getPreviousPassword() && $newUserInfos->getConfirmPassword()) {
-                $validPassword = $hasher->isPasswordValid($user, $newUserInfos->previousPassword);
+                $validPassword = $hasher->isPasswordValid($user, $newUserInfos->getPreviousPassword());
                 if ($validPassword) {
                     if ($newUserInfos->getPassword() === $newUserInfos->getConfirmPassword()) {
                         $hashedPassword = $hasher->hashPassword($user, $newUserInfos->getPassword());
@@ -460,10 +462,10 @@ class ApiUserController extends AbstractController
                 throw new Exception("At least one information related to password is missing.");
             }
         }
-        if ($newUserInfos->getLastName()) {
+        if ($newUserInfos->getLastName() !== NULL) {
             $user->setLastName(strtoupper($newUserInfos->getLastName()));
         }
-        if ($newUserInfos->getFirstName()) {
+        if ($newUserInfos->getFirstName() !== NULL) {
             $user->setFirstName(ucwords($newUserInfos->getFirstName()));
         }
         if (isset($uploadedFile)) {

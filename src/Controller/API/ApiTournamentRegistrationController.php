@@ -2,9 +2,11 @@
 
 namespace App\Controller\API;
 
+use App\Entity\Result;
 use App\Entity\Tournament;
 use App\Entity\TournamentRegistration;
 use App\Entity\User;
+use App\Repository\ResultRepository;
 use App\Repository\TournamentRegistrationRepository;
 use App\Repository\TournamentRepository;
 use App\Repository\UserRepository;
@@ -57,7 +59,7 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setUser(null);
         }
 
-        /** Create User if data don't correspond to an instance in bdd */
+        /** Create User if data don't correspond to an instance in bdd and if the property haveToCreateUser is true */
         if (
             $registration->getHaveToCreateUser()
             && $registration->getUserLastName()
@@ -119,7 +121,7 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournament(null);
         }
 
-        /** Create Tournament if data don't correspond to an instance in bdd */
+        /** Create Tournament if data don't correspond to an instance in bdd and if haveToCreateTournament is true */
         if (
             $registration->getHaveToCreateTournament()
             && $registration->getTournamentCity()
@@ -158,6 +160,7 @@ class ApiTournamentRegistrationController extends AbstractController
             throw new Exception("At least one tournament's information is missing");
         }
 
+        $registration->setResult(new Result());
         $tournamentRegistrationRepo->add($registration, true);
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
@@ -206,6 +209,7 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournament(null);
         }
 
+        $registration->setResult(new Result());
         $tournamentRegistrationRepo->add($registration, true);
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
@@ -236,6 +240,7 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setUserEmail(null);
             $registration->setUserLastName(null);
             $registration->setUserFirstName(null);
+            $result = new Result();
         }
 
         /**
@@ -258,6 +263,9 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournamentEndDate(null);
         }
 
+        if ($result) {
+            $registration->setResult($result);
+        }
         $tournamentRegistrationRepo->add($registration, true);
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
@@ -342,6 +350,11 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setUserEmail(null);
             $registration->setUserLastName(null);
             $registration->setUserFirstName(null);
+        } else {
+            $registration->setUser(null);
+            if ($updatedRegistration->getUserLastName()) $registration->setUserLastName($updatedRegistration->getUserLastName());
+            if ($updatedRegistration->getUserFirstName()) $registration->setUserFirstName($updatedRegistration->getUserFirstName());
+            if ($updatedRegistration->getUserEmail()) $registration->setUserEmail($updatedRegistration->getUserEmail());
         }
 
         /** Create a new instance of user */
@@ -396,6 +409,12 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournamentCity(null);
             $registration->setTournamentStartDate(null);
             $registration->setTournamentEndDate(null);
+        } else {
+            $registration->setTournament(null);
+            if ($updatedRegistration->getTournamentName()) $registration->setTournamentName($updatedRegistration->getTournamentName());
+            if ($updatedRegistration->getTournamentCity()) $registration->setTournamentCity($updatedRegistration->getTournamentCity());
+            if ($updatedRegistration->getTournamentStartDate()) $registration->setTournamentStartDate($updatedRegistration->getTournamentStartDate());
+            if ($updatedRegistration->getTournamentEndDate()) $registration->setTournamentEndDate($updatedRegistration->getTournamentEndDate());
         }
 
         /** Create a new instance of tournament */
@@ -434,9 +453,6 @@ class ApiTournamentRegistrationController extends AbstractController
         if ($updatedRegistration->getRequestState()) {
             $registration->setRequestState($updatedRegistration->getRequestState());
         }
-        if ($updatedRegistration->isHasParticipated() !== NULL) {
-            $registration->setHasParticipated($updatedRegistration->getHasParticipated());
-        }
         if ($updatedRegistration->isParticipationSingle() !== NULL) {
             $registration->setParticipationSingle($updatedRegistration->isParticipationSingle());
         }
@@ -445,15 +461,6 @@ class ApiTournamentRegistrationController extends AbstractController
         }
         if ($updatedRegistration->isParticipationMixed() !== NULL) {
             $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
-        }
-        if ($updatedRegistration->getSingleStageReached()) {
-            $registration->setSingleStageReached($updatedRegistration->getSingleStageReached());
-        }
-        if ($updatedRegistration->getDoubleStageReached()) {
-            $registration->setDoubleStageReached($updatedRegistration->getDoubleStageReached());
-        }
-        if ($updatedRegistration->getMixedStageReached()) {
-            $registration->setMixedStageReached($updatedRegistration->getMixedStageReached());
         }
         if ($updatedRegistration->getDoublePartnerName()) {
             $registration->setDoublePartnerName($updatedRegistration->getDoublePartnerName());
@@ -512,6 +519,12 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournamentCity(null);
             $registration->setTournamentStartDate(null);
             $registration->setTournamentEndDate(null);
+        } else {
+            $registration->setTournament(null);
+            if ($updatedRegistration->getTournamentName()) $registration->setTournamentName($updatedRegistration->getTournamentName());
+            if ($updatedRegistration->getTournamentCity()) $registration->setTournamentCity($updatedRegistration->getTournamentCity());
+            if ($updatedRegistration->getTournamentStartDate()) $registration->setTournamentStartDate($updatedRegistration->getTournamentStartDate());
+            if ($updatedRegistration->getTournamentEndDate()) $registration->setTournamentEndDate($updatedRegistration->getTournamentEndDate());
         }
 
         if ($updatedRegistration->isParticipationSingle() !== NULL) {
@@ -522,15 +535,6 @@ class ApiTournamentRegistrationController extends AbstractController
         }
         if ($updatedRegistration->isParticipationMixed() !== NULL) {
             $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
-        }
-        if ($updatedRegistration->getSingleStageReached()) {
-            $registration->setSingleStageReached($updatedRegistration->getSingleStageReached());
-        }
-        if ($updatedRegistration->getDoubleStageReached()) {
-            $registration->setDoubleStageReached($updatedRegistration->getDoubleStageReached());
-        }
-        if ($updatedRegistration->getMixedStageReached()) {
-            $registration->setMixedStageReached($updatedRegistration->getMixedStageReached());
         }
         if ($updatedRegistration->getDoublePartnerName()) {
             $registration->setDoublePartnerName($updatedRegistration->getDoublePartnerName());

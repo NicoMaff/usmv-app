@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Faker\Factory;
 use App\Entity\Article;
 use App\Entity\Event;
+use App\Entity\Result;
 use App\Entity\Tournament;
 use App\Entity\TournamentRegistration;
 use App\Entity\User;
@@ -160,52 +161,41 @@ class AppFixtures extends Fixture
             $manager->persist($event);
         }
 
-        $member = new User();
-        $admin = new User();
         $superadmin = new User();
-        $player = new User();
+        $player1 = new User();
+        $player2 = new User();
 
-        $member
-            ->setLastName("MEMBER")
-            ->setFirstName("Member")
+        $player1
+            ->setLastName("DERRIEN")
+            ->setFirstName("Yohann")
             ->setGender("male")
-            ->setEmail("member@mail.com")
-            ->setPassword($this->hasher->hashPassword($member, "password"))
+            ->setEmail("derrien@mail.com")
+            ->setPassword($this->hasher->hashPassword($player1, "password"))
             ->setRoles(["ROLE_MEMBER"])
             ->setCreatedAt(new \DateTimeImmutable());
-        $manager->persist($member);
+        $manager->persist($player1);
 
-        $admin
-            ->setLastName("ADMIN")
-            ->setFirstName("Admin")
-            ->setGender("male")
-            ->setEmail("admin@mail.com")
-            ->setPassword($this->hasher->hashPassword($admin, "password"))
-            ->setRoles(["ROLE_ADMIN"])
-            ->setCreatedAt(new \DateTimeImmutable());
-        $manager->persist($admin);
-
-        $superadmin
-            ->setLastName("BIG")
-            ->setFirstName("Boss")
-            ->setGender("male")
-            ->setEmail("superadmin@mail.com")
-            ->setPassword($this->hasher->hashPassword($superadmin, "password"))
-            ->setRoles(["ROLE_SUPERADMIN"])
-            ->setCreatedAt(new \DateTimeImmutable());
-        $manager->persist($superadmin);
-
-        $player
+        $player2
             ->setLastName("GANCI")
             ->setFirstName("Charlotte")
             ->setGender("female")
             ->setEmail("ganci@mail.com")
             ->setRoles(["ROLE_MEMBER"])
+            ->setPassword($this->hasher->hashPassword($player2, "password"))
+            ->setCreatedAt(new \DateTimeImmutable());
+        $manager->persist($player2);
+
+        $superadmin
+            ->setLastName("MAFFÉÏS")
+            ->setFirstName("Nicolas")
+            ->setGender("male")
+            ->setEmail("competitions@villeparisisbadminton77.fr")
+            ->setRoles(["ROLE_SUPERADMIN"])
             ->setPassword($this->hasher->hashPassword($superadmin, "password"))
             ->setCreatedAt(new \DateTimeImmutable());
-        $manager->persist($player);
+        $manager->persist($superadmin);
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $tournament = new Tournament();
             $tournament
                 ->setName(mt_rand(1, 3) === 1 ? null : $faker->realText(mt_rand(40, 60)))
@@ -228,14 +218,16 @@ class AppFixtures extends Fixture
             for ($j = 1; $j <= mt_rand(1, 2); $j++) {
                 $registration = new TournamentRegistration();
                 $registration
-                    ->setUser((mt_rand(1, 5) === 1 ? (mt_rand(1, 5) === 1 ? $superadmin : $admin) : $member))
+                    ->setUser((mt_rand(1, 5) === 1 ? $superadmin : (mt_rand(1, 2) === 1 ? $player1 : $player2)))
                     ->setTournament($tournament)
                     ->setParticipationSingle(mt_rand(1, 3) === 1 ? false : true)
                     ->setParticipationDouble(mt_rand(1, 3) === 1 ? false : true)
                     ->setParticipationMixed(mt_rand(1, 3) === 1 ? false : true)
-                    ->setDoublePartnerName($faker->name())
-                    ->setMixedPartnerName($faker->name())
                     ->setComment($faker->text(mt_rand(100, 300)));
+                if ($registration->isParticipationSingle()) $registration->setDoublePartnerName($faker->name());
+                if ($registration->isParticipationDouble()) $registration->setMixedPartnerName($faker->name());
+                $registration->setResult(new Result());
+
                 $manager->persist($registration);
             }
         }
