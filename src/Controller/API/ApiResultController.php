@@ -144,13 +144,7 @@ class ApiResultController extends AbstractController
         if ($updatedResult->getMixedStageReached() !== NULL) $result->setMixedStageReached($updatedResult->getMixedStageReached());
         if ($updatedResult->getComment() !== NULL) $result->setComment($updatedResult->getComment());
 
-        if (
-            $result->getSingleStageReached() !== $updatedResult->getSingleStageReached() ||
-            $result->getDoubleStageReached() !== $updatedResult->getDoubleStageReached() ||
-            $result->getMixedStageReached() !== $updatedResult->getMixedStageReached()
-        ) {
-            $result->setAreResultsValidated(false);
-        }
+        $result->setAreResultsValidated(false);
 
         $result->setUpdatedAt(new \DateTime());
         $repository->add($result, true);
