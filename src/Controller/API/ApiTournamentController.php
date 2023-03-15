@@ -101,6 +101,16 @@ class ApiTournamentController extends AbstractController
     }
 
     /**
+     * GET
+     * An user can access to all tournaments of the current season
+     */
+    #[Route("/tournaments/season", name: "api_tournament_readAllSeasonalTournaments", methods: "GET")]
+    public function readAllSeasonalTournaments(TournamentRepository $repository): JsonResponse
+    {
+        return $this->json($repository->findAllSeasonalTournaments(), 200, context: ["groups" => "tournament:read"]);
+    }
+
+    /**
      * UPDATE
      * An admin can update a tournament or a part of tournament from its id
      * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
