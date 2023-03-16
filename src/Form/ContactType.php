@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Contact;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -50,6 +52,15 @@ class ContactType extends AbstractType
             ->add("sendCopy", CheckboxType::class, [
                 "label" => "Recevoir une copie",
                 "required" => false,
+            ])
+            ->add("submit", SubmitType::class, [
+                "label" => "Envoyer",
+                "attr" => ["class" => "btn btn-level1"]
+            ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'contact',
+                'locale' => 'fr',
             ]);
     }
 
