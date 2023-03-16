@@ -115,7 +115,8 @@
                             {{ form_errors(form.sendCopy)}}
                         </div>
                         <div class="btn-container">
-                            <button type="submit" class="btn btn-level1">Envoyer</button>
+                            {{ form_widget(form.submit)}}
+                            {# <button type="submit" class="btn btn-level1">Envoyer</button> #}
                         </div>
                     </div>
                     {{ form_rest(form) }}
