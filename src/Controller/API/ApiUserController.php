@@ -239,7 +239,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can get details of all users (admin + member).
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route('users', 'api_user_readAllsrc/Controller/API/ApiUserController.phpUsers', methods: "GET")]
+    #[Route('admin/users', 'api_user_readAll', methods: "GET")]
     public function readAllUsers(UserRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, context: ["groups" => "user:read"]);

@@ -559,12 +559,44 @@ class ApiTournamentRegistrationController extends AbstractController
     }
 
     /**
+     * PATCH
+     * An ADMIN can validate one member registration from the registration's id
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/tournament-registration/validate/{id}", name: "api_tournamentRegistration_validateMemberRegistration", methods: "PATCH")]
+    public function validateMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
+    {
+        $registration = $repository->find($id);
+        $registration
+            ->setRequestState("validated")
+            ->setUpdatedAt(new \DateTime());
+        $repository->add($registration, true);
+        return $this->json($registration, 200, context: ["groups" => "registration:update"]);
+    }
+
+    /**
+     * PATCH
+     * An ADMIN can cancel a registration.
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/tournament-registration/cancel/{id}", "api_tournamentRegistration_cancelMemberRegistration", methods: "PATCH")]
+    public function cancelMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
+    {
+        $registration = $repository->find($id);
+        $registration
+            ->setRequestState("cancelled")
+            ->setUpdatedAt(new \DateTime());
+        $repository->add($registration, true);
+        return $this->json($registration, 200, context: ["groups" => "registration:update"]);
+    }
+
+    /**
      * UPDATE (Delete for a member)
      * A MEMBER can cancel a registration (instead of delete it).
      */
     #[IsGranted("ROLE_MEMBER")]
-    #[Route("/tournament-registration/cancel/{id}", "api_tournamentRegistration_cancelMemberRegistration", methods: "PATCH")]
-    public function cancelMemberRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
+    #[Route("/tournament-registration/cancel/{id}", "api_tournamentRegistration_cancelRegistration", methods: "PATCH")]
+    public function cancelRegistration(TournamentRegistrationRepository $repository, int $id): JsonResponse
     {
         $registration = $repository->findOneBy(["user" => $this->getUser(), "id" => $id]);
 
