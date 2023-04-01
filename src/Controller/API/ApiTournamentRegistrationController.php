@@ -11,6 +11,7 @@ use App\Repository\TournamentRegistrationRepository;
 use App\Repository\TournamentRepository;
 use App\Repository\UserRepository;
 use Exception;
+use phpDocumentor\Reflection\Types\Null_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,128 +37,124 @@ class ApiTournamentRegistrationController extends AbstractController
     #[Route("/admin/tournament-registration", name: "api_tournamentRegistration_createMemberRegistration", methods: "POST")]
     public function createMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator): JsonResponse
     {
-        $jsonReceived = $request->getContent();
-        $registration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+        $registration = $serializer->deserialize($request->getContent(), TournamentRegistration::class, "json");
 
-        /**
-         * Check if the user's data correspond to an instance of user.
-         * If true, set the user's instance to the registration.
-         * Otherwise, use the user's data without create a new instance.
-         * The front have to send only the data and not the user id.
-         */
-        $userSearch = [
-            "email" => $registration->getUserEmail(),
-            "firstName" => $registration->getUserFirstName(),
-            "lastName" => $registration->getUserLastName()
-        ];
-        if ($userRepo->findOneBy($userSearch)) {
-            $registration->setUser($userRepo->findOneBy($userSearch));
-            $registration->setUserEmail(null);
-            $registration->setUserLastName(null);
-            $registration->setUserFirstName(null);
+        /** Set the User */
+        if ($registration->getUserLastName() !== null && $registration->getUserFirstName() !== null && $registration->getUserEmail() !== null) {
+            $registeredUser = $userRepo->findOneBy([
+                "email" => $registration->getUserEmail(),
+                "firstName" => $registration->getUserFirstName(),
+                "lastName" => $registration->getUserLastName()
+            ]);
+
+            if ($registeredUser !== null) {
+                $registration->setUser($registeredUser);
+                $registration->setUserEmail(null);
+                $registration->setUserLastName(null);
+                $registration->setUserFirstName(null);
+            } else {
+                $registration->setUser(null);
+            }
         } else {
-            $registration->setUser(null);
+            throw new Exception("At least, one information is missing about user.");
         }
 
         /** Create User if data don't correspond to an instance in bdd and if the property haveToCreateUser is true */
-        if (
-            $registration->getHaveToCreateUser()
-            && $registration->getUserLastName()
-            && $registration->getUserFirstName()
-            && $registration->getUserEmail()
-        ) {
-            $user = new User();
+        if ($registration->getHaveToCreateUser()) {
+            if (
+                $registration->getUserLastName()
+                && $registration->getUserFirstName()
+                && $registration->getUserEmail()
+            ) {
+                $user = new User();
 
-            $password = "";
-            for ($i = 0; $i < 6; $i++) {
-                $alpha = mt_rand(97, 122);
-                $alphaMaj = mt_rand(65, 90);
-                $char = mt_rand(1, 2) === 1 ? mt_rand(0, 9) : (mt_rand(1, 2) === 1 ? chr($alpha) : chr($alphaMaj));
-                $password .= $char;
+                $password = "";
+                for ($i = 0; $i < 6; $i++) {
+                    $alpha = mt_rand(97, 122);
+                    $alphaMaj = mt_rand(65, 90);
+                    $char = mt_rand(1, 2) === 1 ? mt_rand(0, 9) : (mt_rand(1, 2) === 1 ? chr($alpha) : chr($alphaMaj));
+                    $password .= $char;
+                }
+
+                $user
+                    ->setLastName($registration->getUserLastName())
+                    ->setFirstName($registration->getUserFirstName())
+                    ->setEmail($registration->getUserEmail())
+                    ->setPassword($password)
+                    ->setConfirmPassword($password);
+
+                $errors = $validator->validate($user);
+                if (count($errors) > 0) {
+                    return $this->json($errors, 400);
+                }
+                $user->setPassword($hasher->hashPassword($user, $password));
+
+                $userRepo->add($user, true);
+
+                $registration->setUser($user);
+                $registration->setUserEmail(null);
+                $registration->setUserLastName(null);
+                $registration->setUserFirstName(null);
+            } else {
+                throw new Exception("At least one user's information is missing");
             }
-
-            $user
-                ->setLastName($registration->getUserLastName())
-                ->setFirstName($registration->getUserFirstName())
-                ->setEmail($registration->getUserEmail())
-                ->setPassword($password)
-                ->setConfirmPassword($password);
-
-            $errors = $validator->validate($user);
-            if (count($errors) > 0) {
-                return $this->json($errors, 400);
-            }
-            $user->setPassword($hasher->hashPassword($user, $password));
-
-            $userRepo->add($user, true);
-
-            $registration->setUser($user);
-            $registration->setUserEmail(null);
-            $registration->setUserLastName(null);
-            $registration->setUserFirstName(null);
-        } else {
-            throw new Exception("At least one user's information is missing");
         }
 
-        /**
-         * Check if the tournament's data correspond to an instance of tournament.
-         * If true, set the tournament's instance to the registration.
-         * Otherwise, use the tournament's data without create a new instance.
-         * The front have to send only the data and not the tournament id.
-         */
-        $tournamentSearch = [
-            "name" => $registration->getTournamentName(),
-            "city" => $registration->getTournamentCity(),
-            "startDate" => $registration->getTournamentStartDate(),
-            "endDate" => $registration->getTournamentEndDate()
-        ];
-        if ($tournamentRepo->findOneBy($tournamentSearch)) {
-            $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
-            $registration->setTournamentName(null);
-            $registration->setTournamentCity(null);
-            $registration->setTournamentStartDate(null);
-            $registration->setTournamentEndDate(null);
+        /** Set the tournament */
+        if ($registration->getTournamentCity() !== null && $registration->getTournamentStartDate() !== null) {
+            $registeredTournament = $tournamentRepo->findOneBy([
+                "city" => $registration->getTournamentCity(),
+                "startDate" => $registration->getTournamentStartDate(),
+            ]);
+
+            if ($registeredTournament !== null) {
+                $registration->setTournament($registeredTournament);
+                $registration->setTournamentName(null);
+                $registration->setTournamentCity(null);
+                $registration->setTournamentStartDate(null);
+                $registration->setTournamentEndDate(null);
+            } else {
+                $registration->setTournament(null);
+            }
         } else {
-            $registration->setTournament(null);
+            throw new Exception("At least one user's information is missing about the tournament");
         }
 
         /** Create Tournament if data don't correspond to an instance in bdd and if haveToCreateTournament is true */
-        if (
-            $registration->getHaveToCreateTournament()
-            && $registration->getTournamentCity()
-            && $registration->getTournamentStartDate()
-        ) {
-            $tournament = new Tournament();
-            $tournament
-                ->setCity($registration->getTournamentCity())
-                ->setStartDate($registration->getTournamentStartDate());
+        if ($registration->getHaveToCreateTournament()) {
+            if ($registration->getTournamentCity() && $registration->getTournamentStartDate()) {
+                $tournament = new Tournament();
+                $tournament
+                    ->setCity($registration->getTournamentCity())
+                    ->setStartDate($registration->getTournamentStartDate());
 
-            if ($registration->getTournamentName()) {
-                $tournament->setName($registration->getTournamentName());
-            }
-            if ($registration->getTournamentEndDate()) {
-                $tournament->setEndDate($registration->getTournamentEndDate());
-            }
+                if ($registration->getTournamentName()) {
+                    $tournament->setName($registration->getTournamentName());
+                }
+                if ($registration->getTournamentEndDate()) {
+                    $tournament->setEndDate($registration->getTournamentEndDate());
+                }
 
-            if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
-                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
-            } else if (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
-                $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
-            }
+                if (in_array($tournament->getStartDate()->format("m"), ["09", "10", "11", "12"])) {
+                    $tournament->setSeason("20" . $tournament->getStartDate()->format("y") . "/20" . $tournament->getStartDate()->format("y") + 1);
+                } elseif (in_array($tournament->getStartDate()->format("m"), ["01", "02", "03", "04", "05", "06", "07", "08"])) {
+                    $tournament->setSeason("20" . $tournament->getStartDate()->format("y") - 1 . "/20" . $tournament->getStartDate()->format("y"));
+                }
 
-            $errors = $validator->validate($tournament);
-            if (count($errors) > 0) {
-                return $this->json($errors, 400);
-            }
+                $errors = $validator->validate($tournament);
+                if (count($errors) > 0) {
+                    return $this->json($errors, 400);
+                }
 
-            $tournamentRepo->add($tournament, true);
-            $registration->setTournament($tournament);
-            $registration->setTournamentName(null);
-            $registration->setTournamentCity(null);
-            $registration->setTournamentStartDate(null);
-            $registration->setTournamentEndDate(null);
-        } else {
-            throw new Exception("At least one tournament's information is missing");
+                $tournamentRepo->add($tournament, true);
+                $registration->setTournament($tournament);
+                $registration->setTournamentName(null);
+                $registration->setTournamentCity(null);
+                $registration->setTournamentStartDate(null);
+                $registration->setTournamentEndDate(null);
+            } else {
+                throw new Exception("At least one tournament's information is missing");
+            }
         }
 
         $registration->setResult(new Result());
@@ -165,6 +162,7 @@ class ApiTournamentRegistrationController extends AbstractController
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
     }
+
 
     /**
      * CREATE
@@ -331,30 +329,30 @@ class ApiTournamentRegistrationController extends AbstractController
     public function updateMemberRegistration(Request $request, TournamentRegistrationRepository $tournamentRegistrationRepo, TournamentRepository $tournamentRepo, UserRepository $userRepo, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, ValidatorInterface $validator, int $id): JsonResponse
     {
         $registration = $tournamentRegistrationRepo->find($id);
-        $jsonReceived = $request->getContent();
-        $updatedRegistration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
+        $updatedRegistration = $serializer->deserialize($request->getContent(), TournamentRegistration::class, "json");
 
-        /**
-         * Check if the user's data correspond to an instance of user.
-         * If true, set the user's instance to the registration.
-         * Otherwise, use the user's data without create a new instance.
-         * The front have to send only the data and not the user id.
-         */
-        $userSearch = [
-            "email" => $registration->getUserEmail(),
-            "firstName" => $registration->getUserFirstName(),
-            "lastName" => $registration->getUserLastName()
-        ];
-        if ($userRepo->findOneBy($userSearch)) {
-            $registration->setUser($userRepo->findOneBy($userSearch));
-            $registration->setUserEmail(null);
-            $registration->setUserLastName(null);
-            $registration->setUserFirstName(null);
-        } else {
-            $registration->setUser(null);
-            if ($updatedRegistration->getUserLastName()) $registration->setUserLastName($updatedRegistration->getUserLastName());
-            if ($updatedRegistration->getUserFirstName()) $registration->setUserFirstName($updatedRegistration->getUserFirstName());
-            if ($updatedRegistration->getUserEmail()) $registration->setUserEmail($updatedRegistration->getUserEmail());
+        if (
+            $updatedRegistration->getUserLastName() !== NULL
+            && $updatedRegistration->getUserFirstName() !== NULL
+            && $updatedRegistration->getUserEmail() !== NULL
+        ) {
+            $registeredUser = $userRepo->findOneBy([
+                "email" => $updatedRegistration->getUserEmail(),
+                "firstName" => $updatedRegistration->getUserFirstName(),
+                "lastName" => $updatedRegistration->getUserLastName()
+            ]);
+
+            if ($registeredUser !== NULL) {
+                $registration->setUser($registeredUser);
+                $registration->setUserEmail(null);
+                $registration->setUserLastName(null);
+                $registration->setUserFirstName(null);
+            } else {
+                $registration->setUser(null);
+                if ($updatedRegistration->getUserLastName() !== NULL) $registration->setUserLastName($updatedRegistration->getUserLastName());
+                if ($updatedRegistration->getUserFirstName() !== NULL) $registration->setUserFirstName($updatedRegistration->getUserFirstName());
+                if ($updatedRegistration->getUserEmail() !== NULL) $registration->setUserEmail($updatedRegistration->getUserEmail());
+            }
         }
 
         /** Create a new instance of user */
@@ -391,30 +389,25 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setUser($userRepo->find($user->getId()));
         }
 
-        /**
-         * Check if the tournament's data correspond to an instance of tournament.
-         * If true, set the tournament's instance to the registration.
-         * Otherwise, use the tournament's data without create a new instance.
-         * The front have to send only the data and not the tournament id.
-         */
-        $tournamentSearch = [
-            "name" => $updatedRegistration->getTournamentName(),
-            "city" => $updatedRegistration->getTournamentCity(),
-            "startDate" => $updatedRegistration->getTournamentStartDate(),
-            "endDate" => $updatedRegistration->getTournamentEndDate()
-        ];
-        if ($tournamentRepo->findOneBy($tournamentSearch)) {
-            $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
-            $registration->setTournamentName(null);
-            $registration->setTournamentCity(null);
-            $registration->setTournamentStartDate(null);
-            $registration->setTournamentEndDate(null);
-        } else {
-            $registration->setTournament(null);
-            if ($updatedRegistration->getTournamentName()) $registration->setTournamentName($updatedRegistration->getTournamentName());
-            if ($updatedRegistration->getTournamentCity()) $registration->setTournamentCity($updatedRegistration->getTournamentCity());
-            if ($updatedRegistration->getTournamentStartDate()) $registration->setTournamentStartDate($updatedRegistration->getTournamentStartDate());
-            if ($updatedRegistration->getTournamentEndDate()) $registration->setTournamentEndDate($updatedRegistration->getTournamentEndDate());
+        if ($updatedRegistration->getTournamentCity() !== NULL && $updatedRegistration->getTournamentStartDate() !== NULL) {
+            $registeredTournament = $tournamentRepo->findOneBy([
+                "city" => $updatedRegistration->getTournamentCity(),
+                "startDate" => $updatedRegistration->getTournamentStartDate(),
+            ]);
+
+            if ($registeredTournament !== NULL) {
+                $registration->setTournament($registeredTournament);
+                $registration->setTournamentName(null);
+                $registration->setTournamentCity(null);
+                $registration->setTournamentStartDate(null);
+                $registration->setTournamentEndDate(null);
+            } else {
+                $registration->setTournament(null);
+                if ($updatedRegistration->getTournamentName()) $registration->setTournamentName($updatedRegistration->getTournamentName());
+                if ($updatedRegistration->getTournamentCity()) $registration->setTournamentCity($updatedRegistration->getTournamentCity());
+                if ($updatedRegistration->getTournamentStartDate()) $registration->setTournamentStartDate($updatedRegistration->getTournamentStartDate());
+                if ($updatedRegistration->getTournamentEndDate()) $registration->setTournamentEndDate($updatedRegistration->getTournamentEndDate());
+            }
         }
 
         /** Create a new instance of tournament */
@@ -450,7 +443,7 @@ class ApiTournamentRegistrationController extends AbstractController
             $registration->setTournament($tournamentRepo->find($tournament->getId()));
         }
 
-        if ($updatedRegistration->getRequestState()) {
+        if ($updatedRegistration->getRequestState() !== NULL) {
             $registration->setRequestState($updatedRegistration->getRequestState());
         }
         if ($updatedRegistration->isParticipationSingle() !== NULL) {
@@ -462,19 +455,19 @@ class ApiTournamentRegistrationController extends AbstractController
         if ($updatedRegistration->isParticipationMixed() !== NULL) {
             $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
         }
-        if ($updatedRegistration->getDoublePartnerName()) {
+        if ($updatedRegistration->getDoublePartnerName() !== NULL) {
             $registration->setDoublePartnerName($updatedRegistration->getDoublePartnerName());
         }
-        if ($updatedRegistration->getDoublePartnerClub()) {
+        if ($updatedRegistration->getDoublePartnerClub() !== NULL) {
             $registration->setDoublePartnerClub($updatedRegistration->getDoublePartnerClub());
         }
-        if ($updatedRegistration->getMixedPartnerName()) {
+        if ($updatedRegistration->getMixedPartnerName() !== NULL) {
             $registration->setMixedPartnerName($updatedRegistration->getMixedPartnerName());
         }
-        if ($updatedRegistration->getMixedPartnerClub()) {
+        if ($updatedRegistration->getMixedPartnerClub() !== NULL) {
             $registration->setMixedPartnerClub($updatedRegistration->getMixedPartnerClub());
         }
-        if ($updatedRegistration->getComment()) {
+        if ($updatedRegistration->getComment() !== NULL) {
             $registration->setComment($updatedRegistration->getComment());
         }
 
@@ -498,33 +491,28 @@ class ApiTournamentRegistrationController extends AbstractController
         $updatedRegistration = $serializer->deserialize($jsonReceived, TournamentRegistration::class, "json");
 
         if ($registration === null) {
-            throw new Exception("The registration's id selected does not belong to this user.");
+            throw new Exception("The selected registration does not belong to this user.");
         }
 
-        /**
-         * Check if the tournament's data correspond to an instance of tournament.
-         * If true, set the tournament's instance to the registration.
-         * Otherwise, use the tournament's data without create a new instance.
-         * The front have to send only the data and not the tournament id.
-         */
-        $tournamentSearch = [
-            "name" => $updatedRegistration->getTournamentName(),
-            "city" => $updatedRegistration->getTournamentCity(),
-            "startDate" => $updatedRegistration->getTournamentStartDate(),
-            "endDate" => $updatedRegistration->getTournamentEndDate()
-        ];
-        if ($tournamentRepo->findOneBy($tournamentSearch)) {
-            $registration->setTournament($tournamentRepo->findOneBy($tournamentSearch));
-            $registration->setTournamentName(null);
-            $registration->setTournamentCity(null);
-            $registration->setTournamentStartDate(null);
-            $registration->setTournamentEndDate(null);
-        } else {
-            $registration->setTournament(null);
-            if ($updatedRegistration->getTournamentName()) $registration->setTournamentName($updatedRegistration->getTournamentName());
-            if ($updatedRegistration->getTournamentCity()) $registration->setTournamentCity($updatedRegistration->getTournamentCity());
-            if ($updatedRegistration->getTournamentStartDate()) $registration->setTournamentStartDate($updatedRegistration->getTournamentStartDate());
-            if ($updatedRegistration->getTournamentEndDate()) $registration->setTournamentEndDate($updatedRegistration->getTournamentEndDate());
+        if ($updatedRegistration->getTournamentCity() !== NULL && $updatedRegistration->getTournamentStartDate() !== NULL) {
+            $registeredTournament = $tournamentRepo->findOneBy([
+                "city" => $updatedRegistration->getTournamentCity(),
+                "startDate" => $updatedRegistration->getTournamentStartDate(),
+            ]);
+
+            if ($registeredTournament !== NULL) {
+                $registration->setTournament($registeredTournament);
+                $registration->setTournamentName(null);
+                $registration->setTournamentCity(null);
+                $registration->setTournamentStartDate(null);
+                $registration->setTournamentEndDate(null);
+            } else {
+                $registration->setTournament(null);
+                if ($updatedRegistration->getTournamentName()) $registration->setTournamentName($updatedRegistration->getTournamentName());
+                if ($updatedRegistration->getTournamentCity()) $registration->setTournamentCity($updatedRegistration->getTournamentCity());
+                if ($updatedRegistration->getTournamentStartDate()) $registration->setTournamentStartDate($updatedRegistration->getTournamentStartDate());
+                if ($updatedRegistration->getTournamentEndDate()) $registration->setTournamentEndDate($updatedRegistration->getTournamentEndDate());
+            }
         }
 
         if ($updatedRegistration->isParticipationSingle() !== NULL) {
@@ -536,19 +524,19 @@ class ApiTournamentRegistrationController extends AbstractController
         if ($updatedRegistration->isParticipationMixed() !== NULL) {
             $registration->setParticipationMixed($updatedRegistration->isParticipationMixed());
         }
-        if ($updatedRegistration->getDoublePartnerName()) {
+        if ($updatedRegistration->getDoublePartnerName() !== NULL) {
             $registration->setDoublePartnerName($updatedRegistration->getDoublePartnerName());
         }
-        if ($updatedRegistration->getDoublePartnerClub()) {
+        if ($updatedRegistration->getDoublePartnerClub() !== NULL) {
             $registration->setDoublePartnerClub($updatedRegistration->getDoublePartnerClub());
         }
-        if ($updatedRegistration->getMixedPartnerName()) {
+        if ($updatedRegistration->getMixedPartnerName() !== NULL) {
             $registration->setMixedPartnerName($updatedRegistration->getMixedPartnerName());
         }
-        if ($updatedRegistration->getMixedPartnerClub()) {
+        if ($updatedRegistration->getMixedPartnerClub() !== NULL) {
             $registration->setMixedPartnerClub($updatedRegistration->getMixedPartnerClub());
         }
-        if ($updatedRegistration->getComment()) {
+        if ($updatedRegistration->getComment() !== NULL) {
             $registration->setComment($updatedRegistration->getComment());
         }
 

@@ -163,8 +163,8 @@ class ApiTournamentController extends AbstractController
             if ($updatedTournament->getStandardPrice2()) {
                 $tournament->setStandardPrice2($updatedTournament->getStandardPrice2());
             }
-            if ($updatedTournament->getStandardPrice3()) {
-                $tournament->setStandardPrice3($updatedTournament->getStandardPrice1());
+            if ($updatedTournament->getStandardPrice3() !== $tournament->getStandardPrice3()) {
+                $tournament->setStandardPrice3($updatedTournament->getStandardPrice3());
             }
             if ($updatedTournament->getElitePrice1()) {
                 $tournament->setElitePrice1($updatedTournament->getElitePrice1());
