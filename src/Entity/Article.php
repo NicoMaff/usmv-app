@@ -23,7 +23,7 @@ class Article
     #[Assert\NotBlank]
     #[Assert\Length(
         min: 3,
-        max: 100,
+        // max: 100,
         minMessage: "Le titre doit comporter plus de 5 caractères",
         maxMessage: "Le titre ne doit pas comporter plus de 5 caractères"
     )]
@@ -67,6 +67,7 @@ class Article
     private ?string $thirdAdditionalImageUrl = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups("article:read", "article:write", "article:update")]
     private ?bool $visible = null;
 
     #[ORM\Column]

@@ -15,11 +15,12 @@ class Event
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["event:create"])]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
@@ -27,6 +28,7 @@ class Event
         propertyPath: "startDate",
         message: "La date de fin de l'événement ne doit pas précéder la date de début !"
     )]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -37,21 +39,27 @@ class Event
         minMessage: "Le contenu doit contenir au moins 10 caractères.",
         maxMessage: "Le contenu ne doit pas contenir plus de 500 caractères."
     )]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?string $imageName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?string $imageUrl = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?bool $visible = null;
 
     #[ORM\Column]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["event:create", "event:update", "event:read"])]
     private ?\DateTimeImmutable $updatedAt = null;
 
 

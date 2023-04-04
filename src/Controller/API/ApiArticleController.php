@@ -345,6 +345,21 @@ class ApiArticleController extends AbstractController
     }
 
     /**
+     * PATCH
+     * An ADMIN can directly toggle one article visibility 
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/article/toggle-visibility/{id}", name: "api_article_toggleVisibility", methods: "PATCH")]
+    public function toggleVisibility(ArticleRepository $repository, int $id): JsonResponse
+    {
+        $article = $repository->find($id);
+        $article->setVisible(!$article->isVisible());
+        $repository->add($article, true);
+
+        return $this->json($article, 201, context: ["groups" => "article:read"]);
+    }
+
+    /**
      * DELETE
      * An ADMIN can delete an article from its ID.
      * If an article is deleted, all of its files will be removed from the server.

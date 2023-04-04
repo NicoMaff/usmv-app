@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route("api/")]
+#[Route("/api")]
 class ApiEventController extends AbstractController
 {
     /**
@@ -81,7 +81,7 @@ class ApiEventController extends AbstractController
      * READ
      * An ADMIN can get an event's details from its id.
      */
-    #[Route("event/{id}", "api_event_readEvent", methods: "GET")]
+    #[Route("/event/{id}", "api_event_readEvent", methods: "GET")]
     public function readEvent(EventRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200);
@@ -91,7 +91,7 @@ class ApiEventController extends AbstractController
      * READ
      * An ADMIN can get all events' details.
      */
-    #[Route("events", "api_event_readAllEvents", methods: "GET")]
+    #[Route("/events", "api_event_readAllEvents", methods: "GET")]
     public function readAllEvents(EventRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200);
@@ -105,7 +105,7 @@ class ApiEventController extends AbstractController
      * If a new image is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("event/{id}", "api_event_updateOne", methods: ["PATCH", "POST"])]
+    #[Route("/event/{id}", "api_event_updateOne", methods: ["PATCH", "POST"])]
     public function updateOne(EventRepository $repository, Request $request, int $id, ValidatorInterface $validator, SerializerInterface $serializer, SluggerInterface $slugger): JsonResponse
     {
         // Request using multipart/form-data
@@ -168,12 +168,27 @@ class ApiEventController extends AbstractController
     }
 
     /**
+     * PATCH
+     * An ADMIN can directly toggle one article visibility 
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/event/toggle-visibility/{id}", name: "api_article_toggleVisibility", methods: "PATCH")]
+    public function toggleVisibility(EventRepository $repository, int $id): JsonResponse
+    {
+        $event = $repository->find($id);
+        $event->setVisible(!$event->isVisible());
+        $repository->add($event, true);
+
+        return $this->json($event, 201, context: ["groups" => "event:read"]);
+    }
+
+    /**
      * DELETE
      * An ADMIN can delete an event from its id.
      * If an event is deleted, its image will be also removed from the server.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("event/{id}", "api_event_deleteEvent", methods: "DELETE")]
+    #[Route("/event/{id}", "api_event_deleteEvent", methods: "DELETE")]
     public function deleteEvent(EventRepository $repository, int $id): JsonResponse
     {
         $event = $repository->find($id);
