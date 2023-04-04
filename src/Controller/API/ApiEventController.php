@@ -23,7 +23,7 @@ class ApiEventController extends AbstractController
      * If no image is uploaded, a default image will be added to the event.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("event", "api_event_createEvent", methods: "POST")]
+    #[Route("/event", "api_event_createEvent", methods: "POST")]
     public function createEvent(EventRepository $repository, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, SluggerInterface $slugger): JsonResponse
     {
         // Request using multipart/form-data
@@ -40,8 +40,6 @@ class ApiEventController extends AbstractController
         }
 
         $event = $serializer->deserialize($jsonReceived, Event::class, "json");
-
-
 
         if (isset($uploadedFile)) {
             // File settings
@@ -72,9 +70,9 @@ class ApiEventController extends AbstractController
         if (count($errors) > 0) {
             return $this->json($errors, 400);
         }
-
+        // dd("test");
         $repository->add($event, true);
-        return $this->json($event, 201);
+        return $this->json($event, 201, context: ["groups" => "event:read"]);
     }
 
     /**
@@ -84,7 +82,7 @@ class ApiEventController extends AbstractController
     #[Route("/event/{id}", "api_event_readEvent", methods: "GET")]
     public function readEvent(EventRepository $repository, int $id): JsonResponse
     {
-        return $this->json($repository->find($id), 200);
+        return $this->json($repository->find($id), 200, context: ["groups" => "event:read"]);
     }
 
     /**
@@ -94,7 +92,7 @@ class ApiEventController extends AbstractController
     #[Route("/events", "api_event_readAllEvents", methods: "GET")]
     public function readAllEvents(EventRepository $repository): JsonResponse
     {
-        return $this->json($repository->findAll(), 200);
+        return $this->json($repository->findAll(), 200, context: ["groups" => "event:read"]);
     }
 
     /**
@@ -164,7 +162,7 @@ class ApiEventController extends AbstractController
         }
 
         $repository->add($event, true);
-        return $this->json($event, 201);
+        return $this->json($event, 201, context: ["groups" => "event:read"]);
     }
 
     /**

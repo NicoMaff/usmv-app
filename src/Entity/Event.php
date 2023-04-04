@@ -34,7 +34,7 @@ class Event
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
     #[Assert\Length(
-        min: 10,
+        // min: 10,
         max: 500,
         minMessage: "Le contenu doit contenir au moins 10 caractères.",
         maxMessage: "Le contenu ne doit pas contenir plus de 500 caractères."
