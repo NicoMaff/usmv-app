@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Route("api/")]
+#[Route("/api")]
 class ApiUserController extends AbstractController
 {
     /**
@@ -98,7 +98,7 @@ class ApiUserController extends AbstractController
      * During creation, the member can add an avatarFile. For that, the multipart/form-data method is required.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("admin/user/member", name: "api_user_createMemberAccount", methods: "POST")]
+    #[Route("/admin/user/member", name: "api_user_createMemberAccount", methods: "POST")]
     public function createMemberAccount(UserRepository $repository, UserPasswordHasherInterface $hasher, Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
@@ -173,7 +173,7 @@ class ApiUserController extends AbstractController
      * A MEMBER can create his account.
      * During creation, the member can add an avatarFile. For that, the multipart/form-data method is required.
      */
-    #[Route("user/account", name: "api_user_createAccount", methods: "POST")]
+    #[Route("/user/account", name: "api_user_createAccount", methods: "POST")]
     public function createAccount(UserRepository $repository, UserPasswordHasherInterface $hasher, Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
@@ -228,7 +228,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can get details of one member from his id.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("admin/user/{id}", "api_user_readOneMemberDetails", methods: "GET")]
+    #[Route("/admin/user/{id}", "api_user_readOneMemberDetails", methods: "GET")]
     public function readOneMemberDetails(UserRepository $repository, int $id): JsonResponse
     {
         return $this->json($repository->find($id), 200, context: ["groups" => "user:read"]);
@@ -239,7 +239,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can get details of all users (admin + member).
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route('admin/users', 'api_user_readAll', methods: "GET")]
+    #[Route('/admin/users', 'api_user_readAll', methods: "GET")]
     public function readAllUsers(UserRepository $repository): JsonResponse
     {
         return $this->json($repository->findAll(), 200, context: ["groups" => "user:read"]);
@@ -250,7 +250,7 @@ class ApiUserController extends AbstractController
      * A MEMBER can get details of his account.
      */
     #[IsGranted("ROLE_MEMBER")]
-    #[Route("user", name: "api_user_readMemberAccount", methods: "GET")]
+    #[Route("/user", name: "api_user_readMemberAccount", methods: "GET")]
     public function readMemberAccount(UserRepository $repository): JsonResponse
     {
         $user = $repository->findOneBy(["id" => $this->getUser()->getUserIdentifier()]);
@@ -262,7 +262,7 @@ class ApiUserController extends AbstractController
      * The SUPERADMIN can promote a member to admin role.
      */
     #[IsGranted("ROLE_SUPERADMIN")]
-    #[Route("admin/user/{id}/promotion", "api_user_promoteMember", methods: "PATCH")]
+    #[Route("/admin/user/{id}/promotion", "api_user_promoteMember", methods: "PATCH")]
     public function promoteMember(UserRepository $repository, int $id): JsonResponse
     {
         $user = $repository
@@ -277,7 +277,7 @@ class ApiUserController extends AbstractController
      * The SUPERADMIN can demote an admin to member role.
      */
     #[IsGranted("ROLE_SUPERADMIN")]
-    #[Route("user/{id}/demotion", "api_user_demoteAdmin", methods: "PATCH")]
+    #[Route("/user/{id}/demotion", "api_user_demoteAdmin", methods: "PATCH")]
     public function demoteAdmin(UserRepository $repository, int $id): JsonResponse
     {
         $user = $repository
@@ -295,8 +295,8 @@ class ApiUserController extends AbstractController
      * If a new file is uploaded, it will replace the older.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("/admin/user/{id}", name: "api_user_updateMemberDetails", methods: ["POST", "PATCH"])]
-    public function updateMemberDetails(UserRepository $repository, SerializerInterface $serializer, Request $request, int $id, ValidatorInterface $validator): JsonResponse
+    #[Route("/admin/user/admin/{id}", name: "api_user_updateAdminDetails", methods: ["POST", "PATCH"])]
+    public function updateAdminDetails(UserRepository $repository, SerializerInterface $serializer, Request $request, int $id, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
         if ($request->request->get("data")) {
@@ -316,6 +316,9 @@ class ApiUserController extends AbstractController
 
         if ($newUserInfos->getEmail()) {
             $user->setEmail($newUserInfos->getEmail());
+        }
+        if ($newUserInfos->getRoles()) {
+            $user->setRoles($newUserInfos->getRoles());
         }
         if ($newUserInfos->getLastName()) {
             $user->setLastName(strtoupper($newUserInfos->getLastName()));
@@ -366,6 +369,88 @@ class ApiUserController extends AbstractController
 
     /**
      * UPDATE
+     * An admin can update member's account details.
+     * WARNING : if the user send file, the method POST is required because multipart/form-data only support POST method (and no PATCH).
+     * Only one file is stored by user.
+     * If a new file is uploaded, it will replace the older.
+     */
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/user/member/{id}", name: "api_user_updateMemberDetails", methods: ["POST", "PATCH"])]
+    public function updateMemberDetails(UserRepository $repository, SerializerInterface $serializer, Request $request, int $id, ValidatorInterface $validator): JsonResponse
+    {
+        // Request using multipart/form-data
+        if ($request->request->get("data")) {
+            $jsonReceived = $request->request->get("data");
+        } else {
+            // Request using raw Body
+            $jsonReceived = $request->getContent();
+        }
+
+        // Request using multipart/form-data
+        if ($request->files->get("file")) {
+            $uploadedFile = $request->files->get("file");
+        }
+
+        $user = $repository->find($id);
+
+        if (in_array("ROLE_ADMIN", $user->getRoles())) {
+            throw new Exception("An admin can't update an other admin info.");
+        } else {
+            $newUserInfos = $serializer->deserialize($jsonReceived, User::class, "json");
+
+            if ($newUserInfos->getEmail()) {
+                $user->setEmail($newUserInfos->getEmail());
+            }
+            if ($newUserInfos->getLastName()) {
+                $user->setLastName(strtoupper($newUserInfos->getLastName()));
+            }
+            if ($newUserInfos->getFirstName()) {
+                $user->setFirstName(ucwords($newUserInfos->getFirstName()));
+            }
+            if ($newUserInfos->getGender()) {
+                $user->setGender($newUserInfos->getGender());
+            }
+            if ($newUserInfos->getBirthDate()) {
+                $user->setBirthDate($newUserInfos->getBirthDate());
+            }
+            if (isset($uploadedFile)) {
+                // File settings
+                $destination = $this->getParameter("kernel.project_dir") . "/src/data/avatarFiles/";
+                $newFileName = "avatar-user" . $user->getId() . "-" . uniqid() . "." . $uploadedFile->guessExtension();
+
+                if ($user->getAvatarFileName() && file_exists($user->getAvatarFileUrl())) {
+                    unlink($user->getAvatarFileUrl());
+                }
+
+                try {
+                    $uploadedFile->move($destination, $newFileName);
+                } catch (FileException $e) {
+                    echo $e->getMessage();
+                }
+
+                $user->setAvatarFileName($newFileName);
+                $user->setAvatarFileUrl($destination . $newFileName);
+            }
+            if ($newUserInfos->getState()) {
+                $user->setState($newUserInfos->getState());
+            }
+            if ($newUserInfos->isValidatedAccount()) {
+                $user->setValidatedAccount($newUserInfos->isValidatedAccount());
+            }
+            $user->setUpdatedAt(new \DateTimeImmutable());
+
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                return $this->json($errors, 400);
+            }
+
+            $repository->add($user, true);
+            return $this->json($user, 201, context: ["groups" => "user:update",]);
+        }
+    }
+
+    /**
+     * UPDATE
      * An ADMIN can validate member's account.
      * This method set the property validateAccount on true && state on "active".
      */
@@ -386,7 +471,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can move a member's state account to inactive.
      * This method set the property state to "inactive".
      */
-    #[Route("user/{id}/inactivation", "api_user_inactivateAccount", methods: "PATCH")]
+    #[Route("/user/{id}/inactivation", "api_user_inactivateAccount", methods: "PATCH")]
     #[IsGranted("ROLE_ADMIN")]
     public function inactivateAccount(UserRepository $repository, int $id): JsonResponse
     {
@@ -402,7 +487,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can activate (or reactivate) a member account.
      * This method set the property state to "active".
      */
-    #[Route("user/{id}/activation", "api_user_activateAccount", methods: "PATCH")]
+    #[Route("/user/{id}/activation", "api_user_activateAccount", methods: "PATCH")]
     #[IsGranted("ROLE_ADMIN")]
     public function activateAccount(UserRepository $repository, int $id): JsonResponse
     {
@@ -420,8 +505,8 @@ class ApiUserController extends AbstractController
      * Only one file is stored by member.
      * If a new file is uploaded, it will replace the older.
      */
-    #[Route("user", name: "api_user_updateAccountDetails", methods: ["POST", "PATCH"])]
     #[IsGranted("ROLE_MEMBER")]
+    #[Route("/user", name: "api_user_updateAccountDetails", methods: ["POST", "PATCH"])]
     public function updateAccountDetails(UserRepository $repository, SerializerInterface $serializer, UserPasswordHasherInterface $hasher, Request $request, ValidatorInterface $validator): JsonResponse
     {
         // Request using multipart/form-data
@@ -503,7 +588,7 @@ class ApiUserController extends AbstractController
      * An ADMIN can remove a member.
      */
     #[IsGranted("ROLE_ADMIN")]
-    #[Route("admin/user/{id}", "api_user_deleteUser", methods: "DELETE")]
+    #[Route("/admin/user/{id}", "api_user_deleteUser", methods: "DELETE")]
     public function deleteUser(UserRepository $repository, int $id): JsonResponse
     {
         $admin = $this->getUser();
