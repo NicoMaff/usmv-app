@@ -59,7 +59,8 @@ class ApiResultController extends AbstractController
     #[Route("/result/{resultId}", name: "api_result_readOneResult", methods: "GET")]
     public function readOneResult(ResultRepository $repository, int $resultId): JsonResponse
     {
-        $result = $repository->findOneBy(["User" => $this->getUser(), "id" => $resultId]);
+        $result = $repository->findOneBy(["id" => $resultId, "User" => $this->getUser()]);
+        // dd($repository->findBy(["User" => $this->getUser()]));
 
         if ($result === null) {
             throw new Exception("The selected result does not belong to this user.");
@@ -76,6 +77,7 @@ class ApiResultController extends AbstractController
     #[Route("/results", name: "api_result_readAllResults", methods: ["GET"])]
     public function readAllResults(ResultRepository $repository): JsonResponse
     {
+
         return $this->json($repository->findBy(["User" => $this->getUser()]), 200, context: ["groups" => "result:read"]);
     }
 

@@ -158,6 +158,7 @@ class ApiTournamentRegistrationController extends AbstractController
         }
 
         $registration->setResult(new Result());
+        $registration->getResult()->setUser($registeredUser);
         $tournamentRegistrationRepo->add($registration, true);
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);
@@ -208,6 +209,7 @@ class ApiTournamentRegistrationController extends AbstractController
         }
 
         $registration->setResult(new Result());
+        $registration->getResult()->setUser($this->getUser());
         $tournamentRegistrationRepo->add($registration, true);
 
         return $this->json($registration, 201, context: ["groups" => "registration:create"]);

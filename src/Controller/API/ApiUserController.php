@@ -61,7 +61,7 @@ class ApiUserController extends AbstractController
         $user->setLastName(strtoupper($user->getLastName()));
         $user->setFirstName(ucwords($user->getFirstName()));
         $user->setPassword($hasher->hashPassword($user, $password));
-        $user->setRoles(["ROLE_ADMIN"]);
+        $user->setRoles(["ROLE_ADMIN", "ROLE_MEMBER"]);
 
         if ($user->getState() === null) {
             $user->setState("active");
@@ -267,9 +267,9 @@ class ApiUserController extends AbstractController
     {
         $user = $repository
             ->find($id)
-            ->setRoles(["ROLE_ADMIN"]);
+            ->setRoles(["ROLE_ADMIN", "ROLE_MEMBER"]);
         $repository->add($user, true);
-        return $this->json($user, 201);
+        return $this->json($user, 201, context: ["groups" => "user:update"]);
     }
 
     /**
@@ -277,14 +277,14 @@ class ApiUserController extends AbstractController
      * The SUPERADMIN can demote an admin to member role.
      */
     #[IsGranted("ROLE_SUPERADMIN")]
-    #[Route("/user/{id}/demotion", "api_user_demoteAdmin", methods: "PATCH")]
+    #[Route("/admin/user/{id}/demotion", "api_user_demoteAdmin", methods: "PATCH")]
     public function demoteAdmin(UserRepository $repository, int $id): JsonResponse
     {
         $user = $repository
             ->find($id)
             ->setRoles(["ROLE_MEMBER"]);
         $repository->add($user, true);
-        return $this->json($user, 201);
+        return $this->json($user, 201, context: ["groups" => "user:update"]);
     }
 
     /**
@@ -471,8 +471,8 @@ class ApiUserController extends AbstractController
      * An ADMIN can move a member's state account to inactive.
      * This method set the property state to "inactive".
      */
-    #[Route("/user/{id}/inactivation", "api_user_inactivateAccount", methods: "PATCH")]
     #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/user/{id}/inactivation", "api_user_inactivateAccount", methods: "PATCH")]
     public function inactivateAccount(UserRepository $repository, int $id): JsonResponse
     {
         $user = $repository
@@ -487,8 +487,8 @@ class ApiUserController extends AbstractController
      * An ADMIN can activate (or reactivate) a member account.
      * This method set the property state to "active".
      */
-    #[Route("/user/{id}/activation", "api_user_activateAccount", methods: "PATCH")]
     #[IsGranted("ROLE_ADMIN")]
+    #[Route("/admin/user/{id}/activation", "api_user_activateAccount", methods: "PATCH")]
     public function activateAccount(UserRepository $repository, int $id): JsonResponse
     {
         $user = $repository
