@@ -40,9 +40,9 @@ class ApiResetPasswordController extends AbstractController
 
         if (!$user) {
             return $this->json([
-                "status" => 404,
-                "message" => "The email does not exist."
-            ], 404);
+                "status" => 200,
+                "message" => "The email with the reset link has been correctly send."
+            ], 200);
         }
 
         try {
