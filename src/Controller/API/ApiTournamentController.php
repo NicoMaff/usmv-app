@@ -3,6 +3,7 @@
 namespace App\Controller\API;
 
 use App\Entity\Tournament;
+use App\Repository\TournamentRegistrationRepository;
 use App\Repository\TournamentRepository;
 use Exception;
 use phpDocumentor\Reflection\Types\Null_;
@@ -261,12 +262,24 @@ class ApiTournamentController extends AbstractController
      */
     #[IsGranted("ROLE_ADMIN")]
     #[Route("/admin/tournament/{id}", "api_tournament_deleteTournament", methods: "DELETE")]
-    public function deleteTournament(TournamentRepository $repository, int $id): JsonResponse
+    public function deleteTournament(TournamentRepository $repository, TournamentRegistrationRepository $registrationRepo, int $id): JsonResponse
     {
         $tournament = $repository->find($id);
+        $registrations = $registrationRepo->findBy(["tournament" => $tournament]);
+
+        foreach ($registrations as $key => $value) {
+            $value->setTournamentCity($tournament->getCity());
+            $value->setTournamentName($tournament->getName());
+            $value->setTournamentStartDate($tournament->getStartDate());
+            $value->setTournamentEndDate($tournament->getEndDate());
+            $value->setTournament(null);
+        }
+
         if ($tournament->getRegulationFileName() && file_exists($tournament->getRegulationFileUrl())) {
             unlink($tournament->getRegulationFileUrl());
         }
+
+
         $repository->remove($tournament, true);
 
         return $this->json([
