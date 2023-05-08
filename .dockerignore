@@ -1,0 +1,13 @@
+node_modules
+SQL
+vendor
+.gitignore
+# composer.json
+# composer.lock
+.dockerignore
+docker-compose*.yaml
+package.json
+yarn-error.log
+yarn.lock
+backend-data
+db-data

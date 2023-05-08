@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  nginx: 
+    image: rev-proxy-i:test
+    build: 
+      dockerfile: docker/Dockerfile.nginx.prod
+    container_name: rev-proxy-c
+    restart: always
+    ports:
+      - "80:80"
+
+  db: 
+    image: mysql:latest
+    container_name: mysql-prod-c
+    restart: always
+    depends_on:
+      - nginx
+    environment:
+      - DB_NAME=usmv-app
+      - DB_PASSWORD=pass
+      - DB_USER=root
+      - MYSQL_ROOT_PASSWORD=root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  backend:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.sym.prod
+    container_name: back-prod-c
+    depends_on:
+      - nginx
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend-data:/var/www/
+
+  phpmyadmin: 
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_PMADB: db
+
+volumes:
+  db-data:
+  backend-data:
